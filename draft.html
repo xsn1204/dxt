@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>初中生优秀语文作文</title>
+    <link href="https://fonts.googleapis.com/css2?family=Long+Cang&family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --grid-color: #b5c4d2; /* 浅蓝灰色网格，参考 image_da2537 */
+            --ink-black: #333;
+            --teacher-red: #e60012;
+            --paper-width: 210mm;
+            --paper-height: 297mm;
+            --grid-size: 32px;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+            margin: 0;
+        }
+        
+
+        /* A4 纸张容器 */
+.a4-page {
+    width: var(--paper-width);
+    height: var(--paper-height);
+    background-color: #fff;
+    padding: 15mm 15mm;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+        /* 顶部标题行 - 参考 image_da2537 */
+        .header-title {
+            text-align: center;
+            color: #76889b;
+            font-size: 18px;
+            font-family: "SimSun", "STSong", serif;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* 评分区域 */
+        .score-box {
+            position: absolute;
+            top: 70px;
+            right: 60px;
+            z-index: 10;
+        }
+
+        .score-text {
+            font-family: 'Zhi Mang Xing', cursive;
+            font-size: 56px;
+            color: var(--teacher-red);
+            transform: rotate(-10deg);
+            display: inline-block;
+        }
+
+        /* 作文方格区域 */
+.grid-container {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    border-left: 1px solid var(--grid-color);
+    border-top: 1px solid var(--grid-color);
+}
+.grid-container::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: #5c7a99;
+}
+
+        /* 正文文字 */
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            font-family: 'Long Cang', cursive; /* 模拟清秀的学生字体 */
+            font-size: 24px;
+            line-height: var(--grid-size);
+            color: var(--ink-black);
+            letter-spacing: 8px; /* 完美适配格子中心 */
+            padding-left: 4px;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+
+.content {
+    position: absolute;
+    inset: 0;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 22px;
+    line-height: var(--grid-size);
+    color: var(--ink-black);
+    padding: 0 6px;
+    box-sizing: border-box;
+    z-index: 5;
+    letter-spacing: 0;
+}
+.content p {
+    margin: 0;
+    line-height: var(--grid-size);
+    text-indent: calc(var(--grid-size) * 2);
+}
+
+.content p.title {
+    text-indent: 0;
+    text-align: center;
+}
+
+        /* 新增：老师红笔波浪线样式 */
+        .teacher-wave {
+            position: relative;
+            color: inherit;
+            text-decoration: none;
+            padding: 0 2px;
+            /* 取消默认高亮背景 */
+            background: transparent;
+        }
+        .teacher-wave::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 4px; /* 波浪线位置（上下调整） */
+            width: 100%;
+            height: 3px; /* 波浪线高度 */
+            /* 波浪渐变背景 - 模拟红笔手写的波浪效果 */
+            background: linear-gradient(-45deg, transparent 30%, var(--teacher-red) 30%, var(--teacher-red) 50%, transparent 50%, transparent 70%, var(--teacher-red) 70%, var(--teacher-red) 100%);
+            background-size: 8px 4px; /* 波浪大小（数值越小波浪越密） */
+            border-radius: 3px;
+            z-index: 6; /* 确保在文字下方 */
+            opacity: 0.85; /* 红笔透明度（模拟笔迹深浅） */
+        }
+
+        /* 底部页码 */
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: "SimSun";
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .a4-page {
+    page-break-after: always;
+}
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">36/36</div></head>
+<body>
+
+    <div class="a4-page">
+        <div class="header-title">
+            语文作文纸
+        </div>
+
+        <div class="score-box">
+            <span class="score-text">优+</span>
+        </div>
+        <div class="grid-container" >
+            <div class="content">
+<p class="title">让我悄悄告诉你</p>
+<p class="title">——致那趟开往春天的地下铁</p>
+
+
+    <p></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;让我悄悄告诉你，学姐，那个初秋的午后，我是怎样走进那间洒满阳光的阅览室的。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;九月的风还带着夏末的余温，吹进实验中学陌生的走廊。转学来的第三周，我对一切都还像隔着一层毛玻璃。课间，同学们涌向操场，我却悄悄拐进阅览室，选了最角落的位置，把头埋进臂弯，让<span class="teacher-wave">茫然有个暂时的去处</span>。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;就在这时，我听见你的声音，像<span class="teacher-wave">初春第一条穿透薄冰的溪</span>流</span>：“同学，你还好吗？”</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;抬起头，光有些晃眼。逆光里，你的轮廓镶着毛茸茸的金边，眉头微微蹙着，是真切的担忧。那一刻，我所有强装的镇定瞬间融化，不知说什么是好，只是摇摇头，又点点头。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;你笑了，在我对面坐下，没有追问，从书包里抽出一本淡绿色封面的书，轻轻推过来，什么也没有说。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;那本《飞鸟集》成了我们之间的第一座桥。后来我才知道，你是高我一级的学姐，那个图书角的常客。你开始带我认识你的朋友，午饭时总在食堂寻我，借给我的书从《呼啸山庄》到《城南旧事》。每一本扉页都有你工整的笔记，像悄悄留下的路标，指引我穿过<span class="teacher-wave">青春的迷雾</span>。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;而最深的印记，是那个我们一起撑伞回家的傍晚，你忽然问我：“你爸爸，是修地铁的工程师对吗？”</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;我愣了一下，点点头。父亲的工作是全家迁徙的理由，却似乎总在提醒我外来者的身份。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;一周后的周末，你约我去市中心的书店。在绘本区，你从身后变出一本灰色封皮的书，一个女孩打着黄伞，拄着盲杖，摸索着通往地下迷宫的路。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;是几米的《地下铁》。</p>
+
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;“送给你，”你眼睛亮晶晶的，“我特意找的。我想，也许这本书，能让你看见<span class="teacher-wave">地下的另一种光</span>。”</p>
+   
+</div>
+
+        </div>
+           
+    </div>
+        </div>
+<div class="a4-page">
+            <div class="header-title">
+            语文作文纸
+        </div>
+    <div class="grid-container">
+        <div class="content">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;那个夜晚，我在台灯下翻开它。<span class="teacher-wave">色彩瑰丽得如同梦境</span>，一句旁白闯入我的眼帘：“在这个城市里，我常常受伤，常常迷迷糊糊闯入多雾的沼泽，深陷泥淖进退两难。”</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;继续往后翻，盲眼女孩跌跌撞撞地漫游在这座迷宫之中，不知前路，不知终点。<span class="teacher-wave">她不断迷路，上错车又下错车，受伤又复原</span>，却依旧恋恋不舍，一点点拼凑、感受着潜藏在黑暗之下的奇幻与美好。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;“我在地下铁无尽的通道中，清晰地听见蝴蝶，轻拍薄翼，来回飞舞。”</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;全书的最后，盲女回到了人群之中。虽然依旧是一节节漫长的地铁，但底色已变成温暖的黄，她的心拥有了光亮。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;我忽然读懂了。父亲参与修建的，不正是这座城市的脉络吗？<span class="teacher-wave">而此刻的我，不也正摸索在陌生的地下甬道里吗？</span>不同的是，我遇见了你，一束主动照进黑暗的光。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;原来，人与人的连接可以如此纯粹：不需要繁复的理由，仅仅因为看见了对方的孤独，便愿意分出自己的光。像地下铁里那些奇幻的相遇，<span class="teacher-wave">不问来处，不问归途，</span>只在交错的瞬间，交换一点温度，一点勇气。
+</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;当你毕业离开后，我依然常去阅览室那个位置。窗外槐树绿了又黄，我不再害怕课间操的音乐。我成了那个主动问“同学你还好吗”的人，像你曾经那样。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;学姐，让我悄悄告诉你：你赠我的那趟“地下铁”，从未到站。它一直开往春天，沿途播撒光的种子。而每一粒种子，都会长成珍贵的<span class="teacher-wave">金叶子</span>，在心中闪着光亮。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;人和人的相遇，大概也是这样的奇迹吧。在各自的黑暗中掘进，却能在某个坐标相遇，严丝合缝。你让我相信，那些冰冷的钢筋混凝土之下，未来会流淌着<span class="teacher-wave">无数重逢与奔赴的故事</span>。</p>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;地下铁，是我们在青春的扉页里，一前一后写下的笔记。</p>
+        </div>
+    </div>
+    
+    </div>
+    </div>
+</body>
+</html>

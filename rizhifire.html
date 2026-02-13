@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ空间 - 我的私密日志</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('star.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #fff;
+            overflow: hidden; /* 初始状态禁止滚动 */
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.5);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* 主体布局 */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto 20px;
+            width: calc(100% - 30px);
+        }
+
+        .card {
+            background: #122543;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 私密日志详情特有样式 */
+        .private-log-detail {
+            padding: 20px;
+        }
+        
+        .log-detail-title {
+            font-size: 24px;
+            color: #f1c40f;
+            margin: 0 0 20px 0;
+            line-height: 1.3;
+        }
+        
+        .log-detail-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .log-detail-content {
+            font-size: 15px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            white-space: pre-line;
+            margin-bottom: 25px;
+        }
+
+        .log-detail-actions {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        /* --- 密码解锁层样式 --- */
+        #lock-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 核心毛玻璃效果 */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: rgba(18, 37, 67, 0.4);
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .lock-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .lock-box h3 {
+            margin-top: 0;
+            color: #f1c40f;
+            font-weight: normal;
+        }
+
+        .lock-box input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px;
+            width: 180px;
+            border-radius: 4px;
+            margin: 15px 0;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .lock-box button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .lock-box button:hover {
+            background: #2980b9;
+        }
+
+        .error-tip {
+            color: #ff7675;
+            font-size: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">32/36</div></head>
+<body>
+
+    <div id="lock-overlay">
+        <div class="lock-box">
+            <h3>确认要开启回忆吗？</h3>
+            <p style="font-size: 14px; opacity: 0.8;">问题：12.19.19.14.15</p>
+            <input type="text" id="password-input" placeholder="输入日期" onkeydown="if(event.keyCode==20121017) checkPassword()">
+            <button onclick="checkPassword()">确认</button>
+            <div id="error-message" class="error-tip">回答错误，请重新输入8位数字</div>
+        </div>
+    </div>
+
+    <div class="top-nav">
+        <span style="margin-right:20px; color:#f1c40f;">⭐ QQ空间</span>
+        <span>个人中心 | 我的主页 | 好友 | 应用</span>
+    </div>
+
+    <div class="container">
+        <div class="main-column">
+            <div class="card private-log-detail">
+        
+                
+                <h2 class="log-detail-title">2012</h2>
+                
+                <div class="log-detail-meta">发布于：2012-12-21 23:18:45</div>
+                
+                <div class="log-detail-content">
+                    2012。
+                    大家都说这一年可能是世界末日。
+                    我听着他们的讨论，看着新闻里夸张的预测，心里却既不害怕，也不期待。
+                    仿佛无论末日多么轰轰烈烈，都和我无关。
+
+                    可是那一天，听说你发生了意外。那一刻我忽然明白，世界末日，不是电影里轰轰烈烈的情节，而是真的降临在你身上的厄运……
+                    真实得让我窒息。
+
+                    我原本早该伸出的手，却因为退缩、犹豫而没有去做。每一次我看着你和那个恶魔靠近，心里不满却选择沉默。
+                    我原以为自己是可以温暖别人，保护别人的存在，原以为退后是一种善意，但其实不过是我的自私和伪善。
+
+                    最近总梦到那天的场景，看见你惊恐的表情，再看着你眼里的光熄灭，我想冲过去，却被自己冻住，站在原地。
+                    我多想把你从那个即将崩塌的世界拽回来，哪怕只有一秒！
+                    可是我做不到。我只能站在远处，看着你掉入那个漩涡，而我无能为力。
+
+                    我恨<strong>陶汝昆</strong>，更恨自己……
+                </div>
+                
+                <div class="log-detail-actions">
+                    <span>✏️ 编辑日志</span>
+                    <span>🗑️ 删除日志</span>
+                    <span>🔓 改为公开日志</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-message');
+            const overlay = document.getElementById('lock-overlay');
+
+            if (input === '20121017') {
+                // 解锁逻辑
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                document.body.style.overflow = 'auto'; // 恢复滚动
+            } else {
+                // 错误提示
+                errorMsg.style.display = 'block';
+                document.getElementById('password-input').value = '';
+                // 简单的抖动反馈
+                document.querySelector('.lock-box').animate([
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(5px)' },
+                    { transform: 'translateX(-5px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 200 });
+            }
+        }
+    </script>
+</body>
+</html>

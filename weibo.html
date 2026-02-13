@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>微博个人主页还原</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        /* 新增：顶部微博抬头栏 */
+        .weibo-header-top {
+            height: 50px;
+            background-color: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        .weibo-logo {
+            width: 100px;
+            height: 30px;
+            background: url("https://img.t.sinajs.cn/t6/style/images/global_nav/WB_logo.png") no-repeat center;
+            background-size: contain;
+            margin-right: 20px;
+        }
+        .weibo-nav {
+            display: flex;
+            flex: 1;
+        }
+        .weibo-nav-item {
+            margin-right: 25px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+        .weibo-nav-item.active {
+            color: #f42424;
+            font-weight: bold;
+        }
+        .weibo-top-right {
+            display: flex;
+            align-items: center;
+        }
+        .weibo-top-search {
+            width: 200px;
+            height: 30px;
+            border: 1px solid #e5e5e5;
+            border-radius: 15px;
+            padding: 0 10px;
+            font-size: 12px;
+            margin-right: 15px;
+        }
+        .weibo-top-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        /* 新增：页面容器，控制整体宽度和居中 */
+        .page-container {
+            max-width: 1260px;
+            margin: 0 auto;
+            display: flex;
+            padding-top: 60px; /* 给顶部栏留出空间 */
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        /* 左侧导航栏 - 微调 */
+        .sidebar {
+            width: 180px;
+            background-color: #fff;
+            padding: 20px 0;
+            border-right: 1px solid #e5e5e5;
+            height: calc(100vh - 60px);
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        .sidebar h2 {
+            font-size: 18px;
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 15px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sidebar ul li.active {
+            background-color: #f9f9f9;
+            color: #f42424;
+            font-weight: bold;
+        }
+        /* 中间内容区 - 微调 */
+        .main {
+            flex: 1;
+            padding: 20px;
+            max-width: 680px; /* 真实微博中间内容区宽度 */
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .main-header .back-btn {
+            font-size: 14px;
+            color: #666;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .main-header .username {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .main-header .search-box {
+            margin-left: auto;
+            padding: 6px 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        /* 微博内容卡片 */
+        .weibo-card {
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .weibo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .weibo-header .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .weibo-header .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .weibo-header .user-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .weibo-header .post-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        .weibo-header .verified {
+            font-size: 12px;
+            color: #1d9ed1;
+            margin-left: 5px;
+        }
+        /* 原文样式（用户自己的内容） */
+        .weibo-original {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        /* 转发内容样式（引用他人的内容） */
+        .weibo-repost {
+            background-color: #f8f8f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .weibo-content .topic {
+            color: #f42424;
+        }
+        .weibo-content .expand {
+            color: #1d9ed1;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .weibo-media {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .weibo-stats {
+            display: flex;
+            font-size: 12px;
+            color: #999;
+        }
+        .weibo-stats div {
+            margin-right: 20px;
+        }
+        .weibo-stats .icon {
+            margin-right: 3px;
+        }
+        /* 右侧推荐栏 - 微调 */
+        .rightbar {
+            width: 280px;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 1px solid #e5e5e5;
+            height: calc(100vh - 60px);
+            margin-left: 10px;
+            border-radius: 4px;
+        }
+        .rightbar h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .rightbar .recommend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .rightbar .recommend-item .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .rightbar .recommend-item .info {
+            flex: 1;
+        }
+        .rightbar .recommend-item .name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .rightbar .recommend-item .desc {
+            font-size: 12px;
+            color: #999;
+        }
+        .rightbar .recommend-item .follow-btn {
+            padding: 4px 10px;
+            border: 1px solid #f42424;
+            border-radius: 4px;
+            color: #f42424;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .rightbar .recommend-item .follow-btn:hover {
+            background-color: #f42424;
+            color: #fff;
+        }
+        .rightbar .refresh {
+            font-size: 12px;
+            color: #1d9ed1;
+            cursor: pointer;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .footer-links {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.8;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">35/36</div></head>
+<body>
+    <!-- 新增：顶部微博抬头栏 -->
+    <div class="weibo-header-top">
+        <div class="weibo-logo"></div>
+        <div class="weibo-nav">
+            <div class="weibo-nav-item active">首页</div>
+            <div class="weibo-nav-item">热门</div>
+            <div class="weibo-nav-item">发现</div>
+            <div class="weibo-nav-item">视频</div>
+            <div class="weibo-nav-item">游戏</div>
+            <div class="weibo-nav-item">会员</div>
+        </div>
+    </div>
+
+    <!-- 新增：页面容器，控制整体宽度和居中 -->
+    <div class="page-container">
+        <!-- 左侧导航栏 -->
+        <div class="sidebar">
+            <h2>个人主页</h2>
+            <ul>
+                <li class="active">她的主页</li>
+                <li>她的关注</li>
+                <li>她的粉丝</li>
+                <li>她的收藏</li>
+                <li>她的赞</li>
+            </ul>
+        </div>
+
+        <!-- 中间内容区 -->
+        <div class="main">
+            <div class="main-header">
+ <span class="back-btn" onclick="goBack()">← 返回</span>
+                <span class="username">今日也向晴</span>
+             
+            </div>
+
+            <!-- 微博内容 -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2023-4-28 来自 iPhone 客户端</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">1831 阅读</div>
+                </div>
+                
+                <!-- 原文：用户自己发的内容 -->
+                <div class="weibo-original">
+                    天呐…为什么我才看到…
+                </div>
+                
+                <!-- 转发内容：引用他人的内容 -->
+                <div class="weibo-repost">
+                    <div style="margin-bottom: 8px;">
+                        @青州早报 <span class="verified">✓</span>
+                    </div>
+                    <div>
+                        <span class="topic">【2012年，16岁少女因拒绝官二代追求，被泼汽油全身毁容，十年已过，女孩现状如何？】2016年3月22日，临渊省青州市中级人民法院门口围满了记者。这一天，邹言等了四年。这四年，她反复手术植皮，不知道去了多少趟医院。她经历网暴嘲讽...16岁少女因拒绝官二代追求，被泼汽油全身毁容，十年已过，女孩现状如何？ <span class="expand">展开</span>
+                    </div>
+                </div>
+                
+             
+                <div class="weibo-stats">
+                    <div><span class="icon">🔁</span> 2066</div>
+                    <div><span class="icon">💬</span> 4622</div>
+                    <div><span class="icon">❤️</span> 6.1万</div>
+                </div>
+                <div style="border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; display: flex; font-size: 14px; color: #666;">
+                    <div style="margin-right: 30px; cursor: pointer;">🔁 转发</div>
+                    <div style="margin-right: 30px; cursor: pointer;">💬 评论</div>
+                    <div style="cursor: pointer;">❤️ 赞</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧推荐栏 -->
+        <div class="rightbar">
+            <h3>你可能感兴趣的人</h3>
+            <div class="refresh">🔄 换一换</div>
+            <div class="recommend-item">
+              
+                <div class="info">
+                    <div class="name">回忆专用小马甲</div>
+                    <div class="desc">宠物博主</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div class="recommend-item">
+                <div class="info">
+                    <div class="name">英国那些事儿</div>
+                    <div class="desc">海外资讯博主</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div class="recommend-item">
+                <div class="info">
+                    <div class="name">月球车玉兔</div>
+                    <div class="desc">月球是目的地，地球是家乡。</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div style="border-top: 1px solid #e5e5e5; margin-top: 20px; padding-top: 20px;" class="footer-links">
+                <div>💡 帮助中心</div>
+                <div>微博客服 4000-960-960 | 自助服务中心 | 常见问题</div>
+                <div>🤝 合作&服务</div>
+                <div>微博营销 合作热线 4000-980-980 | 开放平台 | 更多</div>
+  
+
+            </div>
+        </div>
+    </div>
+    <script>
+function goBack(){
+  window.location.href = "weiboyxq.html";
+}
+</script>
+</body>
+</html>

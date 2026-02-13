@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>土豆网 Tudou.com - 每个人都是生活的导演</title>
+    <style>
+        /* 2012年经典的土豆橙配色与细明体风格 */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            font-family: "SimSun", "Arial", sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #004299; text-decoration: none; }
+        a:hover { text-decoration: underline; color: #f60; }
+
+        /* 顶部导航条 */
+        .top-nav {
+            background: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            padding: 5px 20px;
+            text-align: right;
+            height: 25px;
+            line-height: 25px;
+        }
+
+        /* 橙色主Header */
+        .header {
+            background: #ff6600; /* 土豆网经典橙色 */
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            color: white;
+        }
+
+        .logo-area img { height: 50px; margin-right: 20px; }
+
+        .search-bar {
+            background: #fff;
+            padding: 3px;
+            display: flex;
+            margin-left: 50px;
+            border-radius: 2px;
+        }
+
+        .search-bar input { border: none; width: 300px; padding: 5px; outline: none; }
+        .search-bar button { 
+            background: #f60; 
+            border: none; 
+            color: white; 
+            padding: 5px 15px; 
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* 主体布局 */
+        .main-container {
+            width: 980px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 200px 500px 260px;
+            gap: 15px;
+        }
+
+        /* 左侧排行榜：2012年流行语 */
+        .sidebar-left h3 {
+            border-bottom: 2px solid #f60;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .rank-list { list-style: none; padding: 0; margin: 10px 0; }
+        .rank-list li { 
+            margin-bottom: 8px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+        .rank-num {
+            background: #f60;
+            color: white;
+            padding: 0 5px;
+            margin-right: 5px;
+            font-size: 10px;
+        }
+
+        /* 中间焦点图区 */
+        .focus-area {
+            border: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .player-placeholder {
+            background: #000;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            position: relative;
+        }
+
+        .player-placeholder::after {
+            content: "▶ Click to Load Flash Player";
+            font-size: 16px;
+        }
+
+        .video-info {
+            background: #f9f9f9;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .video-info h2 { font-size: 18px; margin: 0 0 10px 0; color: #f60; }
+
+        /* 右侧登录与个人入口 */
+        .sidebar-right {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            background: #fdfdfd;
+        }
+
+        .login-box h4 { margin: 0 0 10px 0; }
+        .login-box input { width: 90%; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; }
+        .login-box button { 
+            width: 100%; 
+            padding: 8px; 
+            background: linear-gradient(to bottom, #ff9933, #f60); 
+            border: 1px solid #d45500;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .my-menu {
+            margin-top: 20px;
+            border: 1px solid #ffcc99;
+            padding: 10px;
+        }
+        .my-menu li { list-style: none; padding: 5px 0; border-bottom: 1px dotted #ffcc99; }
+
+        /* 底部频道 */
+        .channels {
+            width: 980px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .channel-item { width: 120px; text-align: center; margin-bottom: 15px; }
+        .channel-thumb { 
+            width: 100px; 
+            height: 60px; 
+            background: #eee; 
+            margin: 0 auto 5px; 
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        注册 | 登录 | 看过 | 客服 | 
+    </div>
+
+    <div class="header">
+        <div class="logo-area">
+            <span style="font-size: 32px; font-weight: 900; letter-spacing: -2px;">土豆<span style="color: #fff;">网</span></span>
+            <div style="font-size: 12px; margin-top: -5px;">每个人都是生活的导演</div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="搜视频、搜剧集、搜豆单">
+            <button>搜索</button>
+        </div>
+
+        <div style="margin-left: auto;">
+            <button style="background: #fff; border: 1px solid #ccc; padding: 5px 15px; color: #f60; font-weight: bold;">↑ 上传视频</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar-left">
+            <h3>视频排行榜</h3>
+            <ul class="rank-list">
+                <li><span class="rank-num">1</span> <a href="#">《后宫甄嬛传》全集回放</a></li>
+                <li><span class="rank-num">2</span> <a href="#">江南Style (Gangnam Style)</a></li>
+                <li><span class="rank-num">3</span> <a href="#">伦敦奥运会闭幕式精选</a></li>
+                <li><span class="rank-num">4</span> <a href="#">土豆自制剧《成人记》</a></li>
+                <li><span class="rank-num">5</span> <a href="#">李安导演《少年派》专访</a></li>
+                <li><span class="rank-num">6</span> <a href="#">泰塔尼克号 3D重映预告</a></li>
+                <li><span class="rank-num">7</span> <a href="#">2012世界末日传闻大揭秘</a></li>
+                <li><span class="rank-num">8</span> <a href="#">屌丝男士 第一季</a></li>
+            </ul>
+        </div>
+
+        <div class="focus-area">
+            <div class="player-placeholder"></div>
+            <div class="video-info">
+                <h2>豆单：李安的同性情结</h2>
+                <p>视频数：8</p>
+                <p>李安执导的同性题材电影《断背山》《喜宴》大盘点。挑战经典的电影艺术，李安三部曲之性取向探讨...</p>
+            </div>
+        </div>
+
+        <div class="sidebar-right">
+            <div class="login-box">
+                <h4>快速登录</h4>
+                <input type="text" placeholder="Email / 手机号">
+                <input type="password" placeholder="密码">
+                <button>立即登录</button>
+                <div style="margin-top: 5px; color: #999;">
+                    <input type="checkbox"> 记住我 <span style="float: right;"><a href="#">新用户注册</a></span>
+                </div>
+            </div>
+
+            <div class="my-menu">
+                <div style="color: #f60; font-weight: bold; margin-bottom: 5px;">我的土豆</div>
+                <li>我的主页</li>
+                <li>我的视频</li>
+                <li>我的豆单</li>
+                <li>我的订阅</li>
+                <li>我的好友</li>
+            </div>
+        </div>
+    </div>
+
+    <div class="channels">
+        <div class="channel-item"><div class="channel-thumb"></div>电视剧</div>
+        <div class="channel-item"><div class="channel-thumb"></div>电影</div>
+        <div class="channel-item"><div class="channel-thumb"></div>综艺</div>
+        <div class="channel-item"><div class="channel-thumb"></div>动漫</div>
+        <div class="channel-item"><div class="channel-thumb"></div>娱乐</div>
+        <div class="channel-item"><div class="channel-thumb"></div>音乐</div>
+        <div class="channel-item"><div class="channel-thumb"></div>游戏</div>
+        <div class="channel-item"><div class="channel-thumb"></div>原创</div>
+    </div>
+
+    <div style="text-align: center; padding: 20px; color: #999; border-top: 1px solid #eee;">
+        网络视听许可证0105097号 | 文网文[2012]001号 | Tudou.com © 2012
+    </div>
+
+</body>
+</html>

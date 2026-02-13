@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度一下，你就知道</title>
+    <style>
+        /* 基础样式复位 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: "PingFang SC", "Helvetica Neue", "Microsoft YaHei", Arial, sans-serif;
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航栏 - 精确比例 */
+        .header-nav {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 13px;
+        }
+
+        .nav-left { display: flex; gap: 18px; color: #222; }
+        .nav-right { display: flex; align-items: center; gap: 20px; color: #222; }
+        
+        .wenxin-icon { color: #5449e6; font-weight: bold; display: flex; align-items: center; gap: 4px; }
+        .login-btn {
+            background: #4e6ef2;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* 中间主体区域 */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 12vh; /* 适配大屏的黄金比例 */
+            min-height: calc(100vh - 60px);
+        }
+
+        /* 百度 Logo */
+        .baidu-logo {
+            width: 270px;
+            height: auto;
+            margin-bottom: 38px;
+        }
+
+        /* 搜索框容器 - 关键：利用伪元素实现外层渐变发光 */
+        .search-box-group {
+            position: relative;
+            width: 100%;
+            max-width: 720px; /* 增加宽度，更符合全屏桌面端 */
+            padding: 0 20px;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 56px;
+            background: #fff;
+            border-radius: 28px;
+            /* 图片中的紫色渐变边框效果 */
+            border: 2px solid transparent;
+            background-image: linear-gradient(#fff, #fff), linear-gradient(90deg, #7a5dfa, #4e6ef2);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 4px 15px rgba(122, 93, 250, 0.08);
+        }
+
+        .search-input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            outline: none;
+            padding-left: 24px;
+            font-size: 16px;
+            color: #333;
+            background: transparent;
+        }
+
+        /* 模拟图片右侧图标组 */
+        .input-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 130px; /* 为大按钮留位 */
+            color: #666;
+        }
+
+        .baidu-btn {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            bottom: 4px;
+            width: 110px;
+            background: #4e6ef2;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-size: 17px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .baidu-btn:hover { opacity: 0.9; }
+
+        /* 底部 AI 功能区 */
+        .ai-banner {
+            margin-top: 45px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .ai-tip { color: #333; font-weight: 500; }
+        .try-now { color: #4e6ef2; cursor: pointer; margin-right: 15px; }
+
+        .ai-tag-group { display: flex; gap: 8px; }
+        .ai-tag {
+            background: #f5f6f9;
+            color: #333;
+            padding: 10px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ai-tag:hover { background: #eeeff3; }
+        .ai-tag.more { color: #666; }
+        .nav-map{
+    cursor:pointer;
+}
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">3/36</div></head>
+<body>
+
+    <header class="header-nav">
+        <nav class="nav-left">
+            <span>新闻</span><span class="nav-map" onclick="window.open('map1.html','_blank')">地图</span>
+<span>贴吧</span><span>图片</span><span>网盘</span><span>文库</span>
+            <span>更多</span>
+        </nav>
+        <div class="nav-right">
+            <span>设置</span>
+            <div class="login-btn">登录</div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <img class="baidu-logo" src="logo.png" alt="Baidu">
+        
+        <div class="search-box-group">
+            <div class="search-input-container">
+                <input type="text" class="search-input" placeholder="世界上最快乐的动物">
+                <div class="input-icons">
+                    <span>🎙️</span><span>📎</span><span>🖼️</span>
+                </div>
+                <button class="baidu-btn">百度一下</button>
+            </div>
+        </div>
+
+        <section class="ai-banner">
+    
+       
+        </section>
+    </main>
+<script>
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.baidu-btn');
+    const searchGroup = document.querySelector('.search-box-group');
+
+    // 创建提示信息元素
+    const tipDiv = document.createElement('div');
+    tipDiv.style.cssText = "color: #ff4d4f; font-size: 14px; margin-top: 10px; padding-left: 24px; display: none;";
+    searchGroup.appendChild(tipDiv);
+
+    function performSearch() {
+        const query = searchInput.value.trim();
+        
+        // 隐藏之前的提示
+        tipDiv.style.display = 'none';
+
+        if (query.toLowerCase().includes('quokka')) {
+    window.location.href = 'sousuo.html';
+        } else if (query === '短尾矮袋鼠') {
+            // 2. 搜索短尾矮袋鼠 -> 提示输入英文
+            tipDiv.innerText = "请尝试输入英文单词进行搜索";
+            tipDiv.style.display = 'block';
+        } else {
+            // 3. 搜索其他内容 -> 提示重新尝试
+            tipDiv.innerText = "未找到相关内容，请重新尝试";
+            tipDiv.style.display = 'block';
+        }
+    }
+
+    // 绑定点击事件
+    searchBtn.addEventListener('click', performSearch);
+
+    // 绑定回车键事件
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+</script>
+</body>
+</html>

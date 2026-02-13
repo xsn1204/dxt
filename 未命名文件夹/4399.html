@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>4399小游戏 - 国内最大游戏门户还原</title>
+    <style>
+        :root {
+            --4399-orange: #ff6600;
+            --4399-green: #52ac43;
+            --4399-blue: #0066cc;
+            --text-gray: #666;
+            --border-light: #e0e0e0;
+        }
+
+        body {
+            font-family: Arial, "Microsoft YaHei", sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            /* 模拟截图侧边的背景广告位 */
+            background-image: linear-gradient(to right, #e8f4ff 15%, transparent 15%, transparent 85%, #e8f4ff 85%);
+        }
+
+        /* 顶部紧凑导航 */
+        .top-bar {
+            background: #fff;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 12px;
+            padding: 8px 0;
+            color: var(--text-gray);
+        }
+
+        .container {
+            width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* 头部搜索与Logo */
+        .header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-container {
+            display: flex;
+            border: 2px solid var(--4399-orange);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-container input {
+            width: 400px;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+
+        .search-container button {
+            background: var(--4399-orange);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* 核心导航栏 */
+        .nav-main {
+            background: var(--4399-orange);
+            color: white;
+            display: flex;
+            padding: 0 10px;
+        }
+
+        .nav-main a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .nav-main a:hover { background: #e65c00; }
+
+        /* 内容栅格布局 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr 240px;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        /* 左侧：精细分类 */
+        .side-cat h3 {
+            background: var(--4399-green);
+            color: white;
+            margin: 0;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .cat-list {
+            border: 1px solid var(--border-light);
+            border-top: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 5px;
+        }
+
+        .cat-list a {
+            font-size: 12px;
+            color: #333;
+            text-decoration: none;
+            padding: 5px;
+        }
+
+        .cat-list a:hover { color: var(--4399-orange); text-decoration: underline; }
+
+        /* 中间：信息大本营 */
+        .main-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* 游戏图标横排 */
+        .icon-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .icon-box {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .icon-img {
+            width: 54px;
+            height: 54px;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 文字链推荐区 */
+        .text-promote {
+            border: 1px solid #ffe0b2;
+            background: #fffef2;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .promo-item { font-size: 13px; color: #444; }
+        .promo-item b { color: #d32f2f; }
+        .tag-sm { font-size: 10px; padding: 1px 3px; color: #fff; border-radius: 2px; margin-right: 4px; }
+
+        /* 底部状态条 */
+        .footer-links {
+            background: #f8f8f8;
+            padding: 20px;
+            border-top: 1px solid var(--border-light);
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        .rank-tag { color: #999; width: 18px; display: inline-block; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+<div class="top-bar">
+    <div style="width:1000px; margin:0 auto; display:flex; justify-content: space-between;">
+        <div>您好，欢迎来到4399小游戏！</div>
+        <div>设为首页 | 收藏本站 | 手机客户端</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="header">
+        <div style="font-size: 32px; font-weight: bold; color: var(--4399-orange);">4399小游戏</div>
+        <div class="search-container">
+            <input type="text" placeholder="输入你想玩的游戏，如：造梦西游">
+            <button>搜 索</button>
+        </div>
+    </div>
+
+    <nav class="nav-main">
+        <a href="#">首页</a><a href="#">动作</a><a href="#">益智</a><a href="#">解谜</a><a href="#">双人</a><a href="#">赛车</a><a href="#">冒险</a><a href="#">策略</a><a href="#">小游戏合集</a>
+    </nav>
+
+    <div class="content-grid">
+        <aside class="side-cat">
+            <h3>游戏分类</h3>
+            <div class="cat-list">
+                <a href="#">动作冒险</a><a href="#">体育竞技</a>
+                <a href="#">休闲益智</a><a href="#">策略塔防</a>
+                <a href="#">角色扮演</a><a href="#">射击游戏</a>
+                <a href="#">赛车竞速</a><a href="#">经营模拟</a>
+                <a href="#">女生频道</a><a href="#">双人合作</a>
+                <a href="#">棋牌天地</a><a href="#">装扮大逃杀</a>
+            </div>
+            <h3 style="margin-top:15px; background:var(--4399-blue)">热门专题</h3>
+            <div class="cat-list">
+                <a href="#">死神VS火影</a><a href="#">奥比岛</a>
+                <a href="#">洛克王国</a><a href="#">赛尔号</a>
+                <a href="#">造梦西游</a><a href="#">弹弹堂</a>
+            </div>
+        </aside>
+
+        <main class="main-col">
+            <div class="icon-row">
+                <div class="icon-box"><div class="icon-img"></div><span>神仙道</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>生死狙击</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>火线精英</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>三国杀</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>梦幻西游</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>元气骑士</span></div>
+                <div class="icon-box"><div class="icon-img"></div><span>更多</span></div>
+            </div>
+
+            <div class="text-promote">
+                <div class="promo-item"><span class="tag-sm" style="background:#ff4c4c">热</span> <b>[公告]</b> 4399游戏盒上线全新福利活动</div>
+                <div class="promo-item"><span class="tag-sm" style="background:#4ca5ff">新</span> <b>[新游]</b> 《原始征途》公测登录送礼包</div>
+                <div class="promo-item">· 《奥比岛》春季活动开启限时外观上线</div>
+                <div class="promo-item">· 造梦西游3：大圣归来版本更新说明</div>
+                <div class="promo-item">· 2024年最受欢迎双人小游戏排行榜</div>
+                <div class="promo-item">· 怀旧经典：那些年我们玩过的黄金矿工</div>
+            </div>
+
+            <div style="border: 1px solid var(--border-light); padding:10px;">
+                <h4 style="margin:0 0 10px 0; border-bottom: 2px solid var(--4399-green); display:inline-block; padding-bottom:3px;">最新游戏更新</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; font-size:12px; line-height:2;">
+                    <span>[冒险] 勇闯魔鬼窟 · 01-22</span>
+                    <span>[益智] 水果消消乐 · 01-22</span>
+                    <span>[动作] 忍者复仇记 · 01-21</span>
+                    <span>[体育] 灌篮高手3D · 01-21</span>
+                    <span>[双人] 森林冰火人12 · 01-20</span>
+                    <span>[射击] 狙击精英V4 · 01-20</span>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div style="border:1px solid var(--border-light); padding:10px;">
+                <h4 style="margin:0 0 10px 0; color:var(--4399-orange)">大家都在玩</h4>
+                <div style="font-size:13px; line-height:2.2;">
+                    <div><span class="rank-tag" style="color:red">1</span> 造梦西游4</div>
+                    <div><span class="rank-tag" style="color:orange">2</span> 赛尔号</div>
+                    <div><span class="rank-tag" style="color:orange">3</span> 洛克王国</div>
+                    <div><span class="rank-tag">4</span> 森林冰火人</div>
+                    <div><span class="rank-tag">5</span> 生死狙击</div>
+                    <div><span class="rank-tag">6</span> 黄金矿工</div>
+                    <div><span class="rank-tag">7</span> 弹弹堂</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer-links">
+        <b>友情链接：</b> 百度游戏 | 腾讯游戏 | 网易游戏 | 7k7k小游戏 | 2144小游戏 | 搜狗游戏 | 360游戏中心<br>
+        关于4399 | 管理人员 | 商务合作 | 招聘信息 | 客服中心 | 网站地图 | 法律声明 | 纠纷处理
+    </footer>
+</div>
+
+</body>
+</html>

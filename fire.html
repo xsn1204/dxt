@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔓延</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            /* 皮肤肉色底层背景 */
+            background: #e8c4a8;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">extra3/36</div></head>
+<body>
+    <canvas id="fireCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('fireCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 设置画布大小
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 火焰粒子类（保留原有完整功能）
+        class FireParticle {
+            constructor(x, y, targetHeight) {
+                this.x = x;
+                this.y = y;
+                this.startY = y;
+                this.targetHeight = targetHeight;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = -Math.random() * 4 - 3;
+                this.life = 1;
+                this.decay = Math.random() * 0.008 + 0.003;
+                this.size = Math.random() * 40 + 30;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
+                this.size *= 0.99;
+            }
+
+            draw() {
+                if (this.life <= 0) return;
+
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+
+                if (this.life > 0.7) {
+                    gradient.addColorStop(0, `rgba(255, 255, 220, ${this.life})`);
+                    gradient.addColorStop(0.2, `rgba(255, 220, 100, ${this.life * 0.9})`);
+                    gradient.addColorStop(0.5, `rgba(255, 150, 50, ${this.life * 0.7})`);
+                    gradient.addColorStop(0.8, `rgba(255, 80, 0, ${this.life * 0.4})`);
+                    gradient.addColorStop(1, `rgba(200, 0, 0, 0)`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 180, 50, ${this.life})`);
+                    gradient.addColorStop(0.3, `rgba(255, 100, 0, ${this.life * 0.7})`);
+                    gradient.addColorStop(0.6, `rgba(200, 50, 0, ${this.life * 0.4})`);
+                    gradient.addColorStop(1, `rgba(100, 0, 0, 0)`);
+                }
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
+            }
+        }
+
+        // 全局变量
+        let fireParticles = [];
+        const startTime = Date.now(); // 记录动画开始时间
+        const startFadeAfter = 4000; // 7秒后开始渐变（单位：毫秒）
+        const fadeDuration = 2000; // 渐变持续时间（2秒，可调整，实现平滑过渡）
+        let isFullyBlack = false; // 标记是否已经完全变为黑色
+
+        // 动画循环
+        function animate() {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - startTime; // 已流逝时间
+            let blackAlpha = 0; // 黑色遮罩的透明度（0=完全透明，1=完全不透明）
+
+            // 1. 计算黑色遮罩透明度（实现渐变逻辑）
+            if (elapsedTime >= startFadeAfter) {
+                // 超过7秒，开始计算渐变进度
+                const fadeElapsed = elapsedTime - startFadeAfter;
+                // 透明度在 [0, 1] 之间取值，避免超过1
+                blackAlpha = Math.min(fadeElapsed / fadeDuration, 1);
+                // 当透明度达到1，标记为完全变黑
+                if (blackAlpha === 1) {
+                    isFullyBlack = true;
+                }
+            }
+
+            // 2. 未完全变黑时，正常绘制火焰（同时叠加渐变黑遮罩）
+            if (!isFullyBlack) {
+                // 绘制半透明肉色遮罩，实现火焰拖影效果
+                ctx.fillStyle = 'rgba(232, 196, 168, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // 持续从底部生成火焰
+                const numFlames = 8;
+                for (let i = 0; i < numFlames; i++) {
+                    fireParticles.push(new FireParticle(
+                        Math.random() * canvas.width,
+                        canvas.height,
+                        0
+                    ));
+                }
+
+                // 更新和绘制火焰粒子，过滤掉失效的粒子
+                fireParticles = fireParticles.filter(p => {
+                    p.update();
+                    p.draw();
+                    return p.life > 0 && p.y > -100;
+                });
+
+                // 绘制渐变黑色遮罩（叠加在火焰上方，实现渐黑效果）
+                ctx.fillStyle = `rgba(0, 0, 0, ${blackAlpha})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else {
+                // 3. 完全变黑后，直接绘制纯黑色画布，优化性能
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            // 持续循环动画
+            requestAnimationFrame(animate);
+        }
+
+        // 窗口大小改变时重新设置画布
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 开始动画
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>相册</title>
+    <style>
+        :root {
+            --qzone-blue: #e1f1f7;
+            --qzone-border: #ddd;
+            --qzone-text: #333;
+            --qzone-link: #d19e03;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('morning.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #000000;
+        }
+
+        /* 蓝天背景 Banner */
+        .header-wrapper {
+            background: url('pride.jpg') no-repeat center;
+            background-size: cover;
+            height: 220px;
+            max-width: 1000px; /* Banner最大宽度 */
+            margin: 0 auto; /* 水平居中 */
+            border-bottom: 1px solid var(--qzone-border);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+
+        /* 头像与资料 */
+        .profile-section {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .unified-avatar {
+            width: 130px;
+            height: 130px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .user-info h2 { margin: 0; color: white; font-size: 24px; }
+        .diamond-tag {
+            display: inline-block;
+            background: #ffaa00;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        /* 导航菜单 */
+        .nav-tabs {
+            position: absolute;
+            bottom: 0;
+            left: 195px;
+            display: flex;
+        }
+        .tab {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--qzone-border);
+            border-bottom: none;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .tab.active { background: #fff; font-weight: bold; }
+        .tab:hover { background: #fff; }
+
+        /* 通用抬头样式 */
+        .unified-header {
+            font-weight: bold;
+            color: #fff;
+            font-size: 24px;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            background-color: #c9a769;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b89658;
+            font-size: 12px;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-left span {
+            margin: 0 8px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        /* 核心：相册布局样式（修复版） */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--qzone-border);
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        .card-header {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 修复相册模块容器样式（统一命名，避免冲突） */
+        .main-album-container {
+            max-width: 1000px; /* 关键：与Banner的max-width一致 */
+            margin: 20px auto; /* 关键：与Banner的水平居中方式一致 */
+            padding: 20px;
+            background: #fff;
+            border: 1px solid var(--qzone-border);
+            border-radius: 2px;
+            box-sizing: border-box; /* 关键：padding计入宽度，避免超出 */
+        }
+
+        /* 修复相册子标签栏 */
+        .album-sub-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+
+        .album-sub-tabs .sub-tab {
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-right: 10px;
+        }
+
+        .album-sub-tabs .sub-tab.active {
+            border-bottom-color: #d19e03;
+            font-weight: bold;
+            color: var(--qzone-link);
+        }
+
+        /* 相册分组标题 */
+        .album-group-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        /* 修复相册卡片网格 - 确保对齐 */
+        .album-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 150px);
+            gap: 20px; /* 统一间距 */
+            justify-content: flex-start; /* 左对齐，避免分散 */
+        }
+
+        /* 修复相册卡片样式 - 消除透明、统一背景 */
+        .album-card {
+            width: 150px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            background: #fff; /* 确保卡片不透明 */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* 增加轻微阴影，提升层次感 */
+        }
+
+        /* 修复相册封面图 - 统一尺寸，消除透明 */
+        .album-card-cover {
+            width: 100%;
+            height: 120px;
+            background-color: #f9f9f9; /* 兜底背景，避免透明 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .album-card-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 修复相册数量角标 - 确保层级 */
+        .album-card-count {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333;
+            border: 1px solid #ddd; /* 增加边框，更清晰 */
+            z-index: 10; /* 确保在封面之上 */
+        }
+
+        /* 修复相册底部说明文字 */
+        .album-card-desc {
+            padding: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            background-color: #fff; /* 确保不透明 */
+            white-space: nowrap; /* 防止文字换行导致高度不一致 */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 特殊状态样式（不可见/需回答问题） */
+        .cover-disabled {
+            color: #999;
+            font-size: 12px;
+            text-align: center;
+            padding: 0 10px;
+            line-height: 1.4;
+        }
+
+        /* 密码弹窗样式 */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal-content {
+            width: 320px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .modal-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+        .modal-desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .password-input {
+            width: 100%;
+            height: 35px;
+            border: 1px solid #ddd;
+            padding: 0 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 6px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .btn-confirm {
+            background: #d19e03;
+            color: #fff;
+        }
+        .btn-cancel {
+            background: #eee;
+            color: #666;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">24/36</div></head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <span>⭐ QQ空间</span>
+            <span>她的主页 ></span>
+            <span>她的相册 ></span>
+            <span></span>
+        </div>
+        <div class="top-nav-right">
+            <a href="#">不知所以然</a>
+            <a href="#">[退出]</a>
+            <a href="#">⚙️</a>
+        </div>
+    </div>
+
+    <div class="header-wrapper">
+        <div class="header-content">
+            <!-- 头像与资料区域 -->
+            <div class="profile-section">
+                <img src="avatar1.jpg" class="unified-avatar">
+                <div class="user-info">
+                    <h2 class="unified-header">🌻白日梦想家<span style="font-size:12px; color:#666; margin-left:10px;">LV 29</span></h2>
+                    <div class="diamond-tag" id="diamond">替她开通黄钻</div>
+                </div>
+            </div>
+
+            <!-- 导航菜单 -->
+            <div class="nav-tabs">
+                <div class="tab">
+                    <a href="qqzone1.html" target="_blank" style="text-decoration: none; color: inherit;">主页</a>
+                </div>
+                <div class="tab">
+                    <a href="rizhilist.html" target="_blank" style="text-decoration: none; color: inherit;">日志</a>
+                </div>
+            <div class="tab active"> <a href="album.html" target="_blank" style="text-decoration: none; color: inherit;">相册</a></div>
+                <div class="tab">留言板</div>
+                <div class="tab">说说</div>
+                <div class="tab">个人档</div>
+                <div class="tab">音乐</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修复后的相册模块 -->
+    <div class="main-album-container">
+        <!-- 相册子标签 -->
+        <div class="album-sub-tabs">
+            <div class="sub-tab active">相册</div>
+            <div class="sub-tab">照片</div>
+            <div class="sub-tab">视频</div>
+        </div>
+
+        <!-- 最爱分组 -->
+        <div class="album-group">
+            <h3 class="album-group-title">最爱</h3>
+            <div class="album-card-grid">
+                <!-- 视频相册卡片 -->
+                <div class="album-card" id="video-album">
+                    <div class="album-card-cover">
+                        <img src="summer.jpg" alt="视频封面">
+                        <div class="album-card-count">34</div>
+                    </div>
+                    <div class="album-card-desc">说说配图</div>
+                </div>
+
+                <!-- 公开相册卡片 -->
+                <div class="album-card" id="public-album">
+                    <div class="album-card-cover">
+                        <img src="lena.jpg" alt="公开相册">
+                        <div class="album-card-count">26</div>
+                    </div>
+                    <div class="album-card-desc">电影壁纸</div>
+                </div>
+
+                <!-- 需要回答问题相册（加密相册） -->
+                <div class="album-card" id="secret-album">
+                    <div class="album-card-cover">
+                        <div class="cover-disabled">需要回答问题</div>
+                        <div class="album-card-count">8</div>
+                    </div>
+                    <div class="album-card-desc">💓</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 人物分组（示例） -->
+        <div class="album-group" style="margin-top: 30px;">
+            <h3 class="album-group-title">人物</h3>
+            <div class="album-card-grid">
+                <!-- 示例空卡片占位 -->
+                <div class="album-card">
+                    <div class="album-card-cover">
+                                <img src="case.jpg" alt="家人">
+                        <div class="album-card-count">25</div>
+                    </div>
+                    <div class="album-card-desc">家人</div>
+                </div>
+                <div class="album-card">
+                    <div class="album-card-cover">
+                               <img src="dylan.png" alt="实中7班">
+                        <div class="album-card-count">56</div>
+                    </div>
+                    <div class="album-card-desc">实中</div>
+                </div>
+
+     
+                                <div class="album-card" id="unnamed-album">
+                    <div class="album-card-cover">
+                        <img src="wanda.jpg" alt="🍂">
+                        <div class="album-card-count">44</div>
+                    </div>
+                    <div class="album-card-desc">🍂</div>
+                </div>
+                    
+          
+            </div>
+        </div>
+        <!-- 人物分组（示例） -->
+        <div class="album-group" style="margin-top: 30px;">
+            <h3 class="album-group-title">其他</h3>
+            <div class="album-card-grid">
+                <!-- 示例空卡片占位 -->
+                <div class="album-card">
+                    <div class="album-card-cover">
+                        <div class="cover-disabled">暂无照片</div>
+                        <div class="album-card-count">0</div>
+                    </div>
+                    <div class="album-card-desc">暂无照片</div>
+                </div>
+         
+                <!-- 未命名相册 -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 密码弹窗（移到body内，修复位置错误） -->
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="modal-title">请输入相册密码</div>
+            <div class="modal-desc">F♯FG<br>G♯GAA♯<br>C♯DD♯</div>
+            <input type="text" class="password-input" id="pwdInput" placeholder="请输入3位字母密码" maxlength="4">
+            <div class="modal-btns">
+                <button class="modal-btn btn-confirm" onclick="checkPassword()">确定</button>
+                <button class="modal-btn btn-cancel" onclick="closeModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 黄钻切换特效
+        const diamond = document.getElementById('diamond');
+        diamond.onclick = function() {
+            this.style.background = "#e74c3c";
+            this.innerText = "✨ 尊贵黄钻用户";
+            document.body.style.cursor = "url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto";
+            alert("恭喜！您已成功点亮黄钻标识。");
+        };
+
+        // 加密相册弹窗逻辑
+        const secretAlbum = document.getElementById('secret-album');
+        const passwordModal = document.getElementById('passwordModal');
+        const pwdInput = document.getElementById('pwdInput');
+
+        // 打开密码弹窗
+        secretAlbum.onclick = function() {
+            passwordModal.style.display = "flex";
+            pwdInput.value = ""; // 清空输入框
+        };
+
+        // 关闭弹窗
+        function closeModal() {
+            passwordModal.style.display = "none";
+        }
+
+      // 验证密码
+function checkPassword() {
+    const password = pwdInput.value.trim();
+    if(!password) {
+        alert("请输入密码！");
+        return;
+    }
+    
+    // 验证密码（4869为正确答案，错误提示APTX）
+    if(password === "LUV") {
+        // 修改点：直接使用 window.location.href 进行跳转
+        window.location.href = "photo.html"; 
+    } else {
+        alert("🎹"); // 错误提示
+        pwdInput.value = ""; // 清空输入框
+    }
+}
+
+        // 点击弹窗外层关闭
+        passwordModal.onclick = function(e) {
+            if(e.target === passwordModal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>

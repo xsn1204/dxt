@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学妹的视频留言</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .video-container {
+            width: 90%;
+            max-width: 1000px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .video-header {
+            background: #2a2a2a;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .video-title {
+            font-size: 1.3em;
+        }
+        /* 调整视频播放器样式：移除紫色渐变，作为封面图的容器 */
+        .video-player {
+            width: 100%;
+            height: 500px;
+            background: #222222; /* 替换紫色为深灰色备用背景（图片加载失败时显示） */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* 开启相对定位，让封面图绝对定位铺满 */
+            overflow: hidden; /* 隐藏图片超出容器的部分 */
+        }
+        /* 封面图样式：调整为铺满整个视频播放器 */
+        .video-cover {
+            position: absolute; /* 绝对定位，脱离文档流 */
+            top: 0;
+            left: 0;
+            width: 100%; /* 宽度100%铺满容器 */
+            height: 100%; /* 高度100%铺满容器 */
+            object-fit: cover; /* 保持图片比例，裁剪多余部分，保证铺满不拉伸 */
+            /* 轻柔闪动动画 */
+            animation: blingBling 3s ease-in-out infinite;
+        }
+        /* 轻柔闪动动画定义 */
+        @keyframes blingBling {
+            0%, 100% { 
+                opacity: 0.9; 
+                filter: brightness(1);
+                box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1); /* 改为内阴影，不超出容器 */
+            }
+            50% { 
+                opacity: 1; 
+                filter: brightness(1.1);
+                box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.2); /* 改为内阴影，更自然 */
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            /* 按钮也加轻微闪动，同时提高层级，避免被图片遮挡 */
+            animation: btnBling 4s ease-in-out infinite;
+            z-index: 10; /* 提高层级，确保按钮在图片上方 */
+        }
+        /* 播放按钮轻微闪动 */
+        @keyframes btnBling {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+        .transcript {
+            background: #2a2a2a;
+            padding: 40px;
+            color: white;
+            display: none;
+        }
+        .transcript.show {
+            display: block;
+            animation: slideUp 0.5s;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .transcript-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #4caf50;
+        }
+        .transcript-content {
+            line-height: 2.2;
+            font-size: 1.05em;
+        }
+        .transcript-content p {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: rgba(255, 215, 0, 0.3);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .emotional {
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        .continue-btn {
+            display: block;
+            text-align: center;
+            padding: 20px;
+            background: #4caf50;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .continue-btn:hover {
+            background: #45a049;
+        }
+        /* 新增：验证弹窗样式（纯文字无背景，唯美写诗风格） */
+        .verify-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* 轻微遮罩提升文字可读性，可删除实现完全无背景 */
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none; /* 默认隐藏 */
+            animation: fadeIn 0.3s ease-in;
+        }
+        .verify-content {
+            /* 纯文字无背景，仅保留内容居中 */
+            width: 90%;
+            max-width: 600px;
+            color: white;
+            text-align: center;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+        }
+        .verify-text {
+            /* 唯美写诗体样式：优雅字体、大行距、居中对齐 */
+            font-family: "SimSun", "Georgia", "Times New Roman", serif;
+            font-size: 1.5em;
+            line-height: 3;
+            margin-bottom: 30px;
+            color: #f8f8f8;
+            letter-spacing: 2px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 雅致类名：poem-blank（诗句填空），还原___样式，无黄色边框 */
+.poem-blank {
+    display: inline-block;
+    width: 90px; /* 核心修改：加宽到90px，足够容纳「金叶子」三个字+字间距 */
+    height: 1.5em; /* 与诗句文字高度对齐 */
+    background: transparent; /* 完全透明背景，不遮挡任何内容 */
+    border: none; /* 移除所有边框，包括黄色下边框 */
+    color: #ffd700; /* 输入文字仍为金色，贴合风格 */
+    font-family: "SimSun", "Georgia", serif;
+    font-size: 1em;
+    letter-spacing: 1px; /* 保留字间距，不挤压文字 */
+    text-align: center; /* 文字居中，视觉更整齐 */
+    outline: none; /* 移除聚焦时的默认轮廓 */
+    padding: 0;
+    margin: 0; /* 取消负边距，避免文字偏移被遮挡 */
+    caret-color: #ffd700; /* 光标也改为金色，提升氛围感 */
+}
+
+/* 填空容器：包裹___和输入框，实现输入覆盖___的效果 */
+.blank-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* 静态___样式，作为填空背景（同步加宽，匹配输入框，保证三个字完整显示） */
+.blank-underline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px; /* 核心修改：同步加宽到90px，与输入框一致，___也完整覆盖三个字 */
+    height: 100%;
+    color: #f8f8f8; /* ___与诗句文字同色，更协调 */
+    z-index: 1; /* 置于输入框下方，被输入文字覆盖 */
+    text-align: center; /* ___居中，避免偏移，与输入文字对齐 */
+    letter-spacing: 5px; /* 可选：加宽___的间距，让下划线更长更舒展，更适配三个字 */
+}
+        .verify-btn {
+            /* 简约金色按钮，贴合唯美风格 */
+            padding: 10px 30px;
+            border: 1px solid #ffd700;
+            border-radius: 20px;
+            font-size: 1.1em;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: "Microsoft YaHei", serif;
+            margin-top: 20px;
+        }
+        .verify-btn:hover {
+            background: rgba(255, 215, 0, 0.4);
+            transform: translateY(-2px);
+        }
+        .error-tip {
+            /* 金色错误提示，贴合需求 */
+            color: #ffd700;
+            margin-top: 15px;
+            font-size: 1em;
+            display: none;
+            font-family: "SimSun", serif;
+            letter-spacing: 1px;
+            animation: fadeIn 0.3s ease-in;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <div class="video-container">
+        <div class="video-header">
+            <div class="video-title">📹 余向晴的视频留言</div>
+            <div style="color: #999; font-size: 0.9em;">2026年1月录制</div>
+        </div>
+
+        <div class="video-player" id="videoPlayer">
+            <!-- 封面图已设置为铺满整个视频框 -->
+            <img src="jimi.png" class="video-cover" alt="视频封面">
+            <!-- 给播放按钮添加id，方便js控制 -->
+            <div class="play-btn" id="playBtn" onclick="openVerifyModal()">▶</div>
+        </div>
+
+        <div class="transcript" id="transcript">
+            <div class="transcript-title">📝 视频内容</div>
+            <div class="transcript-content">
+<p> 以然学姐： </p>
+
+<p> 如果你看到了这里，说明你还是那个细心的学姐，一眼就看穿了我的小秘密。那我就不再绕弯子啦。 </p>
+
+<p> 其实，<span class="highlight">dxt</span>是我设计的，并不需要你去找谁。 </p>
+
+<p> 我只是觉得，你可能把自己弄丢太久了，再次见到你的时候，我差点认不出你，。 </p>
+
+<p> 你可能不知道，那段时间你给过多少人温暖。你在阅览室坐下来的那一刻，你递过来的那本《地下铁》，你什么都没问，却让我觉得，我可以打开自己了。 </p>
+
+<p> 后来上了高中，我才发现你慢慢离大家都远了。当时我不懂，只觉得遗憾。现在我才明白，原来你一直在自责，以至于。 </p>
+
+<p> 关于<strong>邹言</strong>学姐，我觉得就像两只一起走过路的小动物。你们给过对方最真的心，只是后来的路太难走了，只能在那个路口散开。这真的不是你的错，学姐，那不是伪善，你真的已经尽力了。 </p>
+
+<p> 而我很幸运。人生的另一个时间点。以前是你照顾我，这次换我来陪着你吧。 </p>
+
+<p> 我不是想逼你回去面对什么，更不是想替谁说原谅。我只是想让你知道——你曾经给予的善意，没有消失，它只是搭上了不同的列车，去了别的地方。 </p>
+
+<p> 如果哪一天你愿意走出那段阴霾，不是为了任何人，只是为了你自己，那就已经足够了。 </p>
+
+<p> 生活总要往前走的，但那个下午你坐到我身边的样子，我会记得好久好久。 </p>
+
+<p> 祝你安好，不止今天。 </p>
+            </div>
+        </div>
+
+        <a href="flashback.html" class="continue-btn" id="continueBtn" style="display: none;">继续 →</a>
+    </div>
+
+    <!-- 新增：验证弹窗（纯文字唯美风格，___填空样式） -->
+    <div class="verify-modal" id="verifyModal">
+        <div class="verify-content">
+            <div class="verify-text">
+                我走出地下铁，<br>
+                阳光温暖地洒下，<br>
+                叶子掉落的声音，<br>
+                有一种缓慢而愉快的节奏，<br>
+                听说这里藏着一片
+                <!-- 填空容器：包裹___和输入框，实现输入覆盖___ -->
+                <div class="blank-wrapper">
+                    <span class="blank-underline">___</span>
+                    <input type="text" class="poem-blank" id="answerInput" placeholder="" />
+                </div>
+                。
+            </div>
+            <button class="verify-btn" onclick="checkAnswer()">提交</button>
+            <div class="error-tip" id="errorTip">让我悄悄告诉你</div>
+        </div>
+    </div>
+
+    <script>
+        // 打开验证弹窗
+        function openVerifyModal() {
+            // 隐藏播放按钮（核心修改）
+            document.getElementById('playBtn').style.display = 'none';
+            // 显示验证弹窗
+            document.getElementById('verifyModal').style.display = 'flex';
+            // 清空输入框和错误提示，自动聚焦输入框
+            const answerInput = document.getElementById('answerInput');
+            answerInput.value = '';
+            document.getElementById('errorTip').style.display = 'none';
+            answerInput.focus(); // 自动聚焦，方便用户输入
+        }
+
+        // 验证答案
+        function checkAnswer() {
+            const correctAnswer = '金叶子';
+            const userAnswer = document.getElementById('answerInput').value.trim();
+            const errorTip = document.getElementById('errorTip');
+
+            // 判断答案是否正确
+            if (userAnswer === correctAnswer) {
+                // 隐藏验证弹窗
+                document.getElementById('verifyModal').style.display = 'none';
+                // 显示后续内容（原播放功能）
+                document.getElementById('videoPlayer').style.display = 'none';
+                document.getElementById('transcript').classList.add('show');
+                document.getElementById('continueBtn').style.display = 'block';
+            } else {
+                // 显示金色错误提示
+                errorTip.style.display = 'block';
+            }
+        }
+
+        // 支持回车提交答案
+        document.getElementById('answerInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+    </script>
+</body>
+</html>

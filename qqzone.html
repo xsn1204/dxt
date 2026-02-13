@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ空间</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+                       background: #e1f2ff url('star.jpg') no-repeat top center;
+            background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed; /* 关键：滚动时背景不动 */
+            color: #fff;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.5);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            height: 280px;
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: url('lighthouse.jpg') no-repeat center;
+            background-size: cover;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-header {
+            position: absolute;
+            bottom: -50px;
+            left: 50px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: #eee;
+        }
+
+        /* 点赞按钮 */
+        .like-badge {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1px solid #444;
+            transition: transform 0.2s;
+        }
+        .like-badge:active { transform: scale(0.9); }
+
+        /* 主体布局 */
+        .container {
+            max-width: 1100px;
+            margin: 60px auto 20px;
+            display: grid;
+            grid-template-columns: 200px 1fr 280px;
+            gap: 15px;
+        }
+
+        .card {
+            background: rgb(17, 19, 21);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 侧边栏菜单 */
+        .side-menu div {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+        }
+        .side-menu div:hover { background: rgba(255,255,255,0.1); }
+
+        /* 说说发布框 */
+        .post-box textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #daab1e;
+            border-radius: 4px;
+            color: white;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .btn-post {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 20px;
+            border-radius: 3px;
+            margin-top: 10px;
+            cursor: pointer;
+            float: right;
+        }
+
+ .feed-item {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.card {
+    background: #122543;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.feed-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+/* 评论区样式 */
+.comment-section {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+}
+.comment-item {
+    font-size: 12px;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+}
+.comment-author {
+    color: #fef4d0;
+    font-weight: bold;
+    margin-right: 6px;
+}
+.comment-author1 {
+    color: #f1c40f;
+    font-weight: bold;
+    margin-right: 6px;
+}
+.comment-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    color: white;
+    padding: 6px 8px;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 12px;
+    margin-top: 8px;
+    height: 36px;
+}
+.btn-comment {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-top: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.feed-img1 {
+    display: block;
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
+    object-position: left center;
+    margin-top: 12px;   /* 上方透明间距 */
+}
+
+.comment-author {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+        /* 签到板块 */
+        .checkin {
+            text-align: center;
+            background: linear-gradient(145deg, #1e3a5f, #122543);
+        }
+        .checkin-num { font-size: 24px; color: #f1c40f; }
+
+        .clear { clear: both; }
+        /* 说说图片灰度效果 */
+.feed-img, .feed-img1 {
+    filter: grayscale(100%); /* 100%完全灰度，可调整0-100% */
+    /* 可选：添加过渡效果，让灰度切换更自然 */
+    transition: filter 0.3s ease;
+}
+
+/* 可选：鼠标悬停时恢复彩色 */
+.feed-img:hover, .feed-img1:hover {
+    filter: grayscale(0);
+}
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">17/36</div></head>
+<body>
+
+    <div class="top-nav">
+        <span style="margin-right:20px; color:#f1c40f;">⭐ QQ空间</span>
+        <span>个人中心 | 我的主页 | 好友 | 应用</span>
+    </div>
+
+    <div class="banner">
+        <div class="like-badge" onclick="addLike()">
+            👍 <span id="like-count">42</span> 点赞
+        </div>
+        <div class="profile-header">
+            <img src="avatar3.png" alt="头像" class="avatar">
+            <div style="margin-left:15px; margin-bottom:10px;">
+                <h2 style="margin:0;">不知所以然</h2>
+                <p style="font-size:12px; opacity:0.7;">http://user.qzone.qq.com/123456</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="side-column">
+            <div class="card side-menu">
+                <div>👤 好友动态</div>
+                <div>❤️ 特别关心</div>
+                <!-- 修改后的代码 -->
+<div>
+    <a href="hospital.html" target="_blank" style="text-decoration: none; color: inherit;">📅 <strong>那年今日</strong></a>
+</div>
+                <div>🎮 我的日志</div>
+                <div>🖼️ 照片墙</div>
+            </div>
+        </div>
+
+        <div class="main-column">
+            <div class="card post-box">
+                <textarea id="statusInput" rows="3" placeholder="说点什么吧..."></textarea>
+                <button class="btn-post" onclick="postStatus()">发表</button>
+                <div class="clear"></div>
+            </div>
+
+            <div id="feedContainer">
+
+
+    <!-- 2012世界末日相关说说 -->
+<div class="card feed-item" style="padding: 15px; border-radius: 8px; margin: 10px 0;;">
+    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+    <div style="margin-top:8px;">对此一点也不相信来着。</div>
+    
+    <!-- 新增：QQ空间风格纯文字新闻转发Card（可跳转web.html） -->
+    <div style="margin: 12px 0; border: 1px solid #dcdcdc; border-radius: 6px; background: #f8f8f8; overflow: hidden; cursor: pointer;" onclick="window.open('web.html', '_blank');">
+        <!-- 新闻Card标题栏（QQ空间经典样式） -->
+        <div style="padding: 8px 12px; background: #f0f0f0; border-bottom: 1px solid #dcdcdc; font-size: 13px; color: #333; font-weight: 500;">
+            转发：《2012年：没有任何东西会撞上地球》
+        </div>
+        <!-- 新闻Card纯文字内容区（移除图片，优化文字留白） -->
+        <div style="padding: 12px 12px;">
+            <p style="margin: 0; font-size: 12px; color: #666; line-height: 1.6; text-align: justify;">
+                2012年已经过半，而关于2012是世界末日的传言也让许多人揣揣不安。有人甚至断言，世界末日的具体时刻是2012年12月21日下午3时14分35秒。近日，美国航天局(NASA)在其官方网站表示:2012年没
+            </p>
+        </div>
+        <!-- 新闻Card底部跳转提示（QQ空间经典灰色小字） -->
+        <div style="padding: 6px 12px; background: #f0f0f0; border-top: 1px solid #dcdcdc; font-size: 11px; color: #999; text-align: right;">
+            点击查看完整内容 →
+        </div>
+    </div>
+    <div style="font-size:12px; color:gray; margin-top:10px;">2012年8月19日 - 浏览 156 次</div>
+    <!-- 评论区 -->
+                  <div class="comment-section">
+                        <div class="comment-item">
+            <span class="comment-author" >孤独患者</span>
+            <span>都是假的233，骗小学生</span>
+        </div>
+                   <div class="comment-item">
+            <span class="comment-author" >不知所以然</span>
+            <span>回复 孤独患者：我妹妹就很当真= =</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+                <!-- 饥饿游戏相关说说 -->
+                <div class="card feed-item">
+                    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+                    <div style="margin-top:8px;">晚上躲在被子里看完了《饥饿游戏》，凯特尼斯太勇敢了。换做是我，我能像她那样豁出一切去守护想要守护的人吗？可现实里的我，明明连踩到蚂蚁都会难过好久……<br>最近一直在单曲循环《Safe and Sound》，Taylor Swift的声音好温柔，我想她以后一定会大火的吧。</div>
+                    <img src="hungry.jpg" class="feed-img">
+                    <div style="font-size:12px; color:gray; margin-top:10px;">2012年5月2日 - 浏览 109 次</div>
+                    <!-- 评论区 -->
+           
+
+              <div class="comment-section">
+    <div class="comment-item">
+        <span class="comment-author1">
+            <a href="login2.html" target="_blank" style="text-decoration: none; color: inherit;">
+                🌻白日梦想家
+            </a>
+        </span>
+        <span>被学姐安利到了(*^▽^*)</span>
+    </div>
+
+ <div class="comment-item">
+            <span class="comment-author" >不知所以然</span>
+            <span>回复 🌻白日梦想家：快去看!</span>
+        </div>
+
+
+                        <div class="comment-item">
+                            <span class="comment-author">Adriana</span>
+                            <span>我还是比较喜欢艾薇儿诶。。</span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                              
+
+
+                                <div class="card feed-item">
+                    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+                    <div style="margin-top:8px;"> 好像察觉到了一点什么，朋友也许正准备和一个并不那么合适的人走得很近。心里闷闷的，说不出来是什么感觉，更不知道该不该开口。希望只是我多想了。</div>
+                    <div style="font-size:12px; color:gray; margin-top:10px;">2011年9月26日 - 仅自己可见</div>
+                    <!-- 评论区 -->
+                
+                </div>
+
+  <div class="card feed-item">
+                    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+                   <div style="margin-top:8px;">
+  家门口终于开始修地铁了，好像可以直通学校。可是等建好，我估计已经毕业了吧。终究还是赶不上啊，明天还是得早起去挤我的117路。
+</div>
+
+
+  <img src="bus.png" class="feed-img1" alt="">
+
+
+<div style="font-size:12px; color:gray; margin-top:10px;">
+  2011年6月21日 - 浏览 128 次
+</div>
+<!-- 评论区 -->
+
+                    <div class="comment-section">
+                        <div class="comment-item">
+                            <span class="comment-author">🌻白日梦想家</span>
+                            <span>帮你问了我爸，确实在建啦，不过按进度来看，我应该也赶不上了(╯3╰)</span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+                <!-- 几米相关说说 -->
+                <div class="card feed-item">
+                    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+                    <div style="margin-top:8px;">喧嚣了一整天，只有在读几米的时候，内心才会真的平静下来。 <br>「所有的悲伤，总会留下一丝欢乐的线索。所有的遗憾，总会留下一处完美的角落。」 在这个小小的角落里，不需要说话，也不需要成为谁。真好。</div>
+                                        <img src="jimi.png" class="feed-img1">
+                    <div style="font-size:12px; color:gray; margin-top:10px;">2011年4月26日 - 浏览 96 次</div>
+                    <!-- 评论区 -->
+                    <div class="comment-section">
+                        <div class="comment-item">
+                            <span class="comment-author">是曲奇🍪呀</span>
+                            <span>饶雪漫呢，你看不看，我有她的签名书！</span>
+                        </div>
+                        <div class="comment-item">
+                            <span class="comment-author">盐酱Zoe</span>
+                            <span>顺便表白《龙族》，啥时候和我一起看哇 ( • ̀ω•́ )✧</span>
+                        </div>
+                                                <div class="comment-item">
+                            <span class="comment-author">不知所以然</span>
+                            <span>回复 盐酱Zoe：等暑假去你家玩~</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                                <!-- 饥饿游戏相关说说 -->
+                <div class="card feed-item">
+                    <div style="color:#3498db; font-weight:bold;">不知所以然</div>
+                    <div style="margin-top:8px;">今天真的好郁闷，死活上不了QQ，说是要卸载360才行。一直在想我的宠物怎么办，好久没喂了，会不会已经饿死了。后来折腾了半天终于登上去，第一件事就是点开宠物，看见它还好好的，瞬间放心了。</div>
+                    <img src="qqcw.jpg" class="feed-img1">
+                    <div style="font-size:12px; color:gray; margin-top:10px;">2010年11月15日 - 浏览 87 次</div>
+                    <!-- 评论区 -->
+                    <div class="comment-section">
+                        <div class="comment-item">
+                       <a href="fire.html" target="_blank">
+    <span class="comment-author">盐酱Zoe</span>
+</a>
+
+                            <span>亲家你怎么这样，要好好照顾我的女婿，不然我会替我女儿出气的！</span>
+                        </div>
+              
+                        <div class="comment-item">
+                            <span class="comment-author">不知所以然</span>
+                            <span>回复 盐酱Zoe：放心放心，已经给它喂饭洗澡，现在旅游去了，心情值满分～</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="card checkin">
+                <div style="font-size:14px;">周二 签到</div>
+                <div class="checkin-num">0</div>
+                <div style="font-size:12px; opacity:0.6;">Days</div>
+            </div>
+
+            <div class="card">
+                <h4 style="margin-top:0;">大家都在看</h4>
+                <div style="font-size:13px; line-height:1.6;">
+                    <p>• 二次元老漫说了这句话后...</p>
+                    <p>• 太后版《甄嬛传》原本...</p>
+                    <p>• 谷歌退出中国后，百度崛起了吗...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4 style="margin-top:0;">礼物</h4>
+                <div style="display:flex; justify-content:space-around; font-size:20px;">
+                    🎁 🎂 🎨 🏆
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 点赞功能
+        let count = 42;
+        function addLike() {
+            count++;
+            document.getElementById('like-count').innerText = count;
+            alert('点赞成功！');
+        }
+
+        // 发表说说功能
+        function postStatus() {
+            const input = document.getElementById('statusInput');
+            const container = document.getElementById('feedContainer');
+            
+            if (input.value.trim() === "") {
+                alert("请输入内容");
+                return;
+            }
+
+            const newPost = document.createElement('div');
+            newPost.className = 'card feed-item';
+            newPost.innerHTML = `
+                <div style="color:#3498db; font-weight:bold;">二次元の梦想家</div>
+                <div style="margin-top:8px;">${input.value}</div>
+                <div style="font-size:12px; color:gray; margin-top:10px;">刚刚 - 浏览 1 次</div>
+                <div class="comment-section">
+                    <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
+                    <button class="btn-comment">评论</button>
+                    <div class="clear"></div>
+                </div>
+            `;
+
+            container.prepend(newPost);
+            input.value = "";
+        }
+    </script>
+</body>
+</html>

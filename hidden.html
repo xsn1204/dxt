@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访达 - 2012年的回忆</title>
+    <style>
+        :root {
+            --finder-sidebar: rgba(246, 246, 246, 0.85);
+            --finder-main: #ffffff;
+            --active-blue: #007aff;
+            --text-main: #333;
+            --text-sub: #8e8e93;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('desk.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 顶部系统菜单栏 */
+        .mac-menubar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 13px;
+            color: #000;
+            z-index: 1000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+        .menubar-left span { margin-right: 15px; font-weight: 600; }
+        .menubar-right span { margin-left: 15px; }
+
+        /* Finder 窗口 */
+        .finder-window {
+            width: 900px;
+            height: 600px;
+            background: var(--finder-main);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 顶部工具栏 */
+        .finder-header {
+            height: 52px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            width: 60px;
+        }
+        .control-btn { width: 12px; height: 12px; border-radius: 50%; }
+        .close { background: #ff5f56; border: 0.5px solid #e0443e; }
+        .minimize { background: #ffbd2e; border: 0.5px solid #dea123; }
+        .maximize { background: #27c93f; border: 0.5px solid #1aab29; }
+
+        .toolbar-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        .nav-btns { color: #8e8e93; font-size: 18px; display: flex; gap: 15px; }
+        .current-path { font-size: 14px; font-weight: 600; color: #444; }
+
+        /* 主体布局 */
+        .finder-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 180px;
+            background: var(--finder-sidebar);
+            backdrop-filter: blur(10px);
+            padding: 20px 10px;
+            border-right: 1px solid #dcdcdc;
+        }
+        .sidebar-item {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-item.active { background: rgba(0,0,0,0.1); }
+        .sidebar-title { font-size: 11px; color: #888; margin: 15px 0 5px 10px; font-weight: bold; }
+
+        /* 文件内容区 */
+        .finder-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .discovery-banner {
+            background: #fff9db;
+            border: 1px solid #ffe066;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 25px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .file-item:hover { background: #f2f2f2; }
+        
+        .file-item.hidden {
+            opacity: 0.5;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 0.5; transform: translateY(0); }
+        }
+
+        .file-icon { font-size: 45px; margin-bottom: 8px; }
+        .file-name { font-size: 12px; text-align: center; color: var(--text-main); word-break: break-all; }
+
+        /* 底部状态栏 */
+        .finder-statusbar {
+            height: 25px;
+            background: #f1f1f1;
+            border-top: 1px solid #dcdcdc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            color: #666;
+        }
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>
+</head>
+<body>
+    <div class="mac-menubar">
+        <div class="menubar-left">
+            <span></span>
+            <span>访达</span>
+            <span>文件</span>
+            <span>编辑</span>
+            <span>显示</span>
+            <span>前往</span>
+            <span>窗口</span>
+        </div>
+        <div class="menubar-right">
+            <span>100%</span>
+            <span>Wi-Fi</span>
+            <span>2月10日 周二</span>
+        </div>
+    </div>
+
+    <div class="progress-indicator">1/36</div>
+
+    <div class="finder-window">
+        <div class="finder-header">
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="toolbar-content">
+           
+                <div class="current-path">dxt</div>
+                <div style="width: 60px;"></div> </div>
+        </div>
+
+        <div class="finder-body">
+            <div class="sidebar">
+                <div class="sidebar-title">个人收藏</div>
+                <div class="sidebar-item active">📁 桌面</div>
+                <div class="sidebar-item">🏠 主屏幕</div>
+                <div class="sidebar-item">📑 最近使用</div>
+                <div class="sidebar-item">⬇️ 下载</div>
+                <div class="sidebar-title">位置</div>
+                <div class="sidebar-item">💻 我的 Mac</div>
+            </div>
+
+            <div class="finder-content">
+                <div class="discovery-banner">
+                    <span>🔍</span>
+                    <strong>发现隐藏文件！</strong> 在此文件夹中发现了一个视频文件。
+                </div>
+
+                <div class="file-grid">
+                    <div class="file-item">
+                        <div class="file-icon">📁</div>
+                        <div class="file-name">学妹的QQ空间备份</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">📁</div>
+                        <div class="file-name">照片</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">音乐播放列表.txt</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">阅览室借阅记录.pdf</div>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-icon">🌐</div>
+                        <div class="file-name">贴吧收藏.html</div>
+                    </div>
+                    <a href="video.html" class="file-item hidden">
+                        <div class="file-icon">🎬</div>
+                        <div class="file-name">.学妹的视频留言.mp4</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="finder-statusbar">
+            6 个项目，可用空间 42.01 GB
+        </div>
+    </div>
+
+
+</body>
+</html>

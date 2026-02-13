@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>今日也向晴 - 微博个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        /* 顶部微博抬头栏 */
+        .weibo-header-top {
+            height: 50px;
+            background-color: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        .weibo-logo {
+            width: 100px;
+            height: 30px;
+            background: url("https://img.t.sinajs.cn/t6/style/images/global_nav/WB_logo.png") no-repeat center;
+            background-size: contain;
+            margin-right: 20px;
+        }
+        .weibo-nav {
+            display: flex;
+            flex: 1;
+        }
+        .weibo-nav-item {
+            margin-right: 25px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+        .weibo-nav-item.active {
+            color: #f42424;
+            font-weight: bold;
+        }
+        .weibo-top-right {
+            display: flex;
+            align-items: center;
+        }
+        .weibo-top-search {
+            width: 200px;
+            height: 30px;
+            border: 1px solid #e5e5e5;
+            border-radius: 15px;
+            padding: 0 10px;
+            font-size: 12px;
+            margin-right: 15px;
+        }
+        .weibo-top-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        /* 页面容器，控制整体宽度和居中 */
+        .page-container {
+            max-width: 1260px;
+            margin: 0 auto;
+            display: flex;
+            padding-top: 40px; /* 给顶部栏留出空间 */
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        /* 左侧导航栏 */
+        .sidebar {
+            width: 180px;
+            background-color: #fff;
+            padding: 20px 0;
+            border-right: 1px solid #e5e5e5;
+            height: calc(100vh - 60px);
+            margin-right: 10px;
+            border-radius: 4px;
+            position: sticky;
+            top: 60px;
+        }
+        .sidebar h2 {
+            font-size: 18px;
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 15px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sidebar ul li.active {
+            background-color: #f9f9f9;
+            color: #f42424;
+            font-weight: bold;
+        }
+        /* 中间内容区 */
+        .main {
+            flex: 1;
+            padding: 20px;
+            max-width: 680px; /* 真实微博中间内容区宽度 */
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .main-header .back-btn {
+            font-size: 14px;
+            color: #666;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .main-header .username {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .main-header .search-box {
+            margin-left: auto;
+            padding: 6px 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        /* 新增：用户封面卡片 */
+        .user-cover-card {
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden; /* 隐藏封面图超出部分 */
+        }
+        .user-cover {
+            width: 100%;
+            height: 200px;
+            background: url("deer.jpg") no-repeat center;
+            background-size: cover;
+            position: relative;
+        }
+        .user-avatar-big {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            position: absolute;
+            bottom: -50px;
+            left: 20px;
+        }
+        .user-info-card {
+            padding: 60px 20px 20px; /* 左侧留出头像空间，顶部给大头像预留位置 */
+        }
+        .user-info-card .nickname {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .user-info-card .intro {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .user-info-card .data {
+            display: flex;
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+        .user-info-card .data div {
+            margin-right: 30px;
+        }
+        .user-info-card .data span {
+            color: #333;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .user-info-card .edit-btn {
+            padding: 6px 16px;
+            border: 1px solid #f42424;
+            border-radius: 4px;
+            color: #f42424;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .user-info-card .edit-btn:hover {
+            background-color: #f42424;
+            color: #fff;
+        }
+        /* 微博内容卡片 */
+        .weibo-card {
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .weibo-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .weibo-header .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .weibo-header .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .weibo-header .user-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .weibo-header .post-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        .weibo-header .verified {
+            font-size: 12px;
+            color: #1d9ed1;
+            margin-left: 5px;
+        }
+        /* 原文样式（用户自己的内容） */
+        .weibo-original {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        /* 转发内容样式（引用他人的内容） */
+        .weibo-repost {
+            background-color: #f8f8f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .weibo-content .topic {
+            color: #f42424;
+        }
+        .weibo-content .expand {
+            color: #1d9ed1;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .weibo-media {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        /* 多图展示样式 */
+        .weibo-media-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-width: 500px;
+            margin-bottom: 10px;
+        }
+        .weibo-media-group img {
+            width: 100%;
+            border-radius: 4px;
+        }
+        .weibo-stats {
+            display: flex;
+            font-size: 12px;
+            color: #999;
+        }
+        .weibo-stats div {
+            margin-right: 20px;
+        }
+        .weibo-stats .icon {
+            margin-right: 3px;
+        }
+        .weibo-actions {
+            border-top: 1px solid #e5e5e5;
+            margin-top: 10px;
+            padding-top: 10px;
+            display: flex;
+            font-size: 14px;
+            color: #666;
+        }
+        .weibo-actions div {
+            margin-right: 30px;
+            cursor: pointer;
+        }
+        /* 右侧推荐栏 */
+        .rightbar {
+            width: 280px;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 1px solid #e5e5e5;
+            height: calc(100vh - 60px);
+            margin-left: 10px;
+            border-radius: 4px;
+            position: sticky;
+            top: 60px;
+        }
+        .rightbar h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .rightbar .recommend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .rightbar .recommend-item .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .rightbar .recommend-item .info {
+            flex: 1;
+        }
+        .rightbar .recommend-item .name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .rightbar .recommend-item .desc {
+            font-size: 12px;
+            color: #999;
+        }
+        .rightbar .recommend-item .follow-btn {
+            padding: 4px 10px;
+            border: 1px solid #f42424;
+            border-radius: 4px;
+            color: #f42424;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .rightbar .recommend-item .follow-btn:hover {
+            background-color: #f42424;
+            color: #fff;
+        }
+        .rightbar .refresh {
+            font-size: 12px;
+            color: #1d9ed1;
+            cursor: pointer;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .footer-links {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.8;
+        }
+        /* 单图固定高度 */
+
+
+
+        
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">35/36</div></head>
+<body>
+    <!-- 顶部微博抬头栏 -->
+    <div class="weibo-header-top">
+        <div class="weibo-logo"></div>
+        <div class="weibo-nav">
+            <div class="weibo-nav-item active">首页</div>
+            <div class="weibo-nav-item">热门</div>
+            <div class="weibo-nav-item">发现</div>
+            <div class="weibo-nav-item">视频</div>
+            <div class="weibo-nav-item">游戏</div>
+            <div class="weibo-nav-item">会员</div>
+        </div>
+    </div>
+
+    <!-- 页面容器 -->
+    <div class="page-container">
+        <!-- 左侧导航栏 -->
+        <div class="sidebar">
+            <h2>个人主页</h2>
+           <ul>
+                <li class="active">她的主页</li>
+                <li>她的关注</li>
+                <li>她的粉丝</li>
+                <li>她的收藏</li>
+                <li>她的赞</li>
+            </ul>
+        </div>
+
+        <!-- 中间内容区 -->
+        <div class="main">
+
+
+            <!-- 新增：用户封面卡片（最顶部） -->
+            <div class="user-cover-card">
+                <div class="user-cover">
+                    <img src="6.png" alt="大头像" class="user-avatar-big">
+                </div>
+                <div class="user-info-card">
+                    <div class="nickname">今日也向晴</div>
+                    <div class="intro">
+                        美食探店爱好者 | 追剧狂魔 | 偶尔感慨人生✨
+                        愿每一天都能遇见阳光和美好～
+                    </div>
+                    <div class="data">
+                        <div><span>128</span> 微博</div>
+                        <div><span>356</span> 关注</div>
+                        <div><span>489</span> 粉丝</div>
+                    </div>
+                    <div class="edit-btn">编辑资料</div>
+                </div>
+            </div>
+
+            <!-- 微博1：原创+生活分享（带多图） -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2024-10-28 来自 iPhone 15</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">3256 阅读</div>
+                 </div>
+                
+   <div class="weibo-original">
+                    方哥今天下班又带了一束向日葵回来🌻他说每次看到向日葵，就觉得跟我很像。<br>其实哪有，我明明更像那个每天在办公室摸鱼的社畜。不过还是谢谢方哥，让我在青州的生活里，每天都能看到阳光。有一个能时刻惦记你喜好的人，真的很幸运。
+                </div>
+                
+                <div class="weibo-media-group">
+                    <img src="xrk.jpg" alt="咖啡馆环境">
+            
+                </div>
+     
+                
+                <div class="weibo-actions">
+                    <div>🔁 转发</div>
+                    <div>💬 评论</div>
+                    <div>❤️ 赞</div>
+                </div>
+            </div>
+
+
+            <!-- 微博4：转发+美食推荐 -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2024-10-18 来自 微博网页版</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">1562 阅读</div>
+                </div>
+                
+           <div class="weibo-original">
+                    <span class="topic">#陈绮贞音乐节#</span> 终于听到了现场版的《旅行的意义》。当全场合唱的时候，眼泪真的忍不住。
+                    <br>从初中躲在被子里听MP3，到今天站在台下看她，感觉那段青春碎片终于拼凑完整了。谢谢陈老师，让我依然拥有感动的力量。这一场，真的很圆满!🎸✨
+                </div>
+                
+                       <div class="weibo-media-group">
+                    <img src="cqz.jpg" alt="咖啡馆环境">
+            
+                </div>
+                
+   
+      
+                
+                <div class="weibo-actions">
+                    <div>🔁 转发</div>
+                    <div>💬 评论</div>
+                    <div>❤️ 赞</div>
+                </div>
+            </div>
+            <!-- 微博2：转发+感慨（还原最初风格） -->
+             
+
+<div class="weibo-card">
+
+<div class="weibo-header">
+
+<img src="6.png" alt="头像" class="avatar">
+
+<div class="user-info">
+
+<span class="user-name">今日也向晴</span>
+
+<span class="post-time">2023-4-28 来自 iPhone 13</span>
+
+</div>
+
+<div style="margin-left: auto; font-size: 12px; color: #999;">1831 阅读</div>
+
+</div>
+
+
+<div class="weibo-original">
+
+天呐…为什么我才看到…
+
+</div>
+
+
+<div class="weibo-repost">
+
+<div style="margin-bottom: 8px;">
+
+@青州早报 <span class="verified">✓</span>
+
+</div>
+
+<div>
+
+<span class="topic"></span>【2012年，16岁少女因拒绝官二代追求，被泼汽油全身毁容，十年已过，女孩现状如何？】2016年3月22日，临渊省青州市中级人民法院门口围满了记者。这一天，邹言等了四年。这四年，她反复手术植皮，不知道去了多少趟医院。她经历网暴嘲讽...16岁少女因拒绝官二代追求，被泼汽油全身毁容，十年已过，女孩现状如何？ <span class="expand">展开</span>
+
+</div>
+
+</div>
+
+
+<div class="weibo-stats">
+
+<div><span class="icon">🔁</span> 2066</div>
+
+<div><span class="icon">💬</span> 4622</div>
+
+<div><span class="icon">❤️</span> 6.1万</div>
+
+</div>
+
+
+<div class="weibo-actions">
+
+<div>🔁 转发</div>
+
+<div>💬 评论</div>
+
+<div>❤️ 赞</div>
+
+</div>
+
+</div>
+
+
+            <!-- 微博2：转发+感慨（还原最初风格） -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2021-9-10 来自 iPhone 11</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">1831 阅读</div>
+                </div>
+                
+    <div class="weibo-original">
+                    回实中看老师，办公室里的陈设几乎没变，但老师们的鬓角都白了。聊起那几届的趣事，大家都感慨万千。
+                    我问起了学姐，她的班主任说她很少回来，但好在有她的联系方式。我赶紧留了号码，加上好友后，她说以前的QQ号早就不用了。<br>重新建联的感觉真好，那些在文具店里挑选纸笔的傍晚，仿佛就在昨天。
+                </div>
+                
+                    <div class="weibo-media-group">
+                    <img src="school.jpg" alt="咖啡馆环境">
+            
+                </div>
+                
+    
+                <div class="weibo-stats">
+                    <div><span class="icon">🔁</span> 2066</div>
+                    <div><span class="icon">💬</span> 4622</div>
+                    <div><span class="icon">❤️</span> 6.1万</div>
+                </div>
+                
+                <div class="weibo-actions">
+                    <div>🔁 转发</div>
+                    <div>💬 评论</div>
+                    <div>❤️ 赞</div>
+                </div>
+            </div>
+
+
+            <!-- 微博3：原创+追剧分享（无图） -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2021-7-22 来自 微博网页版</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">987 阅读</div>
+                </div>
+<div class="weibo-original">
+                    <span class="topic">#新生活开启#</span> 绕了一大圈，竟然又回青州上大学了（虽然是读研）。
+                    <br>重回故地，走在熟悉的街道上，那种亲切的感觉扑面而来。青州，好久不见。
+                </div>
+                
+       
+                <div class="weibo-actions">
+                    <div>🔁 转发</div>
+                    <div>💬 评论</div>
+                    <div>❤️ 赞</div>
+                </div>
+            </div>
+
+
+
+            <!-- 微博1：原创+生活分享（带多图） -->
+            <div class="weibo-card">
+                <div class="weibo-header">
+                    <img src="6.png" alt="头像" class="avatar">
+                    <div class="user-info">
+                        <span class="user-name">今日也向晴</span>
+                        <span class="post-time">2020-12-28 来自 iPhone 11</span>
+                    </div>
+                    <div style="margin-left: auto; font-size: 12px; color: #999;">3256 阅读</div>
+                </div>
+                
+        <div class="weibo-original">
+                    我妈今天在大扫除，突然发来几张照片，居然是我中学时候的优秀作文选！
+                    <br>看着本子上那些稚嫩的字迹，还有老师用红笔划的波浪线，不得不承认，时间真的过得好快啊。
+                </div>
+                
+             <div class="weibo-media-group">
+    <a href="draft.html" class="media-link">
+        <img src="wb1.png" alt="作文">
+    </a>
+    <a href="draft.html" class="media-link">
+        <img src="wb2.png" alt="作文">
+    </a>
+</div>
+                
+             
+                
+                <div class="weibo-actions">
+                    <div>🔁 转发</div>
+                    <div>💬 评论</div>
+                    <div>❤️ 赞</div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- 右侧推荐栏 -->
+        <div class="rightbar">
+            <h3>你可能感兴趣的人</h3>
+            <div class="refresh">🔄 换一换</div>
+            <div class="recommend-item">
+
+                <div class="info">
+                    <div class="name">刚刚</div>
+                    <div class="desc">互联网资讯博主</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div class="recommend-item">
+                <div class="info">
+                    <div class="name">千禧bot</div>
+                    <div class="desc">考古博主</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div class="recommend-item">
+                <div class="info">
+                    <div class="name">果壳</div>
+                    <div class="desc">热门科学科普博主</div>
+                </div>
+                <div class="follow-btn">+关注</div>
+            </div>
+            <div style="border-top: 1px solid #e5e5e5; margin-top: 20px; padding-top: 20px;" class="footer-links">
+                <div>💡 帮助中心</div>
+                <div>微博客服 4000-960-960 | 自助服务中心 | 常见问题</div>
+                <div>🤝 合作&服务</div>
+                <div>微博营销 合作热线 4000-980-980 | 开放平台 | 更多</div>
+  
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

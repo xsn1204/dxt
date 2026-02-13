@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗恋吧 【记录】不甜的暗恋_百度搜索</title>
+    <style>
+        :root {
+            --bd-blue: #4e6ef2;
+            --bd-blue-hover: #315efb;
+            --text-main: #222;
+            --text-desc: #626675;
+            --text-link: #0000cc;
+            --border-color: #f0f0f2;
+        }
+
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: var(--text-main); }
+
+        /* 顶部导航 */
+        header {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ebebeb;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+        }
+        .logo { width: 101px; height: 33px; margin-right: 20px; cursor: pointer; }
+        .search-container { display: flex; flex: 1; max-width: 650px; }
+        .search-ipt-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            border: 2px solid #c4c7ce;
+            border-radius: 10px 0 0 10px;
+            padding: 0 16px;
+            border-right: none;
+        }
+        .search-ipt-wrap:hover { border-color: #b0b3b9; }
+        .search-ipt-wrap input {
+            width: 100%;
+            height: 38px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            width: 108px;
+            height: 44px;
+            background: var(--bd-blue);
+            color: #fff;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        .search-btn:hover { background: var(--bd-blue-hover); }
+
+        /* 页面主体 */
+     .wrapper {
+    display: flex;
+    /* 1. 关键：将 margin 设为 0，取消居中 */
+    margin: 0; 
+    /* 2. 使用固定像素 padding，确保与搜索框左侧（121px或120px）严格对齐 */
+    padding: 20px 0 0 121px; 
+    /* 3. 将宽度设为 auto 或具体总和，确保容器不因居中计算而产生位移 */
+    width: auto; 
+}
+        
+        /* 左侧搜索结果 */
+        .content-left { width: 638px; }
+        
+        .result { margin-bottom: 28px; line-height: 1.54; }
+        .result h3 { font-size: 18px; margin: 0 0 4px 0; font-weight: normal; }
+        .result h3 a { color: var(--text-link); text-decoration: none; }
+        .result h3 a:hover { text-decoration: underline; }
+        
+        .c-abstract { font-size: 14px; color: #333; }
+        .c-row { display: flex; gap: 15px; margin-top: 8px; }
+        .c-img { width: 120px; height: 80px; border-radius: 8px; object-fit: cover; border: 1px solid #f0f0f0; }
+        
+        .f-light { color: #9195a3; font-size: 13px; margin-top: 6px; display: flex; align-items: center; }
+        .f-light span { margin-right: 15px; }
+
+        /* 特殊卡片：百度百科 */
+        .baike-section {
+            border: 1px solid #f0f0f2;
+            border-radius: 12px;
+            padding: 16px;
+            background: #fcfcfc;
+            margin-bottom: 28px;
+        }
+        .baike-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #eff3ff;
+            color: var(--bd-blue);
+            font-size: 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* 右侧侧边栏 */
+        .content-right { width: 352px; margin-left: 80px; }
+        .hot-card { border-left: 1px solid #f0f0f2; padding-left: 20px; }
+        .hot-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .hot-list { list-style: none; padding: 0; margin: 0; }
+        .hot-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f8f8f8; cursor: pointer; }
+        .hot-index { width: 24px; font-size: 16px; font-style: italic; font-weight: bold; }
+        .idx-1 { color: #fe2d46; }
+        .idx-2 { color: #f60; }
+        .idx-3 { color: #faa90e; }
+        .hot-text { flex: 1; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .hot-tag-new { color: #ff3b3b; font-size: 12px; margin-left: 4px; border: 1px solid #ff3b3b; border-radius: 3px; padding: 0 2px; transform: scale(0.8); }
+
+        /* 相关搜索（底部） */
+        .rs-container { margin-top: 40px; background: #fafafa; padding: 20px; border-radius: 12px; }
+        .rs-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .rs-item { color: #333; text-decoration: none; font-size: 14px; padding: 8px; background: #fff; border: 1px solid #eee; border-radius: 6px; text-align: center; }
+        .rs-item:hover { color: var(--bd-blue); border-color: var(--bd-blue); }
+
+        /* 分页器 */
+        .page-nav { margin: 40px 0; display: flex; gap: 8px; }
+        .page-nav a {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid #e1e2e6;
+            text-decoration: none;
+            color: var(--bd-blue);
+            border-radius: 6px;
+        }
+        .page-nav a.cur { background: #4e6ef2; color: #fff; border-color: #4e6ef2; }
+        .tieba-card {
+        margin-bottom: 28px;
+        line-height: 1.6;
+    }
+    .tieba-header {
+        display: flex;
+        gap: 16px;
+        margin-top: 10px;
+    }
+    .tieba-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+    .tieba-info {
+        flex: 1;
+        font-size: 14px;
+        color: #333;
+    }
+    .tieba-desc {
+        color: #626675;
+        margin-bottom: 4px;
+    }
+    .tieba-stats {
+        margin-bottom: 8px;
+    }
+    .tieba-tags {
+        display: flex;
+        gap: 12px;
+        color: #4e6ef2;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    /* 热帖列表样式 */
+    .tieba-posts {
+        margin-top: 15px;
+        padding-left: 0;
+        list-style: none;
+    }
+    .post-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        font-size: 14px;
+    }
+    .post-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #0000cc;
+        cursor: pointer;
+    }
+    .post-title-wrap:hover { text-decoration: underline; }
+    .tag-jing {
+        background-color: #ff4d4f;
+        color: white;
+        font-size: 12px;
+        padding: 0 2px;
+        border-radius: 2px;
+        line-height: 14px;
+    }
+    .post-data {
+        color: #9195a3;
+        font-size: 13px;
+        display: flex;
+        gap: 20px;
+    }
+    .data-val {
+        display: inline-block;
+        width: 50px;
+    }
+    
+    .view-more {
+        margin-top: 10px;
+        display: inline-block;
+        color: #0000cc;
+        text-decoration: none;
+        font-size: 14px;
+    }
+    /* 搜索框增强样式 */
+        .search-wrapper {
+            padding: 20px 0 0 120px;
+        }
+        .logo { width: 101px; height: 33px; margin-right: 20px; cursor: pointer; }
+        .search-input-box {
+            width: 654px;
+            height: 44px;
+            border: 2px solid #4e6ef2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: #fff;
+        }
+
+        .search-input-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding-left: 16px;
+            font-size: 16px;
+            color: #222;
+        }
+
+        /* 搜索框内图标组 */
+        .input-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-right: 12px;
+            color: #9195a3;
+        }
+
+        .input-icons i {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn-baidu {
+            width: 108px;
+            height: 44px;
+            background: linear-gradient(135deg, #4e6ef2 0%, #5d7cfb 100%);
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            font-size: 17px;
+            cursor: pointer;
+            margin-right: -2px; /* 覆盖边框微调 */
+        }
+
+        /* 导航子卡片样式 (Sub-tabs) */
+        .nav-tabs {
+            display: flex;
+            margin-top: 12px;
+            padding-left: 123px; /* 对应搜索框左对齐 */
+            list-style: none;
+            gap: 28px;
+        }
+
+        .nav-item {
+            font-size: 15px;
+            color: #626675;
+            cursor: pointer;
+            padding-bottom: 4px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        /* 文心专用颜色 */
+        .nav-item.wenxin {
+            color: #4e6ef2;
+            font-weight: bold;
+        }
+
+        /* 网页选中状态 */
+        .nav-item.active {
+            color: #222;
+            font-weight: bold;
+        }
+
+        .nav-item.active::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #4e6ef2;
+        }
+
+        .nav-item:hover {
+            color: #333;
+        }
+
+        .nav-more {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">27/36</div></head>
+<body>
+
+<div class="search-wrapper">
+
+    <div class="search-input-box">
+        <input type="text" value="Quokka">
+        <div class="input-icons">
+            <span title="清空">×</span>
+            <span title="语音搜索">🎤</span>
+            <span title="附件">📎</span>
+            <span title="图片搜索">📷</span>
+        </div>
+        <button class="btn-baidu">百度一下</button>
+    </div>
+</div>
+
+<ul class="nav-tabs">
+    <li class="nav-item wenxin">文心</li>
+    <li class="nav-item active">网页</li>
+    <li class="nav-item">图片</li>
+    <li class="nav-item">资讯</li>
+    <li class="nav-item">视频</li>
+    <li class="nav-item">笔记</li>
+    <li class="nav-item">地图</li>
+    <li class="nav-item">贴吧</li>
+    <li class="nav-item">文库</li>
+    <li class="nav-item nav-more">更多</li>
+    <li class="nav-item" style="color: #9195a3;">搜索工具</li>
+</ul>
+<div class="wrapper">
+    <div class="content-left">
+        
+        <div class="result">
+            <h3><a href="#">为什么我们会微笑?10个关于“微笑袋鼠”的萌萌秘密</a></h3>
+                   <div class="c-row">   <img src="q1.jpg" class="c-img">
+            <div class="c-abstract">
+                2020年5月21日 - Quokka是素食动物，它们吃草和许多植物的叶子、茎和树皮，因为罗特尼斯岛是淡水稀缺的地方，所以Quokka非常耐渴，可以连续一个月不喝水，或者吃些多肉植物来补充水分。Quokkas有能力在尾巴中储存脂肪，以...
+            </div></div>
+           
+            
+        </div>
+
+        <div class="result">
+            <h3><a href="#">澳洲萌宠大揭秘!🐾</a></h3>
+            <div class="c-row">
+                <img src="q2.jpg" class="c-img">
+                <div class="c-abstract">
+                    2024年11月30日 -  短尾矮袋鼠 quokkas 被称为“世界上最快乐的动物”,短尾矮袋鼠以其友好的天性和可爱的笑容闻名。它们只能在珀斯附近的自然保护区遇见,世界各地的游客都期待与它们合影留念。🥰 📍 
+                </div>
+            </div>
+
+        </div>
+        <div class="result tieba-card">
+    <h3><a href="#">暗恋吧 - 百度贴吧</a></h3>
+    
+    <div class="tieba-header">
+        <img src="anlian.png" class="tieba-avatar" alt="暗恋吧头像">
+        <div class="tieba-info">
+            <div class="tieba-desc">暗恋是快乐、痛苦、期待和幻想的幸福</div>
+            <div class="tieba-stats">
+                <div>关注用户：89万人</div>
+                <div>累计发帖：2456万</div>
+            </div>
+            <div class="tieba-tags">
+                <span>暗恋话题组</span> <span>原创美文</span> <span>经典共享</span> <span>爱情感悟</span> <span>个人故事</span>
+            </div>
+        </div>
+    </div>
+
+    <ul class="tieba-posts">
+        <li class="post-item">
+            <div class="post-title-wrap">
+                <span>【直播】前尘往事兵荒马乱，我背负爱，踉跄而来。</span>
+                <span class="tag-jing">精</span>
+            </div>
+            <div class="post-data">
+                <span>回复：<span class="data-val">2万</span></span>
+                <span>点击：<span class="data-val">31万</span></span>
+            </div>
+        </li>
+        <li class="post-item">
+            <div class="post-title-wrap">
+     <a href="tiebacontent.html" target="_blank" style="text-decoration:none;">
+  <span style="color:#f73131">【记录】日记什么的</span>
+</a>
+
+                <span class="tag-jing">精</span>
+            </div>
+            <div class="post-data">
+                <span>回复：<span class="data-val">120</span></span>
+                <span>点击：<span class="data-val">5902</span></span>
+            </div>
+        </li>
+        <li class="post-item">
+            <div class="post-title-wrap">
+                <span>【记录】不甜的<span>暗恋</span></span>
+                <span class="tag-jing">精</span>
+            </div>
+            <div class="post-data">
+                <span>回复：<span class="data-val">5048</span></span>
+                <span>点击：<span class="data-val">13万</span></span>
+            </div>
+        </li>
+    </ul>
+
+    <a href="#" class="view-more">查看更多<span>暗恋</span>吧的内容 ></a>
+    <div class="f-light" style="margin-top:8px;">tieba.baidu.com/ <span style="font-size:10px; margin-left:4px;">▼</span></div>
+</div>
+
+ 
+        <div class="result">
+            <h3><a href="#">世界上最快乐的动物 - 百度知道</a></h3>
+            <div class="c-abstract">
+                2024年4月6日 - 在澳大利亚广袤的草原上，有一群身形娇小、活泼可爱的生物，它们就是短尾矮袋鼠。这些袋鼠家族中的小精灵，以他们独特的外貌和迷人的行为方式征服着人们的心。跃动草原间，宛如森林中的精灵舞者，短尾矮袋鼠...
+            </div>
+            <div class="f-light"><span>百度知道</span><span>超过100人赞同了该回答</span></div>
+        </div>
+
+        <div class="rs-container">
+            <h4 style="margin:0 0 15px 0">相关搜索</h4>
+            <div class="rs-list">
+                <a href="#" class="rs-item">🔍 quokkas是什么意思</a>
+                <a href="#" class="rs-item">🔍 quokka怎么读</a>
+                <a href="#" class="rs-item">🔍 quokka正确发音</a>
+                <a href="#" class="rs-item">🔍 QUOKKA</a>
+                <a href="#" class="rs-item">🔍 quokka念什么</a>
+                <a href="#" class="rs-item">🔍 quokka的音标</a>
+            </div>
+        </div>
+
+        <div class="page-nav">
+            <a href="#" class="cur">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">7</a>
+            <a href="#">8</a>
+            <a href="#">9</a>
+            <a href="#">10</a>
+            <a href="#">下一页 ></a>
+        </div>
+    </div>
+
+    <div class="content-right">
+        <div class="hot-card">
+            <div class="hot-title">
+                <span>百度热搜</span>
+                <span style="font-size:13px; color:#9195a3; font-weight:normal; cursor:pointer;">换一换</span>
+            </div>
+            <ul class="hot-list">
+                <li class="hot-item">
+                    <span class="hot-index idx-1">1</span>
+                    <span class="hot-text">新春万里暖山河</span>
+                    <span class="hot-tag-new">新</span>
+                </li>
+                <li class="hot-item">
+                    <span class="hot-index idx-2">2</span>
+                    <span class="hot-text">马年央视春晚首发单曲</span>
+                    <span style="color:#f60; font-size:12px; margin-left:4px;">热</span>
+                </li>
+                <li class="hot-item">
+                    <span class="hot-index idx-3">3</span>
+                    <span class="hot-text">机场里还能“赶大集”</span>
+                </li>
+                <li class="hot-item">
+                    <span class="hot-index" style="color:#999">4</span>
+                    <span class="hot-text">高速返乡一幕：红色“长龙”看不见头</span>
+                </li>
+                <li class="hot-item">
+                    <span class="hot-index" style="color:#999">5</span>
+                    <span class="hot-text">两只年货鸭子在后备箱打起来了</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XX中学阅览室借阅系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        .library-header {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+            color: white;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .library-icon {
+            font-size: 2.5em;
+        }
+        .library-title h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        .library-subtitle {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .search-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .records-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .record-table th {
+            background: #ecf0f1;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #bdc3c7;
+        }
+        .record-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .record-table tr:hover {
+            background: #f8f9fa;
+        }
+        .highlight-row {
+            background: #fff9e6 !important;
+        }
+        .book-title {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .book-author {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .status-returned {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .status-borrowed {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .note {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: #34495e;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <div class="library-header">
+        <div class="header-content">
+            <div class="library-icon">📚</div>
+            <div class="library-title">
+                <h1>XX中学阅览室借阅系统</h1>
+                <div class="library-subtitle">Library Management System</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="搜索读者姓名、书名..." value="雨后的彩虹">
+        </div>
+
+        <div class="records-container">
+            <div class="section-title">📖 借阅记录 - 雨后的彩虹（宋以然）</div>
+            
+            <table class="record-table">
+                <thead>
+                    <tr>
+                        <th>书名</th>
+                        <th>作者</th>
+                        <th>借出日期</th>
+                        <th>归还日期</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>
+                            <div class="book-title">地下铁</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-04-01</td>
+                        <td>2012-04-30</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="book-title">向左走向右走</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-03-15</td>
+                        <td>2012-04-10</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="book-title">月亮忘记了</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-02-20</td>
+                        <td>2012-03-20</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="book-title">微微笑</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-01-15</td>
+                        <td>2012-02-15</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-title">📖 借阅记录 - 晴天娃娃（余向晴）</div>
+            
+            <table class="record-table">
+                <thead>
+                    <tr>
+                        <th>书名</th>
+                        <th>作者</th>
+                        <th>借出日期</th>
+                        <th>归还日期</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>
+                            <div class="book-title">地下铁</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-04-15</td>
+                        <td>2012-05-15</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="book-title">森林里的秘密</div>
+                            <div class="book-author">几米 著</div>
+                        </td>
+                        <td>几米</td>
+                        <td>2012-03-10</td>
+                        <td>2012-04-05</td>
+                        <td class="status-returned">✓ 已归还</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>📝 发现：</strong><br>
+                • 学姐宋以然在2012年4月1日借出《地下铁》<br>
+                • 学妹余向晴在2012年4月15日借出《地下铁》<br>
+                • 时间上看，学姐先借，然后推荐给学妹<br>
+                • 这证实了《地下铁》这本书是学姐借给学妹的！
+            </div>
+
+            <a href="macos_desktop.html" class="back-btn">← 返回桌面</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                alert('📚 阅览室记录线索\n\n重要发现：\n\n1. 学姐在2012年4月1日借出《地下铁》\n2. 学妹在2012年4月15日借出《地下铁》\n3. 时间顺序证实：是学姐先借，然后推荐给学妹的\n\n这本书连接了学姐和学妹的友谊！');
+            }, 1500);
+        };
+    </script>
+</body>
+</html>

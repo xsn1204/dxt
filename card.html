@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宋以然 - 电子名片</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 名片主体容器 */
+        .business-card {
+            width: 800px;
+            height: 450px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fc 100%);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 左侧企业信息区 */
+        .card-left {
+            width: 35%;
+            background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .company-logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .company-info h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .company-info p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .company-address {
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* 右侧个人信息区 */
+        .card-right {
+            width: 65%;
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .personal-info {
+            margin-bottom: 30px;
+        }
+
+        .name {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .position {
+            font-size: 18px;
+            color: #3b82f6;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background-color: #3b82f6;
+            margin-bottom: 30px;
+        }
+
+        /* 联系方式列表 */
+        .contact-list {
+            list-style: none;
+            margin-top: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            font-size: 15px;
+            color: #475569;
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: #3b82f6;
+        }
+
+        .contact-label {
+            min-width: 60px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .contact-value {
+            flex: 1;
+        }
+
+        /* 二维码区域 */
+        .qrcode-section {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            text-align: center;
+        }
+
+        .qrcode {
+            width: 100px;
+            height: 100px;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .qrcode-text {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .business-card {
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+            }
+            .card-left, .card-right {
+                width: 100%;
+            }
+            .card-left {
+                padding: 30px;
+                height: 300px;
+            }
+            .card-right {
+                padding: 30px;
+            }
+            .qrcode-section {
+                position: static;
+                margin-top: 30px;
+                text-align: center;
+            }
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">6/36</div></head>
+<body>
+    <div class="business-card">
+        <!-- 左侧企业信息 -->
+        <div class="card-left">
+            <div>
+                <div class="company-logo">臻鼎集团</div>
+                <div class="company-info">
+                    <h2>ZENITH GROUP</h2>
+                </div>
+            </div>
+            <div class="company-address">
+                总部地址：临源省青州市高新区科技产业园路2号鼎宸大厦8层<br>
+                联系方式：400-888-9999
+            </div>
+        </div>
+
+        <!-- 右侧个人信息 -->
+        <div class="card-right">
+            <div class="personal-info">
+                <div class="name">宋以然</div>
+                <div class="position">品牌中心高级经理</div>
+                <div class="divider"></div>
+            </div>
+
+            <ul class="contact-list">
+                <li class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span class="contact-label">电话</span>
+                    <span class="contact-value"><strong>112 1156 8544</strong></span>
+                </li>
+                <li class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span class="contact-label">邮箱</span>
+                    <span class="contact-value">songyiran@zdgroup.com</span>
+                </li>
+                <li class="contact-item">
+                    <span class="contact-icon">💬</span>
+                    <span class="contact-label">微信</span>
+                    <span class="contact-value">SongYR2026</span>
+                </li>
+                <li class="contact-item">
+                    <span class="contact-icon">🌐</span>
+                    <span class="contact-label">网址</span>
+                    <span class="contact-value">www.zenithgroup.com</span>
+                </li>
+            </ul>
+
+            <!-- 二维码区域 -->
+            <div class="qrcode-section">
+                <div class="qrcode">扫码加微信</div>
+         
+            </div>
+        </div>
+    </div>
+</body>
+</html>

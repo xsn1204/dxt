@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>完全星座志 - 杂志封面还原</title>
+    <style>
+        :root {
+            --mag-yellow: #fff200;
+            --mag-pink: #ff3399;
+            --mag-blue: #00aeef;
+            --mag-green: #00a651;
+            --text-dark: #333;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 杂志主容器 */
+        .magazine-cover {
+            width: 500px;
+            height: 700px;
+            background-color: var(--mag-yellow);
+            border: 8px solid #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #fffb8c 0%, var(--mag-yellow) 70%);
+        }
+
+        /* 顶部标题栏 */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            background: rgba(255,255,255,0.5);
+        }
+
+        /* 主标题：完全星座志 */
+        .main-title {
+            text-align: center;
+            font-size: 80px;
+            color: var(--mag-pink);
+            font-weight: 900;
+            margin-top: 10px;
+            letter-spacing: -5px;
+            text-shadow: 4px 4px 0 #fff, 6px 6px 0 var(--text-dark);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 期数角标 */
+        .issue-tag {
+            position: absolute;
+            right: 20px;
+            top: 40px;
+            background: var(--mag-green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 24px;
+            border: 3px solid #fff;
+        }
+
+        /* 人物插画占位 */
+        .character-img {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 400px;
+            background: url('https://via.placeholder.com/320x400/FFCCBC/8D6E63?text=Girl+Illustration') no-repeat center bottom;
+            background-size: contain;
+            z-index: 5;
+        }
+
+        /* 浮动文字块 - 通用样式 */
+        .floating-text {
+            position: absolute;
+            z-index: 20;
+            line-height: 1.2;
+        }
+
+        .promo-1 { top: 150px; left: 20px; color: var(--mag-pink); font-size: 18px; font-weight: bold; }
+        .promo-2 { top: 220px; left: 15px; color: #444; font-size: 13px; width: 140px; }
+        .promo-3 { top: 160px; right: 20px; color: #d60000; font-size: 16px; text-align: right; }
+        .promo-4 { top: 280px; right: 20px; color: var(--mag-blue); font-size: 32px; font-weight: 900; }
+        
+        .badge-text {
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--mag-green);
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        /* 底部标题：追爱A计划 */
+        .bottom-banner {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            background: rgba(147, 101, 184, 0.9);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            z-index: 25;
+            transform: rotate(-1deg);
+        }
+
+        .bottom-title {
+            font-size: 55px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 0 var(--mag-pink);
+        }
+
+        /* 条形码区 */
+        .barcode-area {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            background: #fff;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 8px;
+        }
+        .barcode-img { width: 80px; height: 30px; background: repeating-linear-gradient(90deg, #000, #000 1px, #fff 1px, #fff 3px); }
+
+        /* 装饰小元素 */
+        .star-deco {
+            position: absolute;
+            color: #fff;
+            font-size: 20px;
+            top: 350px;
+            left: 40px;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+<div class="magazine-cover">
+    <div class="top-header">
+        <div>星座 · 心理 · 潮COOL宝典</div>
+        <div>定价: 6.00元</div>
+    </div>
+
+    <div class="issue-tag">6</div>
+
+    <div class="main-title">完全星座志</div>
+
+    <div class="floating-text promo-1">
+        12星座<br>酷男 VS. 酷女<br>终极调查
+    </div>
+
+    <div class="floating-text promo-2">
+        <span class="badge-text">12星座</span><br>
+        男孩 vs 女孩的微妙关系<br>
+        寻找你们的灵魂契约
+    </div>
+
+    <div class="floating-text promo-3">
+        你的恋爱智商及<br>最适配的男生类型<br>
+        <span style="font-size: 12px; color: #666;">测试你的心动百分比</span>
+    </div>
+
+    <div class="floating-text promo-4">
+        SOS!<br>
+        <span style="font-size: 16px; display: block;">12星座夏日甩油必胜班</span>
+        <span style="font-size: 14px; color: #444;">让我们教你轻松“穿瘦一夏”</span>
+    </div>
+
+    <div class="character-img"></div>
+
+    <div class="star-deco">✦</div>
+    <div class="star-deco" style="top:420px; left:300px; color:var(--mag-pink)">✦</div>
+
+    <div class="bottom-banner">
+        <div style="font-size: 12px; margin-bottom: 5px;">⭐ 完美夏日恋情 ⭐</div>
+        <div class="bottom-title">追爱 A 计划</div>
+        <div style="font-size: 10px; margin-top: 5px;">沙滩、微风、海洋的呼唤...... 来谈场浪漫的夏日恋情吧！</div>
+    </div>
+
+    <div class="barcode-area">
+        <div class="barcode-img"></div>
+        <div>ISSN 1006-0634<br>9 771006 063009</div>
+    </div>
+
+    <div style="position: absolute; bottom: 10px; right: 10px; font-weight: bold; color: #88419d; font-size: 20px;">
+        贡嘎山
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+        <meta charset="UTF-8">
+    <title>QQ空间 - 访问权限验证</title>
+    <style>
+        /* 还原2012年QQ空间官方验证页风格：浅灰简约、官方标识 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "宋体", "Microsoft YaHei", SimSun;
+            background: #f2f2f2;
+            color: #333;
+            font-size: 12px;
+        }
+
+        /* 页面容器：居中+官方QQ空间标识 */
+        .qzone-wrap {
+            width: 700px;
+            margin: 80px auto 0;
+            padding: 0 20px;
+        }
+
+        .qzone-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .qzone-logo img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .qzone-logo span {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* 验证卡片：官方浅灰风格 */
+        .verify-card {
+            background: #fff;
+            border: 1px solid #dcdcdc;
+            padding: 25px 30px;
+            position: relative;
+            min-height: 200px;
+        }
+
+        /* 星级图标（还原官方的灰色星星） */
+        .star-icon {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background: url("https://via.placeholder.com/40x40?text=⭐") no-repeat center;
+            background-size: 100%;
+            opacity: 0.3;
+        }
+
+        /* 权限提示文字 */
+        .verify-desc {
+            margin-left: 60px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* 问题选择区域 */
+        .verify-form {
+            margin-left: 60px;
+        }
+
+        .form-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-item label {
+            width: 60px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-select, .form-input {
+            width: 200px;
+            height: 26px;
+            border: 1px solid #dcdcdc;
+            padding: 0 5px;
+            font-size: 12px;
+        }
+
+        .form-btn {
+            width: 60px;
+            height: 26px;
+            background: #f5f5f5;
+            border: 1px solid #dcdcdc;
+            cursor: pointer;
+            margin-left: 70px;
+        }
+
+        .form-btn:hover {
+            background: #eee;
+        }
+
+        /* 申请访问链接 */
+        .apply-link {
+            margin-left: 60px;
+            margin-top: 15px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        .apply-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 页脚版权（还原当年的太平洋电脑网标识） */
+        .footer {
+            margin-top: 30px;
+            text-align: right;
+            color: #999;
+            font-size: 11px;
+        }
+
+        /* 空间内容（验证通过后显示） */
+        .qzone-content {
+            display: none;
+            margin-top: 20px;
+            background: #fff;
+            border: 1px solid #dcdcdc;
+            padding: 20px;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">21/36</div></head>
+<body>
+    <div class="qzone-wrap">
+        <!-- QQ空间官方标识 -->
+        <div class="qzone-logo">
+            <span>⭐ QQ空间</span>
+        </div>
+
+        <!-- 权限验证卡片 -->
+        <div class="verify-card" id="verifyCard">
+            <div class="star-icon"></div>
+            <div class="verify-desc">
+                主人（893478266）设置了权限，您可通过以下方式访问<br>
+                <span style="color: #0066cc;">回答问题后访问</span>
+            </div>
+
+            <div class="verify-form">
+                <div class="form-item">
+                    <label>问题：</label>
+                    <select class="form-select" disabled>
+                        <option>我的生日是？</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label>答案：</label>
+                    <input type="text" class="form-input" id="pwdInput" placeholder="请输入8位数字" maxlength="8">
+                </div>
+                <button class="form-btn" onclick="checkPwd()">确定</button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+   <script>
+    // 密码验证逻辑（正确答案：19980325）
+    function checkPwd() {
+        const inputPwd = document.getElementById("pwdInput").value.trim();
+
+        if (inputPwd === "19980325") {
+            // 验证通过：跳转到 qzone1.html
+            window.location.href = "qqzone1.html"; 
+        } else {
+            // 密码错误：提示并清空输入框
+            alert("答案错误，请重新输入！");
+            document.getElementById("pwdInput").value = "";
+        }
+    }
+
+    // 支持回车键提交
+    // 注意：确保此处的 ID 与你的 HTML 输入框 ID 一致
+    document.getElementById("pwdInput").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            checkPwd();
+        }
+    });
+</script>
+</body>
+</html>

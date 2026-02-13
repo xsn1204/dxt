@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相册</title>
+    <style>
+        :root {
+            --qzone-blue: #e1f1f7;
+            --qzone-border: #ddd;
+            --qzone-text: #333;
+            --qzone-link: #d19e03;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('morning.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #000000;
+        }
+
+        /* 蓝天背景 Banner */
+        .header-wrapper {
+            background: url('pride.jpg') no-repeat center;
+            background-size: cover;
+            height: 220px;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--qzone-border);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            height: 100%;
+        }
+
+        /* 头像与资料 */
+        .profile-section {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .unified-avatar {
+            width: 130px;
+            height: 130px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .user-info h2 { margin: 0; color: white; font-size: 24px; }
+        .diamond-tag {
+            display: inline-block;
+            background: #ffaa00;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        
+        /* 导航菜单 */
+        .nav-tabs {
+            position: absolute;
+            bottom: 0;
+            left: 195px;
+            display: flex;
+        }
+        .tab {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--qzone-border);
+            border-bottom: none;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .tab.active { background: #fff; font-weight: bold; }
+        .tab:hover { background: #fff; }
+
+        /* 导航栏 */
+        .nav {
+            height: 40px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            padding: 0 15px;
+            height: 40px;
+            line-height: 40px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-item.active {
+            background-color: white;
+            color: #4a90e2;
+            font-weight: bold;
+            border-top: 2px solid #4a90e2;
+            margin-top: -1px;
+        }
+
+        /* 相册头部信息 */
+        .album-header {
+            padding: 20px;
+            border-bottom: 1px dashed #e5e5e5;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        .album-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .album-cover {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #e5e5e5;
+            overflow: hidden;
+            margin-right: 20px;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .album-detail h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .album-meta {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .album-meta span {
+            margin-right: 15px;
+        }
+
+        /* 相册操作按钮 - 仅保留返回按钮 */
+        .album-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 5px 12px;
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            background-color: #f5f5f5;
+            color: #666;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        /* 照片列表区域 */
+        .photo-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        .photo-item {
+            border: 1px solid #e5e5e5;
+            border-radius: 2px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .photo-item:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .photo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-img img {
+            transform: scale(1.05);
+        }
+
+        .photo-info {
+            padding: 8px;
+            border-top: 1px solid #f2f2f2;
+        }
+
+        .photo-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #666;
+        }
+
+        .photo-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        /* 分页区域 */
+        .pagination {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e5e5e5;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        .page-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 3px;
+            border: 1px solid #ddd;
+            color: #666;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .page-btn.active {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        .page-btn:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+
+        /* 通用抬头样式 */
+        .unified-header {
+            font-weight: bold;
+            color: #fff;
+            font-size: 24px;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            background-color: #c9a769;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b89658;
+            font-size: 12px;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-left span {
+            margin: 0 8px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        /* 核心：相册布局样式（修复版） */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--qzone-border);
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .card-header {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .profile-section {
+                top: 20px;
+                left: 10px;
+                gap: 10px;
+            }
+            .unified-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            .nav-tabs {
+                left: 100px;
+            }
+            .tab {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-tabs {
+                position: static;
+                justify-content: center;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+            .header-wrapper {
+                height: auto;
+                padding-bottom: 10px;
+            }
+            .profile-section {
+                position: static;
+                padding: 10px;
+                justify-content: center;
+            }
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">25/36</div></head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <span>⭐ QQ空间</span>
+            <span>她的主页 ></span>
+            <span>她的相册 ></span>
+            <span></span>
+        </div>
+        <div class="top-nav-right">
+            <a href="#">不知所以然</a>
+            <a href="#">[退出]</a>
+            <a href="#">⚙️</a>
+        </div>
+    </div>
+
+    <div class="header-wrapper">
+        <div class="header-content">
+            <!-- 头像与资料区域 -->
+            <div class="profile-section">
+                <img src="avatar1.jpg" class="unified-avatar">
+                <div class="user-info">
+                    <h2 class="unified-header">🌻白日梦想家<span style="font-size:12px; color:#666; margin-left:10px;">LV 29</span></h2>
+                    <div class="diamond-tag" id="diamond">替她开通黄钻</div>
+                </div>
+            </div>
+
+            <!-- 导航菜单 -->
+            <div class="nav-tabs">
+                <div class="tab">
+                    <a href="qqzone1.html" target="_blank" style="text-decoration: none; color: inherit;">主页</a>
+                </div>
+                <div class="tab">
+                    <a href="rizhilist.html" target="_blank" style="text-decoration: none; color: inherit;">日志</a>
+                </div>
+                <div class="tab active">相册</div>
+                <div class="tab">留言板</div>
+                <div class="tab">说说</div>
+                <div class="tab">个人档</div>
+                <div class="tab">音乐</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 相册头部信息 -->
+        <div class="album-header">
+            <div class="album-info">
+                <div class="album-cover">
+                    <img src="piano.jpg" alt="相册封面">
+                </div>
+                <div class="album-detail">
+                    <h2>💓</h2>
+                    <div class="album-meta">
+                        <span>创建时间：2011-05-18</span>
+                        <span>照片数量：8张</span>
+                        <span>访问权限：仅自己可见</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 仅保留返回按钮 -->
+            <div class="album-actions">
+                <a href="album.html" class="btn btn-primary">返回</a>
+            </div>
+        </div>
+
+        <!-- 照片网格列表 -->
+        <div class="photo-grid">
+            <!-- 照片项1 -->
+            <div class="photo-item">
+                <div class="photo-img">
+                    <img src="sgrz.png" alt="照片1">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">切切切</div>
+                    <div class="photo-time">2011-06-20 15:30</div>
+                </div>
+            </div>
+
+            <!-- 照片项2 -->
+            <div class="photo-item">
+                <div class="photo-img">
+                    <img src="eyxz.png" alt="照片2">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">🐊🛀</div>
+                    <div class="photo-time">2011-07-28 19:15</div>
+                </div>
+            </div>
+
+            <!-- 照片项3 -->
+            <div class="photo-item">
+                <div class="photo-img">
+                    <img src="znm.png" alt="照片3">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">好好玩</div>
+                    <div class="photo-time">2011-08-12 10:00</div>
+                </div>
+            </div>
+
+            <!-- 照片项4 -->
+            <div class="photo-item">
+                <div class="photo-img">
+                    <img src="ab.png" alt="照片4">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">我要复仇</div>
+                    <div class="photo-time">2011-08-25 14:20</div>
+                </div>
+            </div>
+
+            <!-- 照片项5 -->
+            <div class="photo-item">
+                <div class="photo-img">
+                    <img src="asue.png" alt="照片5">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">完美泡面</div>
+                    <div class="photo-time">2011-10-18 16:45</div>
+                </div>
+            </div>
+
+ <!-- 照片项6 -->
+<div class="photo-item">
+    <a href="21st.html" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="photo-img">
+            <img src="21.png" alt="照片6">
+        </div>
+        <div class="photo-info">
+            <div class="photo-name">我的<strong>贴吧ID</strong>来源</div>
+            <div class="photo-time">2011-10-31 10:50</div>
+        </div>
+    </a>
+</div>
+
+  <div class="photo-item">
+                <div class="photo-img">
+                    <img src="xingzuo.png" alt="照片6">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">白羊座月刊</div>
+                    <div class="photo-time">2012-3-31 20:50</div>
+                </div>
+            </div>
+
+<div class="photo-item">
+                <div class="photo-img">
+                    <img src="cg.png" alt="照片6">
+                </div>
+                <div class="photo-info">
+                    <div class="photo-name">🍊</div>
+                    <div class="photo-time">2013-10-31 11:50</div>
+                </div>
+            </div>
+
+            
+        </div>
+
+
+
+
+
+
+
+
+        <!-- 分页区域 -->
+        <div class="pagination">
+            <a href="#" class="page-btn">上一页</a>
+            <a href="#" class="page-btn active">1</a>
+            <a href="#" class="page-btn">下一页</a>
+        </div>
+    </div>
+</body>
+</html>

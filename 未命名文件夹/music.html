@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>酷我音乐 - 听音乐 用酷我</title>
+    <style>
+        :root {
+            --sidebar-bg: #1e2b4d;
+            --sidebar-hover: #2c3e66;
+            --sidebar-active: #16223d;
+            --main-bg: #ffffff;
+            --player-bg: #111111;
+            --accent-orange: #ff9d00;
+            --accent-green: #40bb8c;
+            --accent-pink: #f06a8a;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #ccc; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* 主容器 */
+        .kuwo-app {
+            width: 1000px; height: 700px;
+            background: var(--main-bg);
+            display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative; overflow: hidden;
+        }
+
+        /* 顶部内容区（侧边栏 + 主视图） */
+        .content-body {
+            flex: 1; display: flex; overflow: hidden;
+        }
+
+        /* 1. 侧边栏 */
+        .sidebar {
+            width: 200px; background: var(--sidebar-bg);
+            color: #b0c4de; display: flex; flex-direction: column;
+        }
+        .sidebar-header {
+            padding: 20px; font-size: 18px; color: #fff; font-weight: bold;
+        }
+        .menu-section { margin-bottom: 20px; }
+        .menu-title { padding: 10px 20px; font-size: 12px; opacity: 0.5; }
+        .menu-item {
+            padding: 10px 20px; cursor: pointer; display: flex; align-items: center; font-size: 14px;
+        }
+        .menu-item:hover { background: var(--sidebar-hover); color: #fff; }
+        .menu-item.active { background: var(--sidebar-active); color: #fff; border-left: 4px solid var(--accent-orange); }
+        .menu-item i { margin-right: 12px; width: 16px; text-align: center; }
+
+        /* 2. 主视图区域 */
+        .main-view { flex: 1; display: flex; flex-direction: column; background: #fff; overflow-y: auto; }
+        
+        /* 搜索栏 */
+        .top-nav {
+            padding: 15px 30px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .search-box {
+            background: #f2f2f2; border-radius: 20px; padding: 5px 15px; width: 300px;
+            display: flex; border: 1px solid #ddd;
+        }
+        .search-box input { border: none; background: none; outline: none; flex: 1; font-size: 13px; }
+
+        /* 排行榜页头 */
+        .ranking-tabs {
+            display: flex; padding: 0 30px; gap: 10px; margin-bottom: 20px;
+        }
+        .rank-card {
+            flex: 1; padding: 15px; border-radius: 4px; color: #fff; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .rank-card.hot { background: var(--accent-orange); }
+        .rank-card.new { background: var(--accent-green); }
+        .rank-card.rise { background: var(--accent-pink); }
+        .rank-card span:first-child { font-weight: bold; font-size: 16px; }
+        .rank-card span:last-child { font-size: 11px; opacity: 0.8; margin-top: 5px; }
+
+        /* 歌曲列表区 */
+        .song-list-container {
+            padding: 0 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        .song-item {
+            display: flex; align-items: center; padding: 8px 0;
+            border-bottom: 1px solid #f9f9f9; font-size: 13px;
+        }
+        .song-item:hover { background: #f5f5f5; }
+        .song-index { width: 30px; color: #999; font-style: italic; font-weight: bold; }
+        .song-index.top3 { color: var(--accent-orange); }
+        .song-name { flex: 1; color: #333; }
+        .song-artist { color: #888; margin-left: 10px; }
+        .song-actions { display: none; gap: 10px; color: var(--accent-orange); }
+        .song-item:hover .song-actions { display: flex; }
+
+        /* 3. 底部播放条 */
+        .player-bar {
+            height: 70px; background: var(--player-bg); color: #fff;
+            display: flex; align-items: center; padding: 0 20px;
+        }
+        .controls { display: flex; align-items: center; gap: 20px; width: 200px; }
+        .btn-play {
+            width: 40px; height: 40px; border: 2px solid #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+        .progress-area { flex: 1; padding: 0 40px; text-align: center; }
+        .progress-info { font-size: 12px; margin-bottom: 5px; color: #ccc; }
+        .bar-bg { height: 4px; background: #333; border-radius: 2px; position: relative; }
+        .bar-current { height: 100%; background: var(--accent-orange); width: 35%; border-radius: 2px; }
+        
+        .extra-tools { width: 200px; display: flex; justify-content: flex-end; gap: 15px; color: #aaa; }
+
+        /* 红包广告小组件 */
+        .ad-red-packet {
+            position: absolute; left: 210px; bottom: 85px;
+            width: 60px; height: 80px; background: #e74c3c;
+            border-radius: 5px; color: #fff; text-align: center;
+            padding-top: 10px; font-size: 10px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+    <div class="kuwo-app">
+        <div class="content-body">
+            <div class="sidebar">
+                <div class="sidebar-header">酷我音乐</div>
+                <div class="menu-section">
+                    <div class="menu-title">曲库</div>
+                    <div class="menu-item"><i>🏠</i> 推荐</div>
+                    <div class="menu-item"><i>📻</i> 电台</div>
+                    <div class="menu-item"><i>🎬</i> MV</div>
+                    <div class="menu-item"><i>🗂️</i> 分类</div>
+                    <div class="menu-item"><i>👤</i> 歌手</div>
+                    <div class="menu-item active"><i>📊</i> 排行</div>
+                    <div class="menu-item"><i>🎙️</i> 直播</div>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-title">我的音乐</div>
+                    <div class="menu-item"><i>☁️</i> 我的电台</div>
+                    <div class="menu-item"><i>📥</i> 下载管理</div>
+                    <div class="menu-item"><i>🎵</i> 本地音乐</div>
+                </div>
+            </div>
+
+            <div class="main-view">
+                <div class="top-nav">
+                    <div style="font-size: 20px; cursor: pointer;">← ↺</div>
+                    <div class="search-box">
+                        <input type="text" placeholder="周杰伦">
+                        <span>🔍</span>
+                    </div>
+                    <div style="font-size: 12px; color: #666;">登录 | 注册 ⚙️</div>
+                </div>
+
+                <div class="ranking-tabs">
+                    <div class="rank-card hot">
+                        <span>🔥 酷我热歌榜</span>
+                        <span>酷我音乐最热歌曲榜！</span>
+                    </div>
+                    <div class="rank-card new">
+                        <span>🆕 酷我新歌榜</span>
+                        <span>最新权威、播放量最高的新歌在此！</span>
+                    </div>
+                    <div class="rank-card rise">
+                        <span>📈 酷我飙升榜</span>
+                        <span>收录一周播放次数涨幅最高的歌曲！</span>
+                    </div>
+                </div>
+
+                <div class="song-list-container">
+                    <div class="left-col" id="col1">
+                        </div>
+                    <div class="right-col" id="col2">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-bar">
+            <div class="controls">
+                <span style="cursor:pointer; font-size:24px;">⏮</span>
+                <div class="btn-play" id="playBtn" onclick="togglePlay()">▶</div>
+                <span style="cursor:pointer; font-size:24px;">⏭</span>
+            </div>
+            <div class="progress-area">
+                <div class="progress-info">一次就好(电影《夏洛特烦恼》... - 杨宗纬 [高品质]</div>
+                <div class="bar-bg">
+                    <div class="bar-current" id="progressBar"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#666; margin-top:5px;">
+                    <span>01:15</span>
+                    <span>04:32</span>
+                </div>
+            </div>
+            <div class="extra-tools">
+                <span>🎧</span> <span>🔊</span> <span>🔁</span> <span style="border:1px solid #444; padding:2px 5px; font-size:10px;">词</span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // 模拟歌曲数据
+        const songs = [
+            "一次就好 - 杨宗纬", "我们不该这样的 - 张赫宣", "演员 - 薛之谦", "恋人心 - 魏新雨", "咱们结婚吧 - 齐晨",
+            "李白 - 李荣浩", "小苹果 - 筷子兄弟", "默 - 那英", "曾经的你 - 许巍", "南山南 - 马頔",
+            "不醉不会 - 田馥甄", "不完美小孩 - TFBOYS", "青春修炼手册 - TFBOYS", "喜欢你 - G.E.M.邓紫棋", "See You Again - Wiz Khalifa",
+            "野子 - 苏运莹", "大梦想家 - TFBOYS", "十年 - 陈奕迅", "Bad Girl - 吴亦凡", "以后的以后 - 庄心妍"
+        ];
+
+        function initList() {
+            const col1 = document.getElementById('col1');
+            const col2 = document.getElementById('col2');
+            
+            songs.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = 'song-item';
+                const realIndex = index + 1;
+                const indexClass = realIndex <= 3 ? 'top3' : '';
+                
+                item.innerHTML = `
+                    <div class="song-index ${indexClass}">${realIndex < 10 ? '0' + realIndex : realIndex}</div>
+                    <div class="song-name">${song.split(' - ')[0]}</div>
+                    <div class="song-artist">${song.split(' - ')[1]}</div>
+                    <div class="song-actions">➕ 📥 🎬</div>
+                `;
+                
+                if(index < 10) col1.appendChild(item);
+                else col2.appendChild(item);
+            });
+        }
+
+        let isPlaying = false;
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('playBtn');
+            btn.innerText = isPlaying ? '⏸' : '▶';
+            btn.style.borderColor = isPlaying ? '#ff9d00' : '#fff';
+            btn.style.color = isPlaying ? '#ff9d00' : '#fff';
+        }
+
+        // 模拟进度条
+        let progress = 35;
+        setInterval(() => {
+            if(isPlaying) {
+                progress += 0.2;
+                if(progress > 100) progress = 0;
+                document.getElementById('progressBar').style.width = progress + '%';
+            }
+        }, 500);
+
+        initList();
+    </script>
+</body>
+</html>

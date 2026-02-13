@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板 - QQ空间</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #e1f2ff url(' morning.png') no-repeat top center;
+            background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed; /* 关键：滚动时背景不动 */
+            display: block;
+            user-select: text;
+            font-family: "Lantinghei SC", "Microsoft YaHei", Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.3);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+        .top-nav .logo { font-weight: bold; margin-right: 20px; color: #ffce44; }
+        .top-nav-item { margin: 0 10px; cursor: pointer; opacity: 0.9; }
+        .top-nav-item:hover { opacity: 1; text-decoration: underline; }
+
+        /* 主体容器 */
+        .container {
+            width: 950px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 4px;
+            min-height: 1000px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* 头部个人信息 */
+        .header-profile {
+            padding: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .avatar-main {
+            width: 120px;
+            height: 120px;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: #fff;
+        }
+        .profile-info { margin-left: 20px; }
+        .nickname { font-size: 24px; color: #444; margin-bottom: 10px; }
+        .vip-tag {
+            background: #fbb03b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* 菜单栏 */
+        .main-menu {
+            border-bottom: 1px solid #eee;
+            padding: 0 40px;
+            margin-bottom: 20px;
+        }
+        .main-menu span {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .menu-active { border-bottom: 3px solid #fbb03b; color: #000 !important; font-weight: bold; }
+
+        /* 留言区域 */
+        .content-box { padding: 0 40px; }
+        .section-title { font-weight: bold; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 15px; }
+        
+        .host-msg { color: #888; margin-bottom: 30px; font-size: 13px; }
+
+        /* 输入框区域 */
+        .comment-input-area {
+            background: #fff;
+            border: 1px solid #e2a03f;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+        }
+        .input-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .btn-publish {
+            background: #fbb03b;
+            color: white;
+            border: none;
+            padding: 6px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* 留言列表 */
+        .msg-list { margin-top: 40px; }
+        .msg-item {
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        .user-avatar-small { width: 50px; height: 50px; margin-right: 15px; }
+        .msg-body { flex: 1; }
+        .msg-header { margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .user-name { color: #c38b2d; font-weight: bold; }
+        .floor { color: #999; }
+        .msg-text { font-size: 14px; line-height: 1.6; color: #333; }
+        .msg-time { color: #ccc; font-size: 11px; margin-top: 10px; }
+
+        /* 回复框 */
+        .reply-box {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 2px solid #ddd;
+        }
+        .reply-item { margin-top: 5px; }
+        .reply-user { color: #c38b2d; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+<div class="top-nav">
+    <div class="logo">QQ空间</div>
+    <div class="top-nav-item">个人主页</div>
+    <div class="top-nav-item">我的动态</div>
+    <div class="top-nav-item"></div>
+    <div style="flex-grow: 1"></div>
+    <div class="top-nav-item">Mamih... [退出]</div>
+</div>
+
+<div class="container">
+    <div class="header-profile">
+        <img src="https://placekitten.com/200/200" class="avatar-main" alt="Tiger">
+        <div class="profile-info">
+            <div class="nickname">Tiger <span class="vip-tag">赠送黄钻</span></div>
+        </div>
+    </div>
+
+    <div class="main-menu">
+        <span>主页</span>
+        <span>日志</span>
+        <span>相册</span>
+        <span class="menu-active">留言板</span>
+        <span>说说</span>
+        <span>个人档</span>
+        <span>更多</span>
+    </div>
+
+    <div class="content-box">
+        <div class="section-title">主人寄语</div>
+        <div class="host-msg">shinee第一~</div>
+
+        <div class="section-title">发表您的留言</div>
+        <div class="comment-input-area">
+            <textarea placeholder="说点什么吧..."></textarea>
+            <div class="input-footer">
+                <button class="btn-publish">发表</button>
+                <div style="color: #999;">
+                    <input type="checkbox"> 私密留言
+                </div>
+            </div>
+        </div>
+
+        <div class="msg-list">
+            <div class="section-title">留言 (69)</div>
+
+            <div class="msg-item">
+                <img src="https://placekitten.com/50/51" class="user-avatar-small">
+                <div class="msg-body">
+                    <div class="msg-header">
+                        <span class="user-name">孤独患者 🍊</span>
+                        <span class="floor">第68楼</span>
+                    </div>
+                    <div class="msg-text">高考加油！！！</div>
+                    <div class="msg-time">2016-06-06 17:14</div>
+                    
+                    <div class="reply-box">
+                        <div class="reply-item">
+                            <span class="reply-user">Tiger:</span> 谢谢
+                            <div class="msg-time">2016-06-06 17:15</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="msg-item">
+                <img src="https://placekitten.com/51/51" class="user-avatar-small">
+                <div class="msg-body">
+                    <div class="msg-header">
+                        <span class="user-name">阿那部酱 🍓</span>
+                        <span class="floor">第67楼</span>
+                    </div>
+                    <div class="msg-text">胖胖加油 我是你的老黑奴</div>
+                    <div class="msg-time">2016-06-04 19:23</div>
+                </div>
+            </div>
+
+            <div class="msg-item">
+                <img src="https://placekitten.com/52/52" class="user-avatar-small">
+                <div class="msg-body">
+                    <div class="msg-header">
+                        <span class="user-name">像 🍓</span>
+                        <span class="floor">第66楼</span>
+                    </div>
+                    <div class="msg-text">我的命中命中。</div>
+                    <div class="msg-time">2015-08-30 21:44</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

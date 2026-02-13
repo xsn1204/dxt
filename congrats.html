@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>青州市实验初级中学 - 荣誉时刻</title>
+    <style>
+        :root {
+            --gold-bright: #fff370;
+            --gold-dark: #d4af37;
+            --light-red: #ff3333;
+            --deep-orange: #ff8c00;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #fde6e6; /* 淡粉色背景，不瘆人 */
+            font-family: "STKaiti", "KaiTi", "SimSun", serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 主容器：放射状光芒背景，还原 image_da1a6c */
+        .glory-container {
+            width: 850px;
+            min-height: 1100px;
+            background: 
+                radial-gradient(circle at 50% 20%, #fff9ad 0%, transparent 60%), /* 中心高光 */
+                linear-gradient(135deg, #ff4444 0%, #ff8c00 100%); /* 橙红渐变 */
+            border: 12px double var(--gold-bright);
+            position: relative;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* 顶部繁花装饰 - 还原原图四周的花朵元素 */
+        .flower-cluster {
+            position: absolute;
+            z-index: 5;
+            font-size: 80px;
+            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+        }
+        .top-left { top: -10px; left: -10px; }
+        .top-right { top: -10px; right: -10px; }
+        .bottom-left { bottom: -10px; left: -10px; }
+        .bottom-right { bottom: -10px; right: -10px; }
+
+        /* 标题：大红立体金边字 */
+        .title-area {
+            text-align: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 110px;
+            margin: 0;
+            color: #ff0000;
+            text-shadow: 
+                -2px -2px 0 var(--gold-bright),  
+                2px -2px 0 var(--gold-bright),
+                -2px 2px 0 var(--gold-bright),
+                2px 2px 0 var(--gold-bright),
+                5px 8px 15px rgba(0,0,0,0.4);
+            letter-spacing: 30px;
+            padding-left: 30px;
+        }
+
+        /* 喜庆的绸带装饰 */
+        .ribbon {
+            background: var(--gold-bright);
+            color: #b30000;
+            display: inline-block;
+            padding: 5px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            margin-top: -10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* 内容文本：背景半透明，增加层次感 */
+        .content-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 3px solid var(--gold-dark);
+        }
+
+        .announcement {
+            color: #333;
+            line-height: 1.8;
+            font-size: 18px;
+            text-indent: 2em;
+            margin-bottom: 25px;
+        }
+
+        /* 名单表格：参考原图的多列布局 */
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .score-table th {
+            background: linear-gradient(to bottom, #ff5f6d, #ffc371);
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .score-table td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #fecaca;
+            text-align: center;
+            width: 25%;
+        }
+
+        .name { color: #333; font-weight: bold; }
+        .val { color: #e63946; font-family: Arial; font-weight: 900; }
+
+        /* 底部安全提示：用温暖的颜色块包裹 */
+      .safety-box {
+    margin-top: 30px;
+    background: #fff3cd;
+    border-left: 8px solid #ffc107;
+    padding: 15px;
+    font-size: 14px;
+    color: #856404;
+    line-height: 1.8; /* 行距增加 */
+}
+
+
+        .safety-box b { color: #b30000; font-size: 16px; }
+
+        /* 装饰性的灯笼 */
+        .lantern {
+            position: absolute;
+            top: 150px;
+            font-size: 40px;
+            animation: swing 3s infinite ease-in-out;
+        }
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+.blur-char {
+    display: inline-block;
+    filter: blur(3px);       /* 模糊强度 */
+    user-select: none;       /* 禁止复制 */
+    -webkit-user-select: none;
+}
+
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">12/36</div></head>
+<body>
+
+    <div class="glory-container">
+        <div class="flower-cluster top-left">🌺</div>
+        <div class="flower-cluster top-right">🌸</div>
+        <div class="flower-cluster bottom-left">🌹</div>
+        <div class="flower-cluster bottom-right">🌻</div>
+
+        <div class="lantern" style="left: 20px;">🏮</div>
+        <div class="lantern" style="right: 20px;">🏮</div>
+
+        <div class="title-area">
+<a href="news.html" target="_blank" rel="noopener noreferrer">
+    <h1 class="main-title">喜报</h1>
+</a>
+
+
+            <div class="ribbon">荣耀实验 · 筑梦前行</div>
+        </div>
+
+        <div class="content-card">
+            <div class="announcement">
+                <b>硕果累累离不开耕耘者的浇灌！</b> 衷心感谢2012届九年级全体教师团队。在全校师生的共同努力下，我校中考再创辉煌，多名学子斩获佳绩！在此向辛勤耕耘的全体教师、关心支持学校的各级领导及家长表示诚挚的谢意！
+            </div>
+
+            <table class="score-table">
+                <thead>
+                    <tr><th colspan="4">⭐ 670分以上学生名单 ⭐</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="name">王伟健</span> <span class="val">712</span></td>
+                        <td><span class="name">张子怡</span> <span class="val">709</span></td>
+                        <td><span class="name">周 倩</span> <span class="val">708</span></td>
+                        <td><span class="name">谢丽云</span> <span class="val">705</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="name">杨啸峰</span> <span class="val">702</span></td>
+                        <td><span class="name">翁雨璐</span> <span class="val">699</span></td>
+                        <td><span class="name">余 冲</span> <span class="val">697</span></td>
+                        <td><span class="name">吕宽勇</span> <span class="val">697</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="name">张紫柔</span> <span class="val">696</span></td>
+                        <td><span class="name">杜怡蕊</span> <span class="val">694</span></td>
+                        <td><span class="name">宋以然</span> <span class="val">691</span></td>
+                        <td><span class="name">唐 哲</span> <span class="val">687</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="name">刘紫晗</span> <span class="val">685</span></td>
+<td>
+  <span class="name">
+    <span>段</span>
+    <span class="blur-char">宜</span>
+    <span>廷</span>
+  </span>
+  <span class="val">683</span>
+</td>
+
+                        <td><span class="name">周子璇</span> <span class="val">682</span></td>
+                        <td><span class="name">袁文俊</span> <span class="val">680</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="name">房子豪</span> <span class="val">676</span></td>
+                        <td><span class="name">邹言</span> <span class="val">675</span></td>
+                        <td><span class="name">王思扬</span> <span class="val">673</span></td>
+                        <td><span class="name">吕 洁</span> <span class="val">671</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="safety-box">
+                <b>📢 温馨提示：</b><br>
+        1. 过马路走斑马线，不闯红灯，靠右行走，未满12周岁不骑自行车。<br>
+                2. 远离火源，不在河边、工地水坑等区域玩耍，严防事故发生。<br>
+                3. 增强电信网络诈骗防范意识，不轻信网络信息，不参与非法活动。
+            </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 20px; color: white; font-weight: bold; line-height: 1.8; ">
+            青州市实验初级中学<br>
+            2012年7月
+        </div>
+    </div>
+
+</body>
+</html>

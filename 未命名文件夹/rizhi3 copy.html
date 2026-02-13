@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ空间 - 我的私密日志</title>
+    <style>
+        /* 全局样式（复用原有风格，保持视觉统一） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('star.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.5);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* 主体布局（修改：移除banner后，调整容器上边距，仅保留主内容区居中适配） */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto 20px; /* 上边距从60px改为20px，移除banner后的留白优化 */
+            width: calc(100% - 30px);
+        }
+
+        .card {
+            background: #122543;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 私密日志详情特有样式 */
+        .private-log-detail {
+            padding: 20px;
+        }
+        /* 私密标识 */
+        .private-tag {
+            display: inline-block;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        /* 日志标题（加大加粗） */
+        .log-detail-title {
+            font-size: 24px;
+            color: #f1c40f;
+            margin: 0 0 20px 0;
+            line-height: 1.3;
+        }
+        /* 日志发布时间（仅保留时间，无阅读/评论） */
+        .log-detail-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        /* 日志完整内容（换行保留，行高优化） */
+        .log-detail-content {
+            font-size: 15px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.8;
+            white-space: pre-line; /* 保留文本换行，适配完整博文 */
+            margin-bottom: 25px;
+        }
+        /* 日志操作按钮（仅保留自己可操作的功能） */
+        .log-detail-actions {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .log-detail-actions span {
+            cursor: pointer;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .log-detail-actions span:hover {
+            color: #2980b9;
+        }
+        /* 返回日志列表按钮 */
+        .btn-back {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .btn-back:hover {
+            background: rgba(52, 152, 219, 0.3);
+        }
+
+        .clear { clear: both; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <!-- 顶部导航（仅保留此部分，移除banner个人信息） -->
+    <div class="top-nav">
+        <span style="margin-right:20px; color:#f1c40f;">⭐ QQ空间</span>
+        <span>个人中心 | 我的主页 | 好友 | 应用</span>
+    </div>
+
+    <!-- 主体布局（无banner，直接展示私密日志详情） -->
+    <div class="container">
+        <!-- 私密日志详情主体（居中展示，无多余元素干扰） -->
+        <div class="main-column">
+            <div class="card private-log-detail">
+                <!-- 返回日志列表 -->
+                <div class="btn-back" onclick="backToLogList()">← 返回我的日志列表</div>
+                
+               
+                
+                <!-- 日志标题 -->
+                <h2 class="log-detail-title">路明非的雨夜 | 龙族随笔</h2>
+                
+                <!-- 日志元信息（仅保留发布时间，无阅读/评论） -->
+                <div class="log-detail-meta">发布于：2025-04-12 23:18:45</div>
+                
+                <!-- 日志完整内容（私密博文的完整内容，支持换行） -->
+                <div class="log-detail-content">
+2012。
+大家都说这一年可能是世界末日。
+我听着他们的讨论，看着新闻里夸张的预测，心里却空空的——一点也不害怕，也不期待。
+仿佛无论末日多么轰轰烈烈，都和我无关。
+
+可是那一天，邹言发生了意外。那一刻，我忽然明白，她的世界末日，不是电影里轰轰烈烈的末日，而是真的发生在她身上。 真实得让我窒息，真实得我几乎无法呼吸。
+
+我想起那些早该伸出的手，却因为害怕、退缩、犹豫而没有去做。每一次我看着她和那个追求者靠近，心里不满却选择沉默；每一次我误以为她能自己走出来，心里默念“算了”，都在堆积一座我无法拆解的山。我原以为自己温暖的存在，能保护别人，原以为退后是一种善意；但现在，我看到的只是她受伤的躯体和心灵，还有我无法挽回的过错。
+
+我梦到过她被伤害的那个场景，我看见她惊恐的表情，我听见自己的无声呼喊，我想冲过去，却被自己冻住，站在原地。
+
+我多想回到过去，把自己拽回那条轨道，把她拉出那个即将崩塌的世界。可是我做不到。我只能站在远处，看着她掉入那个漩涡，而我无能为力。
+
+我恨自己，恨自己太晚明白——不是世界末日会摧毁我们，而是我，未曾及时伸出的手。
+
+从那天起，所有的笑声都带着刺痛，所有的温暖都变得沉重。我学会收起自己，也学会用距离保护自己。可我永远也不会忘记，那一天，她的世界末日，是我一手参与塑造的。
+                </div>
+                
+                <!-- 日志操作（仅自己可操作，无点赞/评论相关） -->
+                <div class="log-detail-actions">
+                    <span onclick="editLogDetail()">✏️ 编辑日志</span>
+                    <span onclick="deleteLogDetail()">🗑️ 删除日志</span>
+                    <span onclick="changeLogStatus()">🔓 改为公开日志</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 返回日志列表
+        function backToLogList() {
+            alert('返回我的日志列表（实际项目中跳转至日志列表页）');
+        }
+
+        // 编辑私密日志
+        function editLogDetail() {
+            alert('进入日志编辑页面，填充当前私密日志完整内容（实际项目中对接编辑功能）');
+        }
+
+        // 删除私密日志
+        function deleteLogDetail() {
+            if (confirm('确定要删除这篇私密日志《路明非的雨夜 | 龙族随笔》吗？删除后无法恢复！')) {
+                alert('私密日志已成功删除！');
+                // 可选：跳转回日志列表（实际项目中使用window.location.href跳转）
+                setTimeout(() => {
+                    backToLogList();
+                }, 1000);
+            }
+        }
+
+        // 更改日志状态（私密→公开）
+        function changeLogStatus() {
+            if (confirm('确定要将这篇私密日志改为公开吗？改为公开后将展示在好友动态中！')) {
+                alert('日志已成功改为公开！');
+                // 可选：更新页面私密标识和提示（实际项目中刷新页面或修改DOM）
+                document.querySelector('.private-tag').innerText = '📢 公开博文（所有人可见）';
+            }
+        }
+    </script>
+</body>
+</html>

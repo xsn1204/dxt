@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小红书</title>
+    <style>
+        /* 全局样式重置和基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* 主容器 - 模拟小红书双列布局 */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* 左侧图片区域 */
+        .left-section {
+            width: 50%;
+            background-color: #fafafa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            /* 使用占位图模拟原图，你可以替换为实际图片链接 */
+            background-image: url("nian.jpg");
+            background-size: cover;
+            background-position: center;
+            aspect-ratio: 1/1;
+        }
+
+        /* 右侧内容区域 */
+        .right-section {
+            width: 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部用户信息 */
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-right: 10px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .location {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .follow-btn {
+            padding: 6px 12px;
+            border: 1px solid #ff2442;
+            border-radius: 20px;
+            background-color: #fff;
+            color: #ff2442;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* 内容标签和正文 */
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .tag-item {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .tag-item::before {
+            content: "● ";
+            color: #ff2442;
+        }
+
+        .text-content {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .hashtags {
+            font-size: 14px;
+            color: #0084ff;
+            line-height: 1.6;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: #999;
+            margin: 10px 0 20px;
+        }
+
+        /* 评论区 */
+        .comments-section {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .comment-input {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .comment-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .input-icons {
+            display: flex;
+            gap: 10px;
+            color: #999;
+        }
+
+        .comment-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .comment-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-right: 10px;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-username {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .comment-text {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .comment-reply {
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 8px;
+            margin-left: 10px;
+            margin-bottom: 5px;
+        }
+
+        .reply-text {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .reply-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .bottom-input {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            margin-top: auto;
+        }
+
+        .bottom-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            color: #999;
+        }
+
+        .icon-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .icon-item span {
+            color: #333;
+        }
+
+        .divider {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin: 10px 0;
+        }
+        /* 今日也向晴的专属头像样式 */
+.avatar-xiangqing {
+
+    background-image: url("6.png");
+    background-size: cover; /* 让图片铺满头像框，不拉伸变形 */
+    background-position: center; /* 图片居中显示 */
+}
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">9/36</div></head>
+<body>
+    <div class="container">
+        <!-- 左侧图片区域 -->
+        <div class="left-section">
+            <div class="main-image"></div>
+        </div>
+
+        <!-- 右侧内容区域 -->
+        <div class="right-section">
+            <!-- 用户信息 -->
+            <div class="user-info">
+                <div class="avatar"></div>
+                <div class="user-details">
+                    <div class="username">趣味生煎</div>
+                    <div class="location">青州市</div>
+                </div>
+                <button class="follow-btn">关注</button>
+            </div>
+
+            <!-- 正文内容 -->
+            <div class="content">
+<div class="tag-item">云门巷</div><div class="text-content">赏古巷非遗花灯，逛百年民俗市集，在云门巷寻味特色小吃，邂逅青州老城的新年韵味。</div>
+<div class="tag-item">弥水洲</div><div class="text-content">观非遗水上打铁花，伴河畔民俗歌舞，在弥水洲乘舟赏景，各类新春展演热闹不停歇。</div>
+                
+                <div class="hashtags">
+                    #好好过年大赏 #青州旅游 #非遗里的中国年 #笔记灵感 #青州攻略 #青州年味 #过年氛围感拉满
+                </div>
+                
+                <div class="post-time">2026-01-24 青州</div>
+            </div>
+
+            <!-- 评论区 -->
+            <div class="comments-section">共 4 条评论</div>
+            
+            <!-- 评论输入框 -->
+            <div class="comment-input">
+                <input type="text" placeholder="说点什么...">
+                <div class="input-icons">
+                    <span>◎</span>
+                    <span>◎</span>
+                    <span>⊕</span>
+                </div>
+            </div>
+
+            <!-- 评论列表 -->
+            <div class="comment-item">
+                
+                <div class="comment-avatar avatar-xiangqing" onclick="jumpToXhs()"></div>
+                <div class="comment-content">
+                    <div class="comment-username" onclick="jumpToXhs()">今日也向晴</div>
+                    <div class="comment-text">请问初三去的话好吃的店开门了嘛？</div>
+                    <div class="comment-time">2026-01-28 回复</div>
+                    <div class="comment-reply">
+                        <div class="comment-username">趣味生煎（作者）</div>
+                        <div class="reply-text">一定要饭点去吃饭，那天有事耽误了下午三点愣是没找到饭吃😅最后吃的水饺</div>
+                        <div class="reply-time">2026-01-29 回复</div>
+                    </div>
+                </div>
+                <span>♡</span>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-avatar"></div>
+                <div class="comment-content">
+                    <div class="comment-username">远山</div>
+                    <div class="comment-text">变化挺大的</div>
+                    <div class="comment-time">2026-01-25 回复</div>
+                </div>
+                <span>♡</span>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-avatar"></div>
+                <div class="comment-content">
+                    <div class="comment-username">郭三少</div>
+                    <div class="comment-text">发现美，记录美，真好看</div>
+                    <div class="comment-time">2026-01-26 回复</div>
+                </div>
+                <span>♡</span>
+            </div>
+
+            <div class="divider">- 到底了 -</div>
+
+            <!-- 底部输入框和互动按钮 -->
+            <div class="bottom-input">
+                <input type="text" placeholder="说点什么...">
+                <div class="action-icons">
+                    <div class="icon-item">♡ <span>100</span></div>
+                    <div class="icon-item">✎ <span>71</span></div>
+                    <div class="icon-item">⊕ <span>4</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // 跳转至xhs.html的函数
+    function jumpToXhs() {
+        window.location.href = "xhs1.html";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ空间 - 我的日志</title>
+    <style>
+        /* 全局样式（复用原有风格） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('star.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.5);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            height: 280px;
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: url('lighthouse.jpg') no-repeat center;
+            background-size: cover;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-header {
+            position: absolute;
+            bottom: -50px;
+            left: 50px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: #eee;
+        }
+
+        /* 点赞按钮（保留原有） */
+        .like-badge {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1px solid #444;
+            transition: transform 0.2s;
+        }
+        .like-badge:active { transform: scale(0.9); }
+
+        /* 主体布局（修改：移除左侧侧边栏，调整为 主内容区 + 右侧统计区） */
+        .container {
+            max-width: 1100px;
+            margin: 60px auto 20px;
+            display: grid;
+            grid-template-columns: 1fr 280px; /* 移除左侧200px列，仅保留主内容和右侧 */
+            gap: 15px;
+        }
+
+        .card {
+            background: #122543;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 日志特有样式（移除写日志相关样式，保留日志列表样式） */
+        .log-item {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .log-item:last-child {
+            border-bottom: none;
+        }
+        .log-title {
+            font-size: 18px;
+            color: #f1c40f;
+            margin: 0 0 8px 0;
+            cursor: pointer;
+        }
+        .log-title:hover {
+            color: #f39c12;
+            text-decoration: underline;
+        }
+        .log-preview {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            margin: 8px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .log-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            display: flex;
+            gap: 20px;
+        }
+        .log-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+        }
+        .log-actions span {
+            cursor: pointer;
+            color: #3498db;
+        }
+        .log-actions span:hover {
+            color: #2980b9;
+        }
+
+        /* 右侧统计卡片 */
+        .log-stat {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .stat-num {
+            font-size: 28px;
+            color: #f1c40f;
+            margin: 5px 0;
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .clear { clear: both; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <!-- 顶部导航（复用） -->
+    <div class="top-nav">
+        <span style="margin-right:20px; color:#f1c40f;">⭐ QQ空间</span>
+        <span>个人中心 | 我的主页 | 好友 | 应用</span>
+    </div>
+
+    <!-- 横幅区域（复用） -->
+    <div class="banner">
+        <div class="like-badge" onclick="addLike()">
+            👍 <span id="like-count">42</span> 点赞
+        </div>
+        <div class="profile-header">
+            <img src="avatar3.png" alt="头像" class="avatar">
+            <div style="margin-left:15px; margin-bottom:10px;">
+                <h2 style="margin:0;">不知所以然</h2>
+                <p style="font-size:12px; opacity:0.7;">http://user.qzone.qq.com/123456</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主体布局（修改：移除左侧侧边栏、删除发表日志卡片） -->
+    <div class="container">
+        <!-- 中间日志主体区域（仅保留日志列表） -->
+        <div class="main-column">
+            <!-- 日志列表 -->
+            <div class="card">
+                <h3 style="margin-top:0; color:#fff; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">我的日志</h3>
+                
+                <!-- 日志项1 -->
+                <div class="log-item">
+                    <h4 class="log-title" onclick="viewLog(1)">路明非的雨夜 | 龙族随笔 🔒</h4>
+                    <div class="log-preview">
+                        总觉得路明非藏在某个雨夜里，会忽然掏出言灵·不要死。要是我也有这样的超能力，是不是就能留住那些不想失去的东西了…
+                    </div>
+                    <div class="log-meta">
+                        <span>2025-04-12</span>
+                        <span>阅读 218</span>
+                        <span>评论 12</span>
+                    </div>
+       
+                </div>
+
+                <!-- 日志项2 -->
+                <div class="log-item">
+                    <h4 class="log-title" onclick="viewLog(2)">左耳的秘密 | 青春碎碎念 🔒</h4>
+                    <div class="log-preview">
+                        黎吧啦的那句“甜言蜜语说给左耳听”，偷偷抄在书签里了。好像青春期的心事，都藏在这些细碎的句子里，不敢说出口，只能写给自己看...
+                    </div>
+                    <div class="log-meta">
+                        <span>2025-04-08</span>
+                        <span>阅读 176</span>
+                        <span>评论 8</span>
+                    </div>
+             
+                </div>
+
+                <!-- 日志项3 -->
+                <div class="log-item">
+                    <h4 class="log-title" onclick="viewLog(3)">2012的糖果 | 童年回忆 🔒</h4>
+                    <div class="log-preview">
+                        翻到小时候的日记，2012年那天居然偷偷藏了好多糖果和童话书，以为世界要消失了。现在想想好傻，但又觉得那时候的自己好可爱...
+                    </div>
+                    <div class="log-meta">
+                        <span>2025-04-01</span>
+                        <span>阅读 324</span>
+                        <span>评论 18</span>
+                    </div>
+                 
+                </div>
+
+                <!-- 日志项4 -->
+                <div class="log-item">
+                    <h4 class="log-title" onclick="viewLog(4)">饥饿游戏的梦 | 深夜碎碎念 🔒</h4>
+                    <div class="log-preview">
+                        乔布斯去世，留下的《乔布斯传》都说了什么?
+                    </div>
+                    <div class="log-meta">
+                        <span>2025-03-28</span>
+                        <span>阅读 156</span>
+                        <span>评论 7</span>
+                    </div>
+          
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧边栏（修改：移除签到和礼物卡片，仅保留日志统计、热门日志推荐） -->
+        <div class="right-column">
+            <!-- 日志统计卡片 -->
+            <div class="card">
+                <h4 style="margin-top:0; margin-bottom:15px;">日志统计</h4>
+                <div class="log-stat">
+                    <div class="stat-num">46</div>
+                    <div class="stat-label">总日志数</div>
+                </div>
+                <div class="log-stat" style="border-top:1px solid rgba(255,255,255,0.1); margin-top:10px; padding-top:10px;">
+                    <div class="stat-num">8.2k</div>
+                    <div class="stat-label">总阅读量</div>
+                </div>
+                <div class="log-stat" style="border-top:1px solid rgba(255,255,255,0.1); margin-top:10px; padding-top:10px;">
+                    <div class="stat-num">528</div>
+                    <div class="stat-label">总评论数</div>
+                </div>
+            </div>
+
+            <!-- 热门日志推荐 -->
+            <div class="card">
+                <h4 style="margin-top:0;">热门日志</h4>
+                <div style="font-size:13px; line-height:1.8;">
+                    <p>• 路明非的雨夜 | 龙族随笔</p>
+                    <p>• 2012的糖果 | 童年回忆</p>
+                    <p>• 左耳的秘密 | 青春碎碎念</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 点赞功能（复用原有）
+        let count = 42;
+        function addLike() {
+            count++;
+            document.getElementById('like-count').innerText = count;
+            alert('点赞成功！');
+        }
+
+        // 查看日志详情
+        function viewLog(id) {
+            const logTitles = {
+                1: "路明非的雨夜 | 龙族随笔",
+                2: "左耳的秘密 | 青春碎碎念",
+                3: "2012的糖果 | 童年回忆",
+                4: "饥饿游戏的梦 | 深夜碎碎念"
+            };
+            alert(`查看日志：《${logTitles[id]}》的详细内容（实际项目中跳转至日志详情页）`);
+        }
+
+        // 编辑日志
+        function editLog(id) {
+            const logTitles = {
+                1: "路明非的雨夜 | 龙族随笔",
+                2: "左耳的秘密 | 青春碎碎念",
+                3: "2012的糖果 | 童年回忆",
+                4: "饥饿游戏的梦 | 深夜碎碎念"
+            };
+            alert(`编辑日志：《${logTitles[id]}》（实际项目中填充编辑框）`);
+        }
+
+        // 删除日志
+        function deleteLog(id) {
+            const logTitles = {
+                1: "路明非的雨夜 | 龙族随笔",
+                2: "左耳的秘密 | 青春碎碎念",
+                3: "2012的糖果 | 童年回忆",
+                4: "饥饿游戏的梦 | 深夜碎碎念"
+            };
+            if (confirm(`确定要删除日志《${logTitles[id]}》吗？`)) {
+                alert(`日志《${logTitles[id]}》已删除！`);
+                // 可选：移除日志项（实际项目需结合后端）
+                event.target.closest('.log-item').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

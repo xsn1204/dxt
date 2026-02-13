@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>永远的同学录 - 珍藏版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Long+Cang&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper-pink: #fff0f5;
+            --border-pink: #ffb6c1;
+            --text-purple: #9370db;
+            --accent-green: #98fb98;
+        }
+
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 活页孔效果 */
+        .ring-binder {
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 150px;
+        }
+        .ring {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #bdc3c7;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        /* 页面容器 */
+        .page {
+            width: 700px;
+            min-height: 900px;
+            background: white;
+            border: 2px solid var(--border-pink);
+            border-radius: 10px;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.05);
+            padding: 40px;
+            position: relative;
+            margin-bottom: 50px;
+            background-image: radial-gradient(#ffebee 2px, transparent 2px);
+            background-size: 30px 30px;
+            overflow: hidden;
+        }
+
+        /* 封面样式 */
+        .cover {
+            background-color: #ff8fb1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .cover h1 { font-size: 80px; margin: 0; font-family: 'Zhi Mang Xing', cursive; }
+        .cover p { font-size: 24px; border: 2px dashed white; padding: 10px 20px; border-radius: 20px; }
+
+        /* 标题装饰 */
+        .title-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title-box h2 {
+            display: inline-block;
+            background: #ff69b4;
+            color: white;
+            padding: 5px 40px;
+            border-radius: 20px;
+            font-size: 28px;
+            letter-spacing: 10px;
+        }
+
+        /* 资料排版 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .field {
+            border-bottom: 1.5px solid #ff69b4;
+            padding: 5px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .label {
+            background: #f06292;
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        .value {
+            font-size: 20px;
+            flex-grow: 1;
+        }
+
+        /* 手写体变体 */
+        .handwriting-1 { font-family: 'Zhi Mang Xing', cursive; color: #2c3e50; }
+        .handwriting-2 { font-family: 'Ma Shan Zheng', cursive; color: #d32f2f; }
+        .handwriting-3 { font-family: 'Long Cang', cursive; color: #1565c0; }
+
+        /* 插画位置 */
+        .character-img {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 280px;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        /* 反面寄语 */
+        .back-page {
+            background-color: #e3f2fd;
+            border-color: #90caf9;
+        }
+        .message-area {
+            height: 600px;
+            border: 2px dashed #90caf9;
+            padding: 30px;
+            line-height: 2;
+            font-size: 24px;
+        }
+
+        /* 标签云风格的选择框 */
+        .type-checkboxes {
+            display: flex;
+            wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .checked { text-decoration: underline; font-weight: bold; color: #ff2442; }
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+    <div class="ring-binder">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+    </div>
+
+    <div class="page cover">
+        <h1>同学录</h1>
+        <p>MEMORIES OF SCHOOL DAYS</p>
+        <div style="margin-top: 100px; font-size: 18px;">班级：三年二班</div>
+    </div>
+
+    <div class="page">
+        <div class="title-box"><h2>个人档案</h2></div>
+        <div style="width: 200px; height: 150px; border: 3px double #ff69b4; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: #ff69b4;">PHOTO</div>
+        
+        <div class="info-grid">
+            <div class="field"><span class="label">姓名</span><span class="value handwriting-1">Lily</span></div>
+            <div class="field"><span class="label">血型</span><span class="value handwriting-1">O</span></div>
+            <div class="field"><span class="label">住址</span><span class="value handwriting-1">地球</span></div>
+            <div class="field"><span class="label">出生日期</span><span class="value handwriting-1">1999.9.23</span></div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <div class="field"><span class="label">最喜欢的艺人</span><span class="value handwriting-1">少女时代</span></div>
+            <div class="field"><span class="label">最爱吃的食物</span><span class="value handwriting-1">鸡肉卷</span></div>
+        </div>
+
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lily" class="character-img" alt="cartoon">
+    </div>
+
+    <div class="page back-page">
+        <div class="title-box"><h2 style="background: #42a5f5;">难忘岁月</h2></div>
+        <div class="message-area handwriting-1">
+            杜杜：<br>
+            I LOVE YOU~ <br>
+            一帆风顺，百事可乐！<br>
+            你是最棒的，以后我们要一直联系哦！
+        </div>
+        <div class="type-checkboxes">
+            <span>我是哪种人？</span>
+            <span class="checked">宅人</span> <span>潜力股</span> <span class="checked">学习狂</span> <span>有为青年</span>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="title-box"><h2>PERSONAL FILE</h2></div>
+        <div class="info-grid">
+            <div class="field"><span class="label">昵称</span><span class="value handwriting-2">丛林母老虎</span></div>
+            <div class="field"><span class="label">出生日期</span><span class="value handwriting-2">2002.3.14</span></div>
+            <div class="field"><span class="label">星座</span><span class="value handwriting-2">双鱼座</span></div>
+            <div class="field"><span class="label">梦想</span><span class="value handwriting-2">当一名人民教师</span></div>
+        </div>
+
+        <div style="margin-top: 40px; border: 1px solid #ddd; padding: 15px;">
+            <h4 style="color: #f06292; margin: 0 0 10px 0;">我的 10 大最爱</h4>
+            <div style="font-size: 14px; line-height: 1.8;" class="handwriting-2">
+                最喜欢的书：《小公主》《小樱桃》<br>
+                最喜欢的动物：孔雀<br>
+                最喜欢的颜色：紫
+            </div>
+        </div>
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Linger" class="character-img" alt="cartoon">
+    </div>
+
+    <div class="page back-page">
+        <div class="title-box"><h2 style="background: #42a5f5;">寄语</h2></div>
+        <div class="message-area handwriting-2">
+            以后要是成了大老师，可别忘了我这个老同学！<br>
+            希望你天天开心，长生不老（哈哈开玩笑）！<br>
+            —— 你的死党
+        </div>
+    </div>
+
+</body>
+</html>

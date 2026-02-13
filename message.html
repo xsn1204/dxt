@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息</title>
+    <style>
+        :root {
+            --mac-bg: #f0f0f0;
+            --mac-blue: #007aff;
+            --mac-green: #34c759;
+            --messages-sidebar: #fff;
+            --shadow-window: 0 25px 60px rgba(0,0,0,0.4);
+            --mac-border: #dcdcdc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        body { height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; background: url('desk.jpg') center/cover no-repeat; overflow: hidden; }
+
+        /* macOS Top Bar */
+         .mac-menubar {
+                position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    padding: 0 20px;
+    box-sizing: border-box; /* 关键 */
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; font-size: 13px; color: #333; z-index: 1000;
+        }
+        .menubar-left span { margin-right: 15px; font-weight: 600; }
+        .menubar-right span { margin-left: 15px; }
+
+        
+        .messages-app { width: 900px; height: 700px; background: #fff; border-radius: 12px; box-shadow: var(--shadow-window); display: flex; flex-direction: column; overflow: hidden; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 500; }
+
+        .app-header { height: 45px; background: var(--mac-bg); border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 15px; }
+        .window-controls { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #FF5F56; } .yellow { background: #FFBD2E; } .green { background: #27C93F; }
+
+        .messages-content { flex: 1; display: flex; overflow: hidden; }
+
+        /* Sidebar */
+        .chat-sidebar { width: 280px; background: var(--messages-sidebar); border-right: 1px solid var(--mac-border); display: flex; flex-direction: column; }
+        .search-bar { padding: 10px; border-bottom: 1px solid #eee; }
+        .search-input { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 8px; font-size: 13px; background: #f7f7f7; text-align: center; }
+
+        .chat-list { overflow-y: auto; flex: 1; }
+        .chat-item { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: background 0.1s; }
+        .chat-item:hover { background: #f9f9f9; }
+        .chat-item.active { background: var(--mac-blue); color: white; }
+        
+        .chat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+        .contact-name { font-weight: 600; font-size: 14px; }
+        .chat-time { font-size: 11px; color: #999; }
+        .chat-item.active .chat-time, .chat-item.active .chat-preview { color: rgba(255, 255, 255, 0.8); }
+        .chat-preview { font-size: 13px; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Main Pane */
+        .chat-pane { flex: 1; display: flex; flex-direction: column; background: white; }
+        .chat-details { height: 45px; border-bottom: 1px solid var(--mac-border); padding: 0 15px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .recipient-name { font-size: 14px; font-weight: 600; }
+
+        .message-list { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+        .time-divider { text-align: center; margin: 20px 0; font-size: 11px; color: #bbb; text-transform: uppercase; }
+
+        .message-row { display: flex; margin-bottom: 10px; }
+        .received { justify-content: flex-start; }
+        .sent { justify-content: flex-end; }
+
+        .message-bubble { max-width: 70%; padding: 8px 14px; font-size: 14px; line-height: 1.4; border-radius: 18px; }
+        .received .message-bubble { background: #e9e9eb; color: #000; }
+        .sent .message-bubble { background: var(--mac-blue); color: #fff; }
+
+        .chat-input-area { padding: 15px 20px; border-top: 1px solid #eee; display: flex; align-items: center; gap: 10px; }
+        .input-box { flex: 1; background: #fff; border: 1px solid #ddd; border-radius: 20px; padding: 8px 15px; font-size: 14px; outline: none; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">13/36</div></head>
+<body>
+
+
+
+            <div class="mac-menubar">
+        <div class="menubar-left">
+            <span></span>
+            <span>信息</span>
+            <span>对话</span>
+         
+        </div>
+        <div class="menubar-right">
+                      <span>100%</span>
+            <span>Wi-Fi</span>
+            <span>2月10日 周二</span>
+        </div>
+    </div>
+
+    <div class="messages-app">
+        <div class="app-header">
+            <div class="window-controls"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+        </div>
+
+        <div class="messages-content">
+            <div class="chat-sidebar">
+                <div class="search-bar"><input type="text" class="search-input" placeholder="搜索"></div>
+                <div class="chat-list">
+                                        <div class="chat-item active" onclick="showChat('qq', this)">
+
+                        <div class="chat-header"><span class="contact-name">90155</span><span class="chat-time">刚刚</span></div>
+                        <div class="chat-preview">【腾讯科技】验证码：5649。您正在尝试登录QQ，请勿泄露。...</div>
+                    </div>
+
+                    <div class="chat-item" onclick="showChat('meituan')">
+                        <div class="chat-header"><span class="contact-name">美团外卖</span><span class="chat-time">10:30</span></div>
+                        <div class="chat-preview">【美团】您订购的轻食沙拉已送达您的公司前台...</div>
+                    </div>
+                    <div class="chat-item" onclick="showChat('code')">
+                        <div class="chat-header"><span class="contact-name">95188</span><span class="chat-time">昨天</span></div>
+                        <div class="chat-preview">【小红书】验证码：582013，用于登录校验...</div>
+                    </div>
+                    <div class="chat-item" onclick="showChat('apple')">
+                        <div class="chat-header"><span class="contact-name">Apple</span><span class="chat-time">周一</span></div>
+                        <div class="chat-preview">您的 iCloud+ 订阅计划已成功续费。</div>
+                    </div>
+                                     <div class="chat-item" onclick="showChat('bank', this)">
+                        <div class="chat-header"><span class="contact-name">工商银行</span><span class="chat-time">1/1</span></div>
+                        <div class="chat-preview">【工商银行】您尾号0412卡1月1日10:45向...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-pane" id="chatPane">
+                <div class="chat-details"><div class="recipient-name" id="chatName">工商银行</div></div>
+                <div class="message-list" id="messageList">
+                    <div class="time-divider">2024年1月1日</div>
+                    <div class="message-row received">
+                        <div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div>
+                    </div>
+                    <div class="time-divider">2025年1月1日</div>
+                    <div class="message-row received">
+                        <div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div>
+                    </div>
+                    <div class="time-divider">2026年1月1日</div>
+                    <div class="message-row received">
+                        <div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+             <div class="input-box">iMessage</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+ 
+
+
+    function showChat(type, el) {
+    const list = document.getElementById('messageList');
+    const name = document.getElementById('chatName');
+
+    document.querySelectorAll('.chat-item')
+        .forEach(i => i.classList.remove('active'));
+
+    if (el) el.classList.add('active');
+
+    if (type === 'qq') {
+        name.innerText = "90155";
+        list.innerHTML = `
+            <div class="time-divider">刚刚</div>
+            <div class="message-row received">
+                <div class="message-bubble">【腾讯科技】验证码：5649。您正在尝试登录QQ，请勿泄露。</div>
+            </div>
+        `;
+    } 
+    else if (type === 'bank') {
+        name.innerText = "工商银行";
+        list.innerHTML = `
+             <div class="time-divider">2024年1月1日</div>
+                    <div class="message-row received"><div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div></div>
+                    <div class="time-divider">2025年1月1日</div>
+                    <div class="message-row received"><div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div></div>
+                    <div class="time-divider">2026年1月1日</div>
+                    <div class="message-row received"><div class="message-bubble">【工商银行】您尾号0412卡1月1日10:45向*聪转出支出10,000.00元。[预约转账支付]</div></div>
+         
+        `;
+    }
+}
+
+
+window.onload = function () {
+    const firstItem = document.querySelector('.chat-item.active');
+    showChat('qq', firstItem);
+};
+
+
+       
+    </script>
+</body>
+</html>

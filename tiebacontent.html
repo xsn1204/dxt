@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗恋吧_百度贴吧 - 喜欢他的第103天，今天他要回台湾了...</title>
+    <style>
+        /* 基础样式重置 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #dceafe; font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif; color: #333; line-height: 1.6; }
+
+        /* 顶部导航 */
+        .top-nav { background: #fff; border-bottom: 1px solid #d0e0f2; height: 40px; display: flex; align-items: center; justify-content: center; width: 100%; position: fixed; top: 0; z-index: 1000; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .top-nav-inner { width: 980px; display: flex; justify-content: space-between; font-size: 12px; }
+        .top-nav-left a { color: #2d64b3; text-decoration: none; margin-right: 15px; }
+
+        /* 头部 Banner */
+        .header { width: 980px; margin: 55px auto 10px; background: #fff; border: 1px solid #c4dbf7; padding: 20px; display: flex; align-items: center; }
+        .bar-logo { width: 80px; height: 80px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .bar-info { margin-left: 20px; flex: 1; }
+        .bar-name { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .bar-stats { font-size: 13px; color: #666; }
+        .btn-follow { background: #ff7f3e; color: #fff; border: none; padding: 6px 18px; border-radius: 3px; cursor: pointer; font-weight: bold; }
+
+        /* 导航标签 */
+        .nav-tabs { width: 980px; margin: 0 auto; background: #f2f7ff; border: 1px solid #c4dbf7; border-bottom: none; display: flex; }
+        .nav-tabs div { padding: 10px 25px; font-size: 14px; color: #2d64b3; cursor: pointer; }
+        .nav-tabs div.active { background: #fff; border-right: 1px solid #c4dbf7; border-left: 1px solid #c4dbf7; margin-top: -1px; font-weight: bold; color: #333; }
+
+        /* 主体内容 */
+        .main-container { width: 980px; margin: 0 auto; background: #fff; border: 1px solid #c4dbf7; margin-bottom: 30px; }
+        .thread-title { padding: 20px; border-bottom: 1px solid #e1e4e6; background: #f9fbff; }
+        .thread-title h1 { font-size: 18px; color: #333; font-weight: bold; }
+
+        /* 楼层样式 */
+        .l-post { display: flex; border-bottom: 1px solid #e1e4e6; min-height: 250px; }
+        /* 默认隐藏所有楼层，由 JS 控制显示 */
+        .l-post { display: none; } 
+
+        .d-author { width: 130px; background: #fbfbfd; padding: 15px 0; display: flex; flex-direction: column; align-items: center; border-right: 1px solid #e1e4e6; }
+        .d-avatar { width: 80px; height: 80px; background: #fff; border: 1px solid #ccc; padding: 4px; position: relative; }
+        .d-avatar-box { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #999; }
+        .user-name { margin-top: 10px; color: #2d64b3; font-size: 13px; font-weight: bold; text-decoration: none; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+        .user-level { margin-top: 5px; background: url('https://tb2.bdstatic.com/tb/static-common/img/user_level_6f6f6f.png') no-repeat; padding-left: 20px; font-size: 11px; color: #ff9900; }
+        
+        .d-post-content { flex: 1; padding: 20px 25px; position: relative; display: flex; flex-direction: column; }
+        .post-text { font-size: 15px; color: #333; line-height: 1.8; flex: 1; margin-bottom: 30px; word-break: break-all; }
+        .post-footer { border-top: 1px dashed #eee; padding-top: 10px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; color: #999; }
+        .post-tail { margin-left: 15px; }
+
+        .louzhu-icon { position: absolute; top: 0; right: 0; background: #ff6b6b; color: #fff; font-size: 10px; padding: 2px 6px; }
+
+        /* 分页 */
+        .pagination { width: 980px; margin: 20px auto; text-align: right; }
+        .pagination a, .pagination span { border: 1px solid #ccc; padding: 5px 12px; background: #fff; text-decoration: none; color: #2d64b3; margin-left: 5px; font-size: 13px; cursor: pointer; }
+        .pagination span.current { border: none; background: none; color: #333; font-weight: bold; cursor: default; }
+
+        .content-img { margin-top: 15px; max-width: 300px; border: 4px solid #f4f4f4; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+    <div class="top-nav-inner">
+        <div class="top-nav-left"><a href="#">网页</a><a href="#">贴吧</a><a href="#">知道</a><a href="#">视频</a><a href="#">图片</a></div>
+        <div class="top-nav-right"><span>登录</span> | <span>注册</span></div>
+    </div>
+</div>
+
+<div class="header">
+    <img class="bar-logo" src="anlian.png" alt="logo">
+    <div class="bar-info">
+        <div class="bar-name">暗恋吧</div>
+        <div class="bar-stats">关注：<span style="color:#ff7f3e">892,441</span> &nbsp; 帖子：<span style="color:#ff7f3e">24,561,032</span></div>
+    </div>
+    <button class="btn-follow">+ 关注</button>
+</div>
+
+<div class="nav-tabs">
+    <div class="active">看贴</div><div>图片</div><div>精品</div><div>视频</div><div>玩乐</div>
+</div>
+
+<div class="main-container" id="post-container">
+    <div class="thread-title"><h1>【记录】日记什么的</h1></div>
+
+    <div class="l-post" data-page="1">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+                第一次在暗恋吧发帖，有点小紧张。>_< 在这个吧看了很多人的故事，今天终于轮到我写自己的了。<br><br>
+                他叫Dylan，是台湾人，初二上学期转来我们学校，比我高一级。他说话声音很有礼貌，跟我们班那些只会打闹的男生一点都不一样。我第一次注意到他是在走廊，他穿着那件偏灰色的长风衣，配一条白色的休闲裤，那一瞬间我脑子里只有四个字：意境美啊。为了能每天看到他，我迈上了午休“求偶遇”的不归路，每天火速吃完饭就去校门口蹲点，看着他慢悠悠地咬着冰棒进校门。有一次擦肩而过的时候，我闻到他身上有一股淡淡的肥皂香。
+            </div>
+            <div class="post-footer"><span class="post-tail">1楼</span><span class="post-tail">2012-02-12 19:45</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="1">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+                 随着观察深入，我发现他的穿衣风格真的绝了。一米八的身高才50公斤左右，腿细得让人嫉妒，但穿上风衣后又特别有骨感美。有一天我和同桌一路跟他到办公楼二楼，看他慢悠悠洗手、慢悠悠出门，甚至还撞到了数学老师，最后竟推门进了广播室。原来他就是传说中那个神秘的广播站站长！那天午间广播响起他的声音，低沉又温柔，我当时站在广播室之外，心跳得完全没法正常呼吸。
+            </div>
+            <div class="post-footer"><span class="post-tail">2楼</span><span class="post-tail">2012-02-12 21:10</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="1">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+            除了学校，校门口旁边那家<strong>【芝心芝味总店】</strong>也是我的秘密基地。Dylan学长好像特别偏爱那里的甜食，经常能看到他推门进去。而我呢，就固定驻守在蛋糕<strong>隔壁的那家奶茶店</strong>里。
+            <br>
+            我每次去都会点同一款果茶，总是选靠窗的位置，偷偷看他在隔壁挑蛋糕的样子。有时候他会拎着一只精致的纸袋走出来，风衣的一角划过奶茶店的落地窗。
+            <br>
+            那一幕，可能会一直保留在我的记忆里吧ミ﹏ミ
+            </div>
+            <div class="post-footer"><span class="post-tail">3楼</span><span class="post-tail">2012-02-12 23:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="1">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+              Dylan是一个很自律的人，不写作业成绩却很好，体育也是满分。为了让他看到我也能很优秀，那学期体育测验，我一直跑一直跑，居然拿了全班第一。跑完我蹲在地上大喘气，心里想的却是：你看，我也能做得很好。
+            </div>
+            <div class="post-footer"><span class="post-tail">4楼</span><span class="post-tail">2012-02-13 13:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="1">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+              去年圣诞节，为了离他更近，我努力考进模联社团参加了市会。那是我离他最近的一次。他是乌克兰代表，穿着笔挺的西装，抱着两台笔记本电脑在那合并文件，简直帅到没朋友！平安夜那天，听说他熬夜写决议草案到凌晨两点，最后他拿到“最杰出代表奖”，我在台下鼓掌鼓得手都红了。结束时，我厚着脸皮让他给我签名，他回头看我那一眼，我感觉自己快要融化了。
+            </div>
+            <div class="post-footer"><span class="post-tail">5楼</span><span class="post-tail">2012-02-13 14:25</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="2">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #add8e6;"><div class="d-avatar-box" style="background:#f0f8ff;"></div></div>
+            <a href="#" class="user-name">🌸行星妹子</a><div class="user-level">LV8 吧友</div>
+        </div>
+        <div class="d-post-content">
+            <div class="post-text">
+                火钳刘明！LZ好纯情啊，那个学长是不是穿校服也很好看的那种？
+            </div>
+            <div class="post-footer"><span class="post-tail">6楼</span><span class="post-tail">2012-02-14 12:30</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="2">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+            回LS，他穿校服真的超帅！尤其是那种白衬衫。<br>
+            今天听说了一个很难过的消息，这学期结束他就要回台湾了，应该是为了出国读大学准备。我好不容易才打听到他的QQ号，可是加了三天了他还没通过验证。也许他根本不知道我是谁吧ミ﹏ミ
+            </div>
+            <div class="post-footer"><span class="post-tail">7楼</span><span class="post-tail">2012-02-14 22:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="2">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+            刚刚，就在刚才！我的QQ响了！“咳咳”的声音简直是世界上最动听的声音！他通过了我的好友申请！(⊙o⊙)<br>
+            </div>
+            <div class="post-footer"><span class="post-tail">8楼</span><span class="post-tail">2012-02-15 20:27</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="2">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #4a4a4a;"><div class="d-avatar-box" style="background:#eee;"></div></div>
+            <a href="#" class="user-name">洛雨晴川</a><div class="user-level">LV11 核心</div>
+        </div>
+        <div class="d-post-content">
+            <div class="post-text">
+               话说台湾学长听起来好偶像剧啊，是不是像江直树那种？<br><br>
+            </div>
+            <div class="post-footer"><span class="post-tail">9楼</span><span class="post-tail">2012-02-17 00:15</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="2">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+                 好久没来贴吧啦，开学了楼楼开始忙起来了。<br>接上文，我是通过另外一个模联同学弄到了他的QQ号，加他之前我紧张得手心全是汗，上上周才通过。<br>加了后发现他空间里有他小时候剪蘑菇头的照片，简直是个傲娇的小正太，和现在高冷的样子反差也太大了吧！<br>虽然看到他在微博吐槽别人乱传他号的时候我吓得差点销号自保╮(╯▽╰)╭，但还是没忍住去他空间留言了。我吐槽了一句“蘑菇头很适合你诶”，结果他半小时后居然回了我一串“……”！ 虽然只有六个点，但我感觉我能盯着看一整晚。这种硬着头皮找话题的日子，虽然心惊胆战，但也代表我们在熟起来了吧>_<
+            </div>
+            <div class="post-footer"><span class="post-tail">10楼</span><span class="post-tail">2012-02-25 20:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="3">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+              今天学校运动会，我这种体育废柴竟然被拉去凑数跑800米。跑到最后50米的时候，感觉肺都要炸了，腿软得像面条，视线也开始模糊，满脑子都是“我不行了我不行了”。
+
+<br>结果！在快到终点的重影里，我隐隐约约看到一个特别像他的人站在那里……我当时还以为自己跑缺氧出幻觉了呢。结果冲过线后，模联的损友一边扶着我，一边坏笑着说：“刚才我看你跑不动了，特意去把学长喊过来给你加油的，怎么样，刚刚充满动力了吧？”
+
+<br>天呐！！！当时我整个人直接从脸红到了脖子根，简直想原地消失！羞得我头都不敢抬，只能抱着水瓶拼命装死。偷偷瞄了一眼，他好像真的在看这边，还跟旁边人说了句什么。
+
+<br>救命，要是被他发现我刚才跑得面目狰狞、披头散发的样子……我的形象是不是彻底崩塌了呀？ミ﹏ミ ╰つ
+            </div>
+            <div class="post-footer"><span class="post-tail">11楼</span><span class="post-tail">2012-04-16 23:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+            <div class="l-post" data-page="3">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+            自从上次运动会他来给我加油（虽然是被强行拽来的），我这几天在走廊遇到他都恨不得低头钻进地缝里。结果昨天晚自习前，模联的同学递给我一块薄荷糖，说是学长给组里每个人都发了，谢谢大家最近备赛辛苦。
+            </div>
+            <div class="post-footer"><span class="post-tail">12楼</span><span class="post-tail">2012-04-27 21:57</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+       <div class="l-post" data-page="3">
+   <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+               <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+                 今天学校的广播里一直在放陈奕迅的《好久不见》，听得人心慌。下午一起开会，我才知道他一个月后就要回台湾了……
+
+<br>刚才我在QQ上试探着发了个“听说你要回去了？”，他过了好久才回了一个：“嗯。”
+
+<br>回想起来，喜欢上他也不过才短短半年的时间，从第一次在模联教室看到他摆弄他那台黑莓手机的侧影开始。可为什么我觉得，我已经把未来几十年的心动额度都提前支取完了呢？
+            </div>
+            <div class="post-footer"><span class="post-tail">13楼</span><span class="post-tail">2012-05-07 12:15</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+
+    <div class="l-post" data-page="3">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+            今天是他在学校的最后一天。毕业典礼之后，我看到他在校门口和几个男生合影。我手心里全是汗，手里捏着一张写了很久的明信片，最后还是没敢递出去。<br>我看他上了一辆出租车，车窗开着，他对着窗外挥手，笑容还是那么温柔。
+            <br>虽然很难过以后再也见不到他了，不过其实他知道我的存在，对不对？这份心情，我会把它藏在这里。希望他在海的那边也能开开心心，永远闪闪发光！
+            </div>
+            <div class="post-footer"><span class="post-tail">14楼</span><span class="post-tail">2012-06-07 20:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+    <div class="l-post" data-page="3">
+        <div class="d-author">
+            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
+            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+        </div>
+        <div class="d-post-content">
+            <span class="louzhu-icon">楼主</span>
+            <div class="post-text">
+   各位吧友，我也要退吧去准备初三的补课了٩(๑•̀ω•́๑)۶<br>我想我们就像两条在转乘站匆匆交汇的地铁线，以前总觉得，没能一起到达终点就叫遗憾。但转而一想，在我的青春时刻表里，已经永远留下了那个名字。这就够了，不是吗？<br>[封楼]
+            </div>
+            <div class="post-footer"><span class="post-tail">15楼</span><span class="post-tail">2012-06-07 21:35</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+        </div>
+    </div>
+
+ 
+</div>
+
+<div class="pagination" id="page-nav">
+    <span onclick="goToPage(1)" class="page-btn active" id="btn-1">1</span>
+    <a onclick="goToPage(2)" class="page-btn" id="btn-2">2</a>
+    <a onclick="goToPage(3)" class="page-btn" id="btn-3">3</a>
+</div>
+
+<div style="width: 980px; margin: 20px auto; padding: 20px; font-size: 14px; color: #999; text-align: center;">
+    ©2012 Baidu <a href="#" style="color:#2d64b3; text-decoration: none;">贴吧协议</a> | <a href="#" style="color:#2d64b3; text-decoration: none;">隐私政策</a>
+</div>
+
+<script>
+    function goToPage(pageNum) {
+        // 1. 隐藏所有帖子
+        const posts = document.querySelectorAll('.l-post');
+        posts.forEach(post => post.style.display = 'none');
+
+        // 2. 显示当前页的帖子
+        const currentPosts = document.querySelectorAll('.l-post[data-page="' + pageNum + '"]');
+        currentPosts.forEach(post => post.style.display = 'flex');
+
+        // 3. 更新分页按钮样式
+        const buttons = document.querySelectorAll('.page-btn');
+        buttons.forEach(btn => {
+            btn.classList.remove('current');
+            // 将 <span> 变回 <a> 以保持样式一致（简化处理，直接改 class）
+            if(btn.id === 'btn-' + pageNum) {
+                btn.style.fontWeight = 'bold';
+                btn.style.color = '#333';
+                btn.style.border = 'none';
+                btn.style.background = 'none';
+            } else {
+                btn.style.fontWeight = 'normal';
+                btn.style.color = '#2d64b3';
+                btn.style.border = '1px solid #ccc';
+                btn.style.background = '#fff';
+            }
+        });
+        
+        // 滚动回顶部
+        window.scrollTo(0, 0);
+    }
+
+    // 初始化显示第一页
+    goToPage(1);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>收件箱 - QQ邮箱</title>
+    <style>
+        :root {
+            --sidebar-width: 200px;
+            --top-height: 55px;
+            --blue-primary: #3b8ede;
+            --text-main: #333;
+            --text-light: #999;
+            --bg-gray: #f2f5f7;
+            --border-color: #dee4e9;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: "lucida Grande", Verdana, "Microsoft YaHei";
+            background-color: white;
+            overflow: hidden;
+        }
+
+        /* --- 保持原样：顶部导航 --- */
+        .header {
+            height: var(--top-height);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fff;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 40px; }
+        .search-bar {
+            background: var(--bg-gray);
+            border-radius: 4px;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            width: 350px;
+        }
+        .search-bar input {
+            background: transparent; border: none; outline: none; width: 100%;
+            font-size: 13px; color: #666;
+        }
+
+        /* 主体布局 */
+        .container { display: flex; height: calc(100vh - var(--top-height)); }
+
+        /* --- 保持原样：侧边栏 --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-gray);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding-top: 10px;
+        }
+        .nav-item {
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            cursor: pointer;
+            color: #444;
+            transition: background 0.2s;
+        }
+        .nav-item:hover { background: #e2e8eb; }
+        .nav-item.active { background: var(--blue-primary); color: white; }
+        .nav-item .icon { width: 18px; margin-right: 10px; text-align: center; }
+        .divider { height: 1px; background: #dce1e6; margin: 10px 20px; }
+        .folder-title { padding: 5px 20px; font-size: 12px; font-weight: bold; color: #666; display: flex; justify-content: space-between; }
+
+        /* --- 调优：内容区 --- */
+        .main-content { flex: 1; display: flex; flex-direction: column; background: #fff; }
+
+        .action-bar {
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            background: #fff;
+        }
+        .btn {
+            padding: 4px 12px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+        }
+        .btn:hover { background: #f8f8f8; }
+
+        /* 邮件阅读区调优：增加纸张质感衬托 */
+        .mail-detail-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #f2f5f7; /* 与侧边栏呼应的浅灰色底色 */
+            padding: 20px;
+        }
+
+        .mail-card {
+            background: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 100%;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 40px 50px;
+        }
+
+        .mail-header-info {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        .mail-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            font-size: 12px;
+            margin-bottom: 6px;
+            display: flex;
+        }
+        .info-label { color: #999; width: 60px; text-align: right; margin-right: 12px; }
+        .info-content { color: #333; }
+        .sender-name { font-weight: bold; color: #1e5494; }
+
+        .mail-text-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+            letter-spacing: 0.5px;
+        }
+        .mail-text-content p {
+            margin: 0 0 18px 0;
+        }
+        .signature {
+            margin-top: 40px;
+
+            text-align: left;
+        }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">16/36</div></head>
+<body>
+
+<header class="header">
+    <div class="header-left">
+        <div style="font-size: 20px; font-weight: bold; color: var(--blue-primary);">MAIL | QQ邮箱</div>
+        <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="搜索邮件、联系人..." readonly>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="nav-item"><span class="icon">✏️</span>写邮件</div>
+        <div class="nav-item active"><span class="icon">📥</span>收件箱</div>
+        <div class="nav-item"><span class="icon">👤</span>通讯录</div>
+        <div class="divider"></div>
+        <div class="nav-item"><span class="icon">🔖</span>重要联系人</div>
+        <div class="nav-item"><span class="icon">⭐</span>星标邮件</div>
+        <div class="nav-item"><span class="icon">📁</span>群邮件</div>
+        <div class="nav-item"><span class="icon">📤</span>已发送</div>
+        <div class="nav-item"><span class="icon">📝</span>草稿箱</div>
+        <div class="nav-item"><span class="icon">🗑️</span>已删除</div>
+        <div class="nav-item"><span class="icon">🚫</span>垃圾箱</div>
+    </aside>
+
+    <main class="main-content">
+        <div class="action-bar">
+            <button class="btn" style="font-weight: bold;" onclick="history.back()">返回</button>
+            <div style="width:1px; height:15px; background:#ddd; margin:0 5px;"></div>
+            <button class="btn">回复</button>
+            <button class="btn">转发</button>
+            <button class="btn">删除</button>
+            <button class="btn">标记为 ▼</button>
+        </div>
+
+        <div class="mail-detail-wrapper">
+            <article class="mail-card">
+                <header class="mail-header-info">
+                    <h1 class="mail-title">从家里给你写的一封信</h1>
+                    <div class="info-row">
+                        <span class="info-label">发件人:</span>
+                        <span class="info-content"><span class="sender-name">893478266</span> &lt;893478266@qq.com&gt;</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">时　间:</span>
+                        <span class="info-content">2012年10月19日(星期五) 21:45</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">收件人:</span>
+                        <span class="info-content">以然学姐</span>
+                    </div>
+                </header>
+
+                <section class="mail-text-content">
+                    <p>以然学姐：</p>
+                    <p>我回家已经三个多月了，想了很久，还是给你写了这封邮件。我先回到原来的学籍上学了，爸爸在青州的工作年底就会结束，到时候也会一起回家。现在算是提前适应吧。</p>
+                    <p>新学校和实中差别挺大的。教材不一样，老师讲课的进度也快，我有点跟不上，最近常常觉得吃力。有时候下课坐在教室里，会突然想起以前在实中的日子，连以前觉得难吃的食堂，现在都怀念得不行。</p>
+                    <p>自从你上了高中之后，QQ都一直不在线，留言好像也没有被看到。我知道你肯定很忙，但还是有点失落，特别想和你说说话。平时也拿不到电脑，所以这次试着给你发封邮件，想问问你最近过得怎么样，看到了要回复我哦～</p>
+                    <p>我现在每天都在努力跟上新学校的节奏，也在慢慢习惯。只是有时候还是会想起以前在实中的那些日子。希望等高考结束以后，我们还能有机会再见一面。</p>
+                    
+                    <div class="signature">
+                        <p>想你了。</p>
+                        <p>2012年10月19日</p>
+                    </div>
+                </section>
+            </article>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

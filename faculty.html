@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yiting Duan | Department of Chemistry | University of Pennsylvania</title>
+    <style>
+        /* UPenn 官方色值 */
+        :root {
+            --upenn-blue: #011F5B;
+            --upenn-red: #990000;
+            --light-grey: #f3f3f3;
+            --border-color: #ccc;
+        }
+
+        body {
+            font-family: 'EB Garamond', Georgia, serif; /* 宾大偏好这种古典而优雅的衬线字体 */
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        /* 顶部 Logo 与 导航栏 */
+        header {
+            border-top: 5px solid var(--upenn-red);
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--upenn-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--upenn-red);
+        }
+
+        /* 黑色个人姓名横条 - 参考图片样式 */
+        .name-banner {
+            background-color: #222;
+            color: white;
+            padding: 40px 10%;
+            font-size: 42px;
+            font-weight: 300;
+        }
+
+        /* 主体布局 */
+        .main-container {
+            display: flex;
+            padding: 40px 10%;
+            gap: 50px;
+        }
+
+        /* 左侧个人信息卡片 - 参考图片样式 */
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .profile-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+.photo-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+    position: relative;
+}
+
+
+        .label-tag {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(153, 0, 0, 0.9);
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            width: calc(100% - 30px);
+        }
+
+        .contact-info {
+            padding: 20px;
+            font-size: 0.95em;
+        }
+
+        .contact-info p { margin: 8px 0; }
+        .contact-info a { color: var(--upenn-blue); text-decoration: none; }
+
+        /* 右侧内容区 */
+        .content-area {
+            flex-grow: 1;
+        }
+
+        .nav-sub {
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--upenn-red);
+        }
+
+        .nav-sub a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: var(--upenn-red);
+            font-weight: bold;
+        }
+
+        h2 {
+            color: var(--upenn-blue);
+            border-bottom: 2px solid var(--upenn-blue);
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .pub-list { list-style: none; padding: 0; }
+        .pub-list li { margin-bottom: 15px; border-left: 3px solid var(--upenn-red); padding-left: 15px; }
+        .me { font-weight: bold; }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--light-grey);
+            padding: 40px 10%;
+            margin-top: 60px;
+            font-size: 0.85em;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">extra6/36</div></head>
+<body>
+
+<header>
+    <div class="logo-text">Penn <span>Chemistry</span></div>
+    <div style="font-size: 0.9em; color: #666;">University of Pennsylvania</div>
+</header>
+
+<div class="name-banner">
+    Yiting Duan
+</div>
+
+<div class="main-container">
+    <aside class="sidebar">
+        <div class="profile-card">
+            <div class="photo-placeholder">
+                <img src="avatar.jpg" alt="Yiting He" style="width:100%; height:100%;">
+                <div class="label-tag">
+                    <strong>Yiting Duan</strong><br>
+                    Postdoctoral Fellow
+                </div>
+            </div>
+            <div class="contact-info">
+                <p><strong>Department:</strong><br>Chemistry</p>
+                <p>📧 <a href="mailto:Yitingd@sas.upenn.edu">Yitingd@sas.upenn.edu</a></p>
+                <p>📍 231 South 34th Street<br>Philadelphia, PA 19104</p>
+                <p>🔬 <strong>The Kozlowski Lab</strong></p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="content-area">
+        <div class="nav-sub">
+            <a href="#">Publications</a> | <a href="#">Research</a> | <a href="#">CV</a> | <a href="#">All</a>
+        </div>
+
+        <section id="bio">
+            <h2>Biography</h2>
+            <p>
+                I am a Postdoctoral Fellow in the Department of Chemistry at the University of Pennsylvania, working under the supervision of <strong>Prof. Macus Kozlowski</strong>. My research lies at the interface of <strong>High-Throughput Experimentation (HTE)</strong> and <strong>Oxidative Coupling Catalysis</strong>. 
+            </p>
+            <p>
+                I received my B.S. in Chemistry from Boston University and my Ph.D. from Scripps Research, where I focused on the total synthesis of complex natural products. Currently, I am developing machine-learning-guided workflows to optimize transition-metal-catalyzed reactions.
+            </p>
+        </section>
+
+        <section id="publications">
+            <h2>Selected Publications</h2>
+            <ul class="pub-list">
+                <li>
+                    <span class="me">Duan, Y.</span>; Walsh, P. J.; Kozlowski, M. C. "Data-Driven Design of Chiral Ligands for Asymmetric C–C Coupling." 
+                    <em>Journal of the American Chemical Society</em>, <strong>2025</strong>, 147, 1024-1035.
+                </li>
+                <li>
+                    <span class="me">Duan, Y.</span>*; Smith, J.*; et al. "Automated Screening of Palladium-Catalyzed C-H Activation." 
+                    <em>Angewandte Chemie International Edition</em>, <strong>2024</strong>, 62, e202301234.
+                </li>
+            </ul>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <div>
+        <strong>Department of Chemistry</strong><br>
+        University of Pennsylvania<br>
+        &copy; 2026 The Trustees of the University of Pennsylvania
+    </div>
+    <div style="text-align: right;">
+        <a href="#" style="color:#666; text-decoration:none;">Directory</a> | 
+        <a href="#" style="color:#666; text-decoration:none;">Contact Us</a><br>
+        Follow Penn Chemistry on Twitter
+    </div>
+</footer>
+
+</body>
+</html>

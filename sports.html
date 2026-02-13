@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>运动会广播站</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Long+Cang&display=swap" rel="stylesheet">
+    
+    <style>
+      body {
+ background-color: #fffde8;; /* 淡粉色背景，不瘆人 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px;
+}
+
+
+
+        .desk {
+            width: 100%;
+            max-width: 600px;
+            perspective: 1000px;
+        }
+
+        .note {
+            background: white;
+            padding: 30px 40px;
+            margin-bottom: -15px; /* 让纸条稍微叠放 */
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.15);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .note:hover {
+            transform: scale(1.02) translateZ(10px);
+            z-index: 10;
+        }
+
+        /* 笔迹 1: 奔放草书感 (Zhi Mang Xing) */
+        .handwriting-1 {
+            font-family: 'Zhi+Mang+Xing', 'Zhi Mang Xing', cursive;
+            color: #1a3a6c; /* 蓝黑墨水 */
+            transform: rotate(-1.5deg);
+            clip-path: polygon(1% 1%, 98% 3%, 100% 97%, 2% 99%);
+        }
+
+        /* 笔迹 2: 工整方正感 (Ma Shan Zheng) */
+        .handwriting-2 {
+            font-family: 'Ma+Shan+Zheng', 'Ma Shan Zheng', cursive;
+            color: #222; /* 碳素墨水 */
+            transform: rotate(1deg);
+            margin-left: 20px;
+            clip-path: polygon(0% 0%, 100% 2%, 98% 98%, 1% 96%);
+        }
+
+        /* 笔迹 3: 灵动纤细感 (Long Cang) */
+        .handwriting-3 {
+            font-family: 'Long+Cang', 'Long Cang', cursive;
+            color: #d71345; /* 红色圆珠笔 */
+            transform: rotate(-0.5deg);
+            clip-path: polygon(2% 0%, 99% 1%, 97% 100%, 0% 98%);
+        }
+
+        .header {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .content {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            text-indent: 2em;
+        }
+
+        .footer {
+            text-align: right;
+            margin-top: 15px;
+            font-size: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 10px;
+        }
+
+        /* 装饰：别针效果 */
+        .pin {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 40px;
+            height: 10px;
+            background: rgba(200,200,200,0.5);
+            border-radius: 5px;
+            transform: translateX(-50%);
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">extra1/36</div></head>
+<body>
+
+<div class="desk">
+    
+
+    <div class="note handwriting-1">
+        <span class="header">初一5班：</span>
+        <div class="content">
+            发令枪的锐响刺破空气，红色跑道上，你如离弦之箭冲出起点!每一步都踩在心跳的鼓点上，每一次摆臂都凝聚着力量，终点线已在眼前，冲！用速度书写属于你的闪电传奇！相信你，你是我们的骄傲。
+        </div>
+        <div class="footer">张逸轩，加油！</div>
+    </div>
+
+    <div class="note handwriting-2">
+        <span class="header">初三2班：</span>
+        <div class="content">
+            200米，不长不短，却最能展现你的实力!从起跑的爆发力，到弯道的控制力，再到直道的冲刺力，你样样出色，加油!别放弃，坚持到底，我们会为你呐喊到最后。
+        </div>
+        <div class="footer">加油毛毛！</div>
+    </div>
+
+    <div class="note handwriting-3">
+        <span class="header">初二7班：</span>
+        <div class="content">
+        不必追風，也不必和誰比較，只要你在跑道上奔跑的那一刻，陽光、汗水和勇氣就已經為你鼓掌。慢一點也好，快一點也好。都有人在終點等你，為你此刻的努力，輕輕說一聲：加油，你已經很棒了。
+        </div>
+        <div class="footer">余向晴，加油</div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>青州市实验初级中学</title>
+    <style>
+        :root {
+            --school-blue: #004b91; /* 参考学校网站主色调 */
+            --bg-gray: #f8f9fb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e0e0e0; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+        /* Safari 全屏容器 */
+        .safari-view {
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 拟真 Safari 地址栏 */
+        .safari-bar {
+            height: 50px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid #d1d1d1;
+            z-index: 100;
+        }
+        .controls { display: flex; gap: 8px; width: 60px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #ccc; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .address-field {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #e3e3e3;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* 网页主体内容 */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            background: var(--bg-gray);
+        }
+
+        /* 头部：参考源码中的 logo 和 nav */
+        .school-header {
+            background: #fff;
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--school-blue);
+        }
+        .school-logo img { height: 60px; }
+        .nav-menu { display: flex; gap: 20px; font-size: 15px; color: #333; font-weight: bold; }
+
+        /* 搜索区域：融合百度与学校搜索 */
+        .hero-section {
+            height: 350px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('school1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            height: 50px;
+            border-radius: 25px;
+            border: none;
+            padding: 0 100px 0 25px;
+            font-size: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            width: 90px;
+            background: var(--school-blue);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* 仿学校主页的三栏布局 */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 40px 10%;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .card-title {
+            border-left: 4px solid var(--school-blue);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-title h3 { font-size: 18px; color: var(--school-blue); }
+
+        .news-list { list-style: none; }
+        .news-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        .news-item a { color: #333; text-decoration: none; }
+        .news-item .date { color: #999; }
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">11/36</div></head>
+<body>
+
+<div class="safari-view">
+
+
+    <div class="page-content">
+        <header class="school-header">
+            <div class="school-logo">
+                <img src="logo2.png" alt="Logo">
+                                <img src="name.png" alt="Logo">
+            </div>
+            <nav class="nav-menu">
+                <span>网站首页</span>
+                <span>实中概况</span>
+                <span>实中党建</span>
+                <span>实中德育</span>
+                <span>实中教学</span>
+            </nav>
+        </header>
+
+        <div class="hero-section">
+            <div class="search-container">
+           <input 
+  type="text" 
+  class="search-input" 
+  id="yearInput"
+  placeholder="搜索毕业年份，查看此届升学情况...">
+
+<button class="search-btn" id="searchBtn">搜 索</button>
+
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <div class="card">
+                <div class="card-title">
+                    <h3>实验新闻</h3>
+                    <small>MORE+</small>
+                </div>
+                <ul class="news-list">
+                    <li class="news-item"><a href="#">全民消防，生命至上——实验中学开展消防安全系列活动</a><span class="date">2026-01-07</span></li>
+                    <li class="news-item"><a href="#">云端同上一堂课 网链共研增实效——我校开展线上互动课堂与联合教研</a><span class="date">2026-01-06</span></li>
+                    <li class="news-item"><a href="#">以歌赴约 共续火花 | 十佳歌手大赛超燃瞬间回顾</a><span class="date">2026-01-05</span></li>
+<li class="news-item">
+  <a href="sports.html" target="_blank" rel="noopener noreferrer">热烈祝贺我校第十三届运动会隆重举行</a>
+
+  <span class="date">2012-04-16</span>
+</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h3>通知公告</h3>
+                    <small>MORE+</small>
+                </div>
+                <ul class="news-list">
+                    <li class="news-item"><a href="#">实初教育集团微信公众号</a></li>
+                    <li class="news-item"><a href="#">关于规范办学监督举报方式的公告</a></li>
+                    <li class="news-item"><a href="#">学生体质健康测试公示</a></li>
+                    <li class="news-item"><a href="#">2025年入学政策公示</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const input = document.getElementById('yearInput');
+    const btn = document.getElementById('searchBtn');
+
+    function handleSearch() {
+        const year = input.value.trim();
+        if (year === '2012') {
+            window.open('congrats.html', '_blank');
+        }
+    }
+
+    btn.addEventListener('click', handleSearch);
+
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回复新郎 - 微信</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #ededed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .wechat-window {
+            width: 600px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .wechat-header {
+            background: #f7f7f7;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #07c160;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+        .contact-name {
+            font-size: 1.1em;
+            color: #333;
+            font-weight: 500;
+        }
+        .chat-area {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .message.sent {
+            flex-direction: row-reverse;
+        }
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .message-content {
+            max-width: 70%;
+        }
+        .message-time {
+            text-align: center;
+            color: #999;
+            font-size: 0.8em;
+            margin: 15px 0;
+        }
+        .message-bubble {
+            padding: 12px 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        .message.received .message-bubble {
+            background: white;
+            color: #333;
+        }
+        .message.sent .message-bubble {
+            background: #95ec69;
+            color: #333;
+        }
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 5px;
+            width: fit-content;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        .ending-notice {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        .ending-notice.show {
+            display: block;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .end-btn {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            background: #07c160;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        .end-btn:hover {
+            background: #06ad56;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <div class="wechat-window">
+        <div class="wechat-header">
+            <div class="contact-avatar">👔</div>
+            <div class="contact-name">张子轩</div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="message-time">2024年3月15日 下午</div>
+
+            <div class="message received">
+                <div class="message-avatar">👔</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        学姐，能帮我一个忙吗？
+                    </div>
+                </div>
+            </div>
+
+            <div class="message received">
+                <div class="message-avatar">👔</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        向晴有时会提到"dxt"，我想了解这是什么
+                    </div>
+                </div>
+            </div>
+
+            <div class="message received">
+                <div class="message-avatar">👔</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        她说这是她青春时期很重要的回忆
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        好的，我帮你查查
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-time">几小时后...</div>
+
+            <div class="message sent" id="reply1" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        我找到答案了
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent" id="reply2" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        "dxt"是"地下铁"的缩写
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent" id="reply3" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        一个是奶茶店的名字，一个是书的名字
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent" id="reply4" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        那是向晴青春时期最美好的回忆
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent" id="reply5" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        她已经放下了过去，现在很幸福
+                    </div>
+                </div>
+            </div>
+
+            <div class="message received" id="reply6" style="display: none;">
+                <div class="message-avatar">👔</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        谢谢学姐，我明白了
+                    </div>
+                </div>
+            </div>
+
+            <div class="message received" id="reply7" style="display: none;">
+                <div class="message-avatar">👔</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        婚礼那天，希望你能来
+                    </div>
+                </div>
+            </div>
+
+            <div class="message sent" id="reply8" style="display: none;">
+                <div class="message-avatar">🌈</div>
+                <div class="message-content">
+                    <div class="message-bubble">
+                        我会去的😊
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ending-notice" id="endingNotice">
+            <h3 style="margin-bottom: 15px; color: #333;">✨ 真相大白</h3>
+            <p style="line-height: 1.8; color: #666;">
+                学姐解开了"dxt"的秘密，<br>
+                也释怀了自己的伤痛。<br><br>
+                学妹找到了幸福，<br>
+                学姐也学会了放下。<br><br>
+                温暖，一直在延续。
+            </p>
+        </div>
+
+        <a href="macos_desktop.html" class="end-btn" id="endBtn" style="display: none;">返回桌面</a>
+    </div>
+
+    <script>
+        let messageIndex = 1;
+        const totalMessages = 8;
+
+        function showNextMessage() {
+            if (messageIndex <= totalMessages) {
+                document.getElementById('reply' + messageIndex).style.display = 'flex';
+                messageIndex++;
+                
+                // 滚动到底部
+                const chatArea = document.getElementById('chatArea');
+                chatArea.scrollTop = chatArea.scrollHeight;
+                
+                if (messageIndex <= totalMessages) {
+                    setTimeout(showNextMessage, 1500);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('endingNotice').classList.add('show');
+                        document.getElementById('endBtn').style.display = 'block';
+                    }, 2000);
+                }
+            }
+        }
+
+        window.onload = function() {
+            setTimeout(() => {
+                showNextMessage();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

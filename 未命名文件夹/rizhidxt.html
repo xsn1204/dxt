@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对于我即将开始的高中生活的吐槽 - QQ空间</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", Arial, sans-serif;
+        }
+        body {
+            background: #f7f7f7;
+            color: #333;
+        }
+               /* 顶部导航栏 */
+        .top-nav {
+            background-color: #c9a769;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b89658;
+            font-size: 12px;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-left span {
+            margin: 0 8px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-right input {
+            height: 20px;
+            width: 150px;
+            padding: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            margin: 0 5px;
+        }
+
+        .top-nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        
+        /* 头部横幅 */
+        .header {
+            background: #eef7ff;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://example.com/qqzone-bg.jpg') no-repeat center/cover;
+            opacity: 0.3;
+        }
+        .header .profile {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .header .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 3px solid #fff;
+        }
+        .header .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .header .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .header .nickname {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .header .qzone-link {
+            font-size: 12px;
+            color: #666;
+        }
+        .header .special-care {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: #a89176;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        /* 导航菜单 */
+        .nav {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 140px;
+        }
+        .nav ul {
+            display: flex;
+            list-style: none;
+        }
+        .nav li {
+            margin-right: 30px;
+        }
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #c9b79c;
+            font-weight: bold;
+            border-bottom: 2px solid #c9b79c;
+        }
+        /* 主体内容区 */
+        .container {
+            width: 980px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+        }
+        .main {
+            flex: 1;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 280px;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+        }
+        /* 日志头部 */
+        .log-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .log-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .log-meta {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            gap: 15px;
+        }
+        .log-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+        }
+        .log-actions a {
+            color: #666;
+            text-decoration: none;
+        }
+        /* 日志正文 */
+        .log-content {
+            line-height: 1.8;
+            font-size: 14px;
+            color: #333;
+        }
+        .log-content .title {
+            text-align: center;
+            font-size: 22px;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #a89176;
+        }
+        .log-content .img-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .log-content .img-box img {
+            max-width: 500px;
+            border: 1px solid #eee;
+        }
+        .log-content p {
+            margin-bottom: 15px;
+        }
+        /* 评论区 */
+        .comments {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .comment-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .comment-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comment-content {
+            flex: 1;
+        }
+        .comment-header {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .comment-text {
+            font-size: 14px;
+            color: #333;
+        }
+        .comment-reply {
+            margin-left: 50px;
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 1px solid #eee;
+        }
+        /* 侧边栏 */
+        .sidebar .section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .sidebar .section:last-child {
+            border-bottom: none;
+        }
+        .sidebar .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #a89176;
+        }
+        .sidebar .visitor-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .sidebar .visitor-item {
+            width: 60px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .sidebar .visitor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        .sidebar .visitor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999;
+            background: #fff;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+          :root {
+            --qzone-blue: #e1f1f7;
+            --qzone-border: rgba(221, 201, 150, 0.871);
+            --qzone-text: #333;
+            --qzone-link: #d19e03;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('morning.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed; /* 关键：滚动时背景不动 */
+            color: #000000;
+        }
+
+              /* 顶部导航栏 */
+        .top-nav {
+            background-color: #c9a769;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b89658;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-left span {
+            margin: 0 8px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-right input {
+            height: 20px;
+            width: 150px;
+            padding: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            margin: 0 5px;
+        }
+
+        .top-nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        /* 蓝天背景 Banner */
+        .header-wrapper {
+            background: url('pride.jpg') no-repeat center;
+            background-size: cover;
+            height: 220px;
+            max-width: 1000px;
+            margin: 0 auto;              /* 让 wrapper 本身居中 */
+            border-bottom: 1px solid var(--qzone-border);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;              /* 内容居中 */
+            position: relative;
+            height: 100%;
+        }
+
+        /* 头像与资料 */
+        .profile-section {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .user-info h2 { margin: 0; color: #ffaa00; font-size: 22px; }
+        .diamond-tag {
+            display: inline-block;
+            background: #ffaa00;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        /* 导航菜单 */
+        .nav-tabs {
+            position: absolute;
+            bottom: 0;
+            left: 195px;
+            display: flex;
+        }
+        .tab {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--qzone-border);
+            border-bottom: none;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .tab.active { background: #fff; font-weight: bold; }
+        .tab:hover { background: #fff; }
+
+        /* 访客统计 */
+        .visitor-stats {
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+        }
+        .visitor-count { color: #ff8800; font-weight: bold; font-size: 16px; }
+
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <span>⭐ QQ空间</span>
+            <span>她的主页 ></span>
+            <span>她的动态 ></span>
+            <span></span>
+        </div>
+        <div class="top-nav-right">
+            <a href="#">不知所以然</a>
+            <a href="#">[退出]</a>
+            <a href="#">⚙️</a>
+        </div>
+    </div>
+    
+    <!-- 主体内容区 -->
+    <div class="container">
+        <!-- 主内容区 -->
+        <div class="main">
+            <div class="log-header">
+                <div class="log-title">对于我即将开始的高中生活的吐槽</div>
+                <div class="log-meta">
+                    <span>编辑于 2013-8-23 18:16</span>
+                    <span>阅读(32)</span>
+                </div>
+                <div class="log-actions">
+                    <a href="#"><img src="https://qzonestyle.gtimg.cn/qzone/v8/img/like.png" alt="赞" style="width:14px; vertical-align: middle;"> 赞(4)</a>
+                    <a href="#"><img src="https://qzonestyle.gtimg.cn/qzone/v8/img/comment.png" alt="评论" style="width:14px; vertical-align: middle;"> 评论(6)</a>
+                    <a href="#"><img src="https://qzonestyle.gtimg.cn/qzone/v8/img/repost.png" alt="转载" style="width:14px; vertical-align: middle;"> 转载(1)</a>
+                    <a href="#">分享</a>
+                    <a href="#">复制地址</a>
+                    <a href="#">收藏</a>
+                    <a href="#">更多 ▼</a>
+                </div>
+                <div style="margin-top:10px; font-size:12px; color:#999;">
+                    已经是第一篇 | <a href="#">下一篇：开学必备66样物品...</a>
+                </div>
+                <div style="margin-top:10px;">
+                    <button style="background:#e1f0ff; border:1px solid #b3d8f5; color:#409eff; padding:4px 12px; border-radius:3px; font-size:12px; cursor:pointer;">本日志为模板日志</button>
+                    <button style="background:#fff; border:1px solid #ddd; color:#666; padding:4px 12px; border-radius:3px; font-size:12px; cursor:pointer; margin-left:5px;">马上也写一篇>></button>
+                </div>
+            </div>
+
+            <div class="log-content">
+                <div class="title">对于我即将开始的高中生活的吐槽</div>
+                <div class="img-box">
+                    <img src="https://example.com/teaching-building.jpg" alt="教学楼">
+                </div>
+<p>段宜廷可能要出国了。</p>
+<p>我不知道是应该开心还是难过，只觉得那些年的自己好傻。</p>
+
+<p>你永远不会知道，</p>
+<p>我偷偷去你常去的蛋糕店蹲你下课，明明我从来不喜欢那家的蛋糕；</p>
+<p>在模联大会上加遍了所有国家代表，只为了找到一个正当理由，可以拿到你的QQ号；</p>
+<p>我甚至拉着朋友去你学调酒的酒吧坐了一整天，结果你只有晚班才来。</p>
+<p>这些事每次想起来，还是会笑。</p>
+
+<p>有时候你忽然上线，有时候又消失，好像整个世界都和我们开玩笑。</p>
+<p>但我反倒很喜欢这样一搭没一搭的联系，就像地铁偶尔交错，在短暂相遇后，又各自驶向不同的方向，只留下轻轻的回响。</p>
+
+<p>直到现在我才明白，我们的轨道是真的要分开了。</p>
+<p>你要去很远的地方，而我也要离开青州，回家读高中。</p>
+
+<p>昨晚我鼓起勇气点开QQ，删了你，删掉所有还能联系你的方式。</p>
+<p>一瞬间，心里空落落的，但又充满了莫名的轻松与解脱，</p>
+<p>我会记住你，记住那些小小的开心和遗憾。</p>
+<p>因为你出现在我的青春，真实地温暖过、鼓舞过我。</p>
+<p>地下铁还在继续向前，只是我们的路已经不一样了。</p>
+<p>我会记得你的笑，你的风衣，你的存在。</p>
+<p>谢谢你，段宜廷，</p>
+<p>谢谢你，给我的这段青春回忆。</p>
+
+            </div>
+
+            <div class="comments">
+                <div class="comment-title">评论(6)</div>
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="https://example.com/comment1.jpg" alt="评论者头像">
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span style="font-weight:bold; color:#666;">青</span>
+                            <span style="margin-left:10px;">1楼 评论时间: 2013-08-23 17:57:53</span>
+                            <a href="#" style="float:right; color:#999;">回复 ▼</a>
+                        </div>
+                        <div class="comment-text">哈哈哈哈好欢乐</div>
+                        <div style="font-size:12px; color:#999; margin-top:5px;">该评论来自手机Qzone</div>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="https://example.com/comment2.jpg" alt="评论者头像">
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span style="font-weight:bold; color:#666;">208的废柴</span>
+                            <span style="margin-left:10px;">2楼 评论时间: 2013-08-23 17:59:31</span>
+                            <a href="#" style="float:right; color:#999;">回复 ▼</a>
+                        </div>
+                        <div class="comment-text">208的废柴来访，太有才了 🎉，求转……</div>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="https://example.com/comment3.jpg" alt="评论者头像">
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span style="font-weight:bold; color:#666;">Adriana</span>
+                            <span style="margin-left:10px;">3楼 评论时间: 2013-08-23 18:00:21</span>
+                            <a href="#" style="float:right; color:#999;">回复 ▼</a>
+                        </div>
+                        <div class="comment-text">求槽点...</div>
+                        <div style="font-size:12px; color:#999; margin-top:5px;">该评论来自手机Qzone</div>
+
+                        <div class="comment-reply">
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://example.com/cat-avatar.jpg" alt="头像">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span style="font-weight:bold; color:#666;">Tiger</span>
+                                        <span style="margin-left:10px;">8月23日 18:00</span>
+                                    </div>
+                                    <div class="comment-text">@Adriana 真的么那我不客气了= =</div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <img src="https://example.com/comment3.jpg" alt="头像">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span style="font-weight:bold; color:#666;">Adriana</span>
+                                        <span style="margin-left:10px;">8月23日 18:01</span>
+                                    </div>
+                                    <div class="comment-text">@Tiger 恩恩..我怎么都没有发现有槽点.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

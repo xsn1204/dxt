@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同窗记忆2012 - 我的同学录</title>
+    <style>
+        :root {
+            --paper-bg: #fffdf2;
+            --blue-accent: #87CEEB;
+            --pink-accent: #FFB6C1;
+            --border-style: 2px dashed #ccc;
+        }
+
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Microsoft YaHei", "STHeiti", sans-serif;
+        }
+
+        /* 模拟翻页容器 */
+        .book {
+            width: 800px;
+            height: 550px;
+            position: relative;
+            perspective: 1500px;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: var(--paper-bg);
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 30px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /* 2012风格背景点缀 */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 40px;
+            background: repeating-linear-gradient(90deg, var(--blue-accent), var(--blue-accent) 50px, #fff 50px, #fff 100px);
+            opacity: 0.3;
+        }
+
+        /* 左侧个人信息区 */
+        .info-section {
+            border-right: var(--border-style);
+            padding-right: 15px;
+        }
+
+        .title-box {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px double var(--blue-accent);
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .info-item b {
+            color: #555;
+            display: inline-block;
+            width: 70px;
+        }
+
+        .handwritten {
+            font-family: "KaiTi", "楷体", serif;
+            color: #1a73e8;
+            font-size: 16px;
+            border-bottom: 1px solid #999;
+            padding: 0 5px;
+        }
+
+        /* 右侧创意区 */
+        .creative-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .photo-box {
+            width: 180px;
+            height: 220px;
+            border: 5px solid white;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            background: #eee;
+            margin: 0 auto;
+            position: relative;
+            transform: rotate(3deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-box::after {
+            content: "Photo";
+            position: absolute;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .message-box {
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        /* 翻页动画控制 */
+        .page.hidden {
+            transform: rotateY(-180deg);
+            transform-origin: left;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 2012 特色图标点缀 */
+        .icon {
+            width: 25px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .qq-style {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .footer-nav {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+<div class="book" id="myBook">
+    <div class="page" id="page1" onclick="flipPage(1)">
+        <div class="info-section">
+            <div class="title-box">MY DATA 我的小资料</div>
+            <div class="info-item"><b>姓名:</b> <span class="handwritten">李燕</span></div>
+            <div class="info-item"><b>生日:</b> <span class="handwritten">1992.03.21</span></div>
+            <div class="info-item"><b>生肖:</b> <span class="handwritten">猴</span></div>
+            <div class="info-item"><b>星座:</b> <span class="handwritten">牧羊座</span></div>
+            <div class="info-item"><b>爱好:</b> <span class="handwritten">唱歌、看书</span></div>
+            <div class="info-item"><b>梦想:</b> <span class="handwritten">能有一份好的工作</span></div>
+            <div class="info-item"><b>偶像:</b> <span class="handwritten">很多的...</span></div>
+            <div class="info-item"><b>QQ号:</b> <span class="handwritten qq-style">893478266</span></div>
+            <div class="info-item"><b>Email:</b> <span class="handwritten">liyan893478266.cn@163.com</span></div>
+        </div>
+        <div class="creative-section">
+            <div class="photo-box">
+                <img src="https://via.placeholder.com/180x220?text=2012+Memories" alt="照片">
+            </div>
+            <div class="message-box">
+                <p><b>对你的第一印象：</b><br><span class="handwritten">那时候你总爱坐在窗前发呆，很文静。</span></p>
+                <p><b>我们的快乐回忆：</b><br><span class="handwritten">一起在操场吃雪糕，讨论《时代英语报》上的冷知识。</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" id="page2" onclick="flipPage(2)" style="z-index: -1;">
+        <div class="info-section">
+            <div class="title-box">MY FRIEND 昔日同窗</div>
+            <div class="info-item"><b>姓名:</b> <span class="handwritten">张伟 (小恐龙)</span></div>
+            <div class="info-item"><b>生日:</b> <span class="handwritten">1993.08.15</span></div>
+            <div class="info-item"><b>星座:</b> <span class="handwritten">狮子座</span></div>
+            <div class="info-item"><b>手机:</b> <span class="handwritten">138********</span></div>
+            <div class="info-item"><b>空间:</b> <span class="handwritten">个人主页更新中...</span></div>
+            <div class="info-item"><b>座右铭:</b> <span class="handwritten">不走寻常路！(美特斯邦威)</span></div>
+            <div class="info-item"><b>现状:</b> <span class="handwritten">准备高考中，加油！</span></div>
+        </div>
+        <div class="creative-section">
+            <div class="photo-box" style="transform: rotate(-3deg);">
+                 <img src="https://via.placeholder.com/180x220?text=Basketball+Boy" alt="照片">
+            </div>
+            <div class="message-box" style="background: rgba(135, 206, 235, 0.2);">
+                <p><b>死党寄语：</b><br><span class="handwritten">苟富贵，勿相忘！以后常在QQ群里聊天。记得给我空间留言板踩踩，记得回踩哦！^_^</span></p>
+                <p><b>最爱听的歌：</b><br><span class="handwritten">《素颜》、《老男孩》</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-nav">点击页面边缘进行翻页 • Memory of Class 2012</div>
+</div>
+
+<script>
+    function flipPage(pageNum) {
+        const p1 = document.getElementById('page1');
+        const p2 = document.getElementById('page2');
+        
+        if (pageNum === 1) {
+            p1.classList.add('hidden');
+            p2.style.zIndex = "1";
+        } else {
+            p1.classList.remove('hidden');
+            p2.style.zIndex = "-1";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时代英语报 - Times English Post</title>
+    <style>
+        :root {
+            --primary-red: #cc0000;
+            --bg-yellow: #fffdf2;
+            --section-purple: #9370db;
+            --border-gray: #ccc;
+        }
+        body {
+            font-family: "Times New Roman", "Microsoft YaHei", serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .newspaper-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-yellow);
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-gray);
+        }
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .logo-area h1 {
+            font-size: 60px;
+            margin: 0;
+            font-family: "Georgia", serif;
+            letter-spacing: 2px;
+        }
+        .logo-area span {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+        .header-info {
+            text-align: right;
+            font-size: 14px;
+        }
+        .issue-box {
+            background-color: orange;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Top Section Grid */
+        .top-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .section-tag {
+            background-color: var(--section-purple);
+            color: white;
+            padding: 2px 10px;
+            font-size: 14px;
+            display: inline-block;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .study-section h3 {
+            color: var(--primary-red);
+            font-size: 18px;
+            margin-top: 5px;
+        }
+        .background-section {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Main Article */
+        .main-article {
+            border-top: 2px solid var(--border-gray);
+            padding-top: 20px;
+        }
+        .article-title {
+            text-align: center;
+        }
+        .article-title h2 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            font-family: "Brush Script MT", cursive, serif;
+        }
+        .article-title .subtitle {
+            color: var(--primary-red);
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .content-wrapper {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .text-column {
+            flex: 2;
+            column-count: 2;
+            column-gap: 20px;
+            font-size: 15px;
+            text-align: justify;
+        }
+        .sidebar {
+            flex: 1;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px dashed var(--section-purple);
+        }
+        .sidebar h4 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--section-purple);
+        }
+
+        /* Foreign Countries Section */
+        .foreign-section {
+            background-color: #fdf6e3;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 10px solid var(--section-purple);
+        }
+        .country-box {
+            margin-bottom: 15px;
+        }
+        .country-name {
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Exercise Table */
+        .exercise-area {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border: 1px solid #eee;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background-color: #f9f9f9; }
+
+        /* Notes box */
+        .notes-box {
+            margin-top: 20px;
+            border: 2px solid #1a73e8;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .notes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 13px;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">26/36</div></head>
+<body>
+
+<div class="newspaper-container">
+    <header>
+        <div class="logo-area">
+            <h1>TIMES <span>时代英语报</span></h1>
+        </div>
+        <div class="header-info">
+            <div><strong>八年级</strong></div>
+            <div>2011年9月20日</div>
+            <div>邮发代号 11-165</div>
+            <div class="issue-box">26</div>
+        </div>
+    </header>
+
+    <div class="top-grid">
+        <div class="study-section">
+            <div class="section-tag">学习进行时</div>
+            <p><strong>Rejoice in Complying with Heaven and Know Its Mandate.</strong></p>
+            <h3>乐天知命。</h3>
+        </div>
+        <div class="background-section">
+            <div class="section-tag">背景知识</div>
+            <p>“旁行而不流，乐天知命，故不忧。”出自《周易·系辞上》。<br>天道规定了人事的法则，命运界定了人力的限度。这些都是人不能改易的，人应该知晓并坦然面对。同时，人在天、命的规范与限度内，又可以通过自身的不断努力，修养德行，拓展功业，故乐于顺从天命。</p>
+        </div>
+    </div>
+
+    <div class="main-article">
+        <div class="section-tag">特别关注</div>
+        <div class="article-title">
+            <h2>"World's happiest animals" face challenges in the wild</h2>
+            <div class="subtitle">“世界上最快乐的动物”野外生存遇挑战</div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="text-column">
+                <p>Quokkas (短尾矮袋鼠) are known for their lovely smiles and friendly nature, so many people call them the "world's happiest animals". These small animals live in Western Australia. Their cute looks, with big eyes and round ears, make them popular among tourists.</p>
+                <p>Quokkas are born friendly and curious, so they often come close to people. This behavior leads to the popular activity of taking "quokka selfies" on Rottnest Island. However, they face serious challenges. Climate change leads to less rainfall and more wildfires, making their living areas smaller. Predators like foxes and feral cats also catch them. Their numbers are dropping.</p>
+                <p>To protect them, Western Australia made a recovery plan. It focuses on protecting habitats, controlling hunting animals, and ensuring they can move between living areas. For tourists, it is forbidden to feed or touch quokkas. Rules breakers could face fines up to $7,000.</p>
+            </div>
+            
+            <div class="sidebar">
+                <div class="section-tag">异域风情</div>
+                <h4>Different ways of schooling</h4>
+                <div class="country-box">
+                    <div class="country-name">Finland (芬兰)</div>
+                    <p style="font-size: 13px;">Students spend around 75 minutes between classes. Play is more important than homework. No standardized tests until end of high school.</p>
+                </div>
+                <div class="country-box">
+                    <div class="country-name">Singapore (新加坡)</div>
+                    <p style="font-size: 13px;">Students take PSLE at the end of primary school. It's a life-changing exam, making them work hard from a young age.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="notes-box">
+        <strong style="color: #1a73e8;">Notes</strong>
+        <div class="notes-grid">
+            <div>1. curious /'kjʊəriəs/ adj. 好奇的</div>
+            <div>4. vulnerable /'vʌlnərəbl/ adj. 脆弱的</div>
+            <div>2. population /ˌpɒpju'leɪʃn/ n. 族群</div>
+            <div>5. recovery /rɪ'kʌvəri/ n. 改善/恢复</div>
+            <div>3. habitat /'hæbɪtæt/ n. 栖息地</div>
+        </div>
+    </div>
+    <div class="exercise-area">
+        <strong>① 根据文章内容和首字母提示完成表格</strong>
+        <table>
+            <tr>
+                <th>Looks and (1) c_____</th>
+                <td>Small, kangaroo-like creatures with big eyes; friendly and curious.</td>
+            </tr>
+            <tr>
+                <th>Popularity</th>
+                <td>"Quokka selfies" make them (2) f_____ all over the world.</td>
+            </tr>
+            <tr>
+                <th>Challenges</th>
+                <td>Climate change: less rainfall and (3) m_____ wildfires; Natural enemies.</td>
+            </tr>
+            <tr>
+                <th>Protection work</th>
+                <td>(4) R_____ for tourists: no feeding or touching quokkas.</td>
+            </tr>
+        </table>
+    </div>
+    
+
+    <div class="notes-box" style="border-color: #28a745; background-color: #f8fff9;">
+        <strong style="color: #28a745;">练习一下</strong>
+        <p style="font-size: 13px; margin: 10px 0;">输入正确答案可开启快捷通道 (33/36)：</p>
+<div style="margin: 20px auto; text-align: center; border-top: 1px dashed var(--section-purple); border-bottom: 1px dashed var(--section-purple); padding: 15px 0; background-color: var(--bg-yellow);">
+    <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Times New Roman', serif;">
+        <strong style="color: var(--primary-red); margin-right: 10px; font-size: 14px;">ANSWERS:</strong>
+        <span style="font-size: 13px;">(1)</span><input type="text" id="ans1" style="width: 70px; border: none; border-bottom: 1px solid #333; background: transparent; text-align: center; outline: none;">
+        <span style="font-size: 13px;">(2)</span><input type="text" id="ans2" style="width: 70px; border: none; border-bottom: 1px solid #333; background: transparent; text-align: center; outline: none;">
+        <span style="font-size: 13px;">(3)</span><input type="text" id="ans3" style="width: 70px; border: none; border-bottom: 1px solid #333; background: transparent; text-align: center; outline: none;">
+        <span style="font-size: 13px;">(4)</span><input type="text" id="ans4" style="width: 70px; border: none; border-bottom: 1px solid #333; background: transparent; text-align: center; outline: none;">
+        <button onclick="checkAnswers()" style="margin-left: 15px; padding: 3px 15px; background: var(--section-purple); color: white; border: none; cursor: pointer; font-family: 'Georgia'; font-size: 12px; letter-spacing: 1px;">SUBMIT</button>
+    </div>
+    <p id="msg" style="color: var(--primary-red); font-size: 11px; margin: 5px 0 0 0; min-height: 12px;"></p>
+</div>
+
+<script>
+    function checkAnswers() {
+        const a1 = document.getElementById('ans1').value.trim().toLowerCase();
+        const a2 = document.getElementById('ans2').value.trim().toLowerCase();
+        const a3 = document.getElementById('ans3').value.trim().toLowerCase();
+        const a4 = document.getElementById('ans4').value.trim().toLowerCase();
+
+        if (a1 === 'character' && a2 === 'famous' && a3 === 'more' && a4 === 'rules') {
+            window.open('transfer.html', '_blank');
+        } else {
+            document.getElementById('msg').innerText = "Incorrect. Please check the clues above.";
+        }
+    }
+</script>
+
+    
+</div>
+
+</body>
+</html>

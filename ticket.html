@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>电影票还原 - 小时代</title>
+    <style>
+        :root {
+            --stellar-blue: #4ea8e5; /* 星美品牌蓝色 */
+            --border-light: #d8e6f3;
+            --text-gray: #666;
+            --ink-black: #1a1a1a;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            font-family: "SimSun", "STSong", serif;
+        }
+
+        /* 电影票主容器：还原背景碎花与底色 */
+        .ticket-card {
+            width: 420px;
+            background-color: #fff;
+            background-image: 
+                radial-gradient(circle at top right, rgba(200, 230, 201, 0.3), transparent 200px),
+                linear-gradient(to bottom, transparent 80%, rgba(200, 230, 201, 0.2));
+            border: 1px solid #ddd;
+            padding: 25px;
+            position: relative;
+            margin-bottom: 40px;
+            box-shadow: 2px 5px 15px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* 顶部 Logo 与 影院名 */
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .brand-logo {
+            color: var(--stellar-blue);
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .cinema-sub {
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* 模拟原图中的带背景色圆角信息块 */
+        .info-box {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .block {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .label {
+            font-size: 11px;
+            color: var(--stellar-blue);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--ink-black);
+            font-family: "Helvetica", Arial, sans-serif;
+        }
+
+        /* 影片名称长条块 */
+        .movie-title-block {
+            grid-column: span 2;
+            padding: 12px;
+        }
+
+        .movie-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* 底部团购与价格信息 */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 0.8fr;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .meituan-tag {
+            color: var(--stellar-blue);
+            font-weight: bold;
+        }
+
+        /* 底部条形码 */
+        .barcode-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .barcode-lines {
+            height: 40px;
+            background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px);
+            margin-bottom: 5px;
+        }
+
+        .barcode-num {
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .print-time {
+            font-size: 10px;
+            color: #999;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        /* 装饰用的小花 (模拟背景碎花) */
+        .flower-decor {
+            position: absolute;
+            right: 10px;
+            bottom: 60px;
+            font-size: 40px;
+            opacity: 0.2;
+            color: #81c784;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">extra7/36</div></head>
+<body>
+
+    <div class="ticket-card">
+        <div class="flower-decor">✿</div>
+        <div class="header">
+            <span class="brand-logo">万达影城</span>
+            <span class="cinema-sub">青州万达影城</span>
+        </div>
+
+        <div class="info-box">
+            <div class="block">
+                <span class="label">影厅 HALL</span>
+                <span class="value">9号厅</span>
+            </div>
+            <div class="block">
+                <span class="label">时间 TIME</span>
+                <span class="value" style="font-size: 16px;">2012-01-14<br>19:30</span>
+            </div>
+            <div class="block movie-title-block">
+                <span class="label">影片 MOVIE</span>
+                <span class="movie-name">那些年，我们一起追的女孩</span>
+            </div>
+            <div class="block" style="grid-column: span 2;">
+                <span class="label">座位 SEAT</span>
+                <span class="value">7排 12座</span> <span style="font-size: 14px; margin-left: 50px;">对号入座</span>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="block">
+                <span class="label">座类 GRADE</span>
+                <span class="value" style="font-size: 16px;">普通区</span>
+            </div>
+            <div class="block">
+                <span class="label">票类 TYPE</span>
+                <span class="value meituan-tag" style="font-size: 16px;">学生优惠</span>
+            </div>
+            <div class="block">
+                <span class="label">票价 PRICE</span>
+                <span class="value" style="font-size: 16px;">25</span>
+            </div>
+        </div>
+
+        <div class="barcode-section">
+            <div class="barcode-lines"></div>
+            <div class="barcode-num">1208457859 041</div>
+            <div class="print-time">01.14 19:26</div>
+        </div>
+    </div>
+
+      <div class="ticket-card">
+        <div class="flower-decor">✿</div>
+        <div class="header">
+            <span class="brand-logo">万达影城</span>
+            <span class="cinema-sub">青州万达影城</span>
+        </div>
+
+        <div class="info-box">
+            <div class="block">
+                <span class="label">影厅 HALL</span>
+                <span class="value">9号厅</span>
+            </div>
+            <div class="block">
+                <span class="label">时间 TIME</span>
+                <span class="value" style="font-size: 16px;">2012-01-14<br>19:30</span>
+            </div>
+            <div class="block movie-title-block">
+                <span class="label">影片 MOVIE</span>
+                <span class="movie-name">那些年，我们一起追的女孩</span>
+            </div>
+            <div class="block" style="grid-column: span 2;">
+                <span class="label">座位 SEAT</span>
+                <span class="value">7排 13座</span> <span style="font-size: 14px; margin-left: 50px;">对号入座</span>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="block">
+                <span class="label">座类 GRADE</span>
+                <span class="value" style="font-size: 16px;">普通区</span>
+            </div>
+            <div class="block">
+                <span class="label">票类 TYPE</span>
+                <span class="value meituan-tag" style="font-size: 16px;">学生优惠</span>
+            </div>
+            <div class="block">
+                <span class="label">票价 PRICE</span>
+                <span class="value" style="font-size: 16px;">25</span>
+            </div>
+        </div>
+
+        <div class="barcode-section">
+            <div class="barcode-lines"></div>
+            <div class="barcode-num">1208457859 042</div>
+            <div class="print-time">01.14 19:26</div>
+        </div>
+    </div>
+
+</body>
+</html>

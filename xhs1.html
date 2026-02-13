@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小红书个人主页</title>
+    <style>
+        :root {
+            --bg-color: #f9f9f9; /* 浅色背景 */
+            --card-bg: #ffffff;  /* 白色卡片 */
+            --xhs-red: #ff2442;
+            --text-main: #333333; /* 深色文字 */
+            --text-sub: #999999;
+            --border-color: #eeeeee;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: -apple-system, system-ui, sans-serif;
+            color: var(--text-main);
+        }
+
+        /* 个人信息头部 */
+        .profile-header {
+            padding: 40px 60px;
+            background: url('5.jpg'); /* 纯白背景 */
+            border-bottom: 1px solid var(--border-color);
+                        background-size: cover; 
+            /* 3. 让图片居中显示 */
+            background-position: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: url('6.png'); /* 纯白背景 */
+            border: 1px solid #eee;
+                                    background-size: cover; 
+            /* 3. 让图片居中显示 */
+            background-position: center;
+        }
+
+        .user-name h2 { margin: 0; font-size: 20px; }
+        .user-id { font-size: 12px; color: #333333; margin-top: 5px; }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .stats span { color: var(--text-sub); }
+        .stats b { color: var(--text-main); margin-right: 4px; }
+
+        /* 标签页导航 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95); /* 磨砂半透明 */
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .tab-item { color: var(--text-sub); cursor: pointer; padding-bottom: 5px; }
+        .tab-item.active { color: var(--text-main); border-bottom: 2px solid var(--xhs-red); font-weight: bold; }
+
+        /* 瀑布流内容 */
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .waterfall {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .note-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 添加轻微阴影 */
+        }
+
+        .note-cover {
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .note-info { padding: 12px; }
+        .note-title { font-size: 14px; line-height: 1.5; margin-bottom: 8px; height: 42px; overflow: hidden; color: #333; }
+        
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 底部导航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 55px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            color: #333;
+        }
+
+        .add-btn {
+            background-color: var(--xhs-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">10/36</div></head>
+<body>
+
+    <section class="profile-header">
+        <div class="user-info">
+            <div class="avatar"></div>
+            <div class="user-name">
+                <h2>今日也向晴</h2>
+                <div class="user-id">小红书号：676XXX7903</div>
+                <div class="user-id" style="margin-top:8px;">📍 IP 属地：临渊</div>
+            </div>
+        </div>
+        <div class="stats">
+            <div><b>88</b> 关注</div>
+            <div><b>251</b> 粉丝</div>
+            <div><b>2073</b> 获赞与收藏</div>
+        </div>
+    </section>
+
+    <div class="tabs">
+        <div class="tab-item">笔记</div>
+        <div class="tab-item">收藏</div>
+        <div class="tab-item active">赞过</div>
+    </div>
+
+    <main>
+        <div class="waterfall">
+            <div class="note-card">
+                <div class="note-cover" style="height: 350px; background-image: url('1.png');"></div>
+                <div class="note-info">
+                    <div class="note-title">青州古城带我穿越回宋朝！氛围感绝了...</div>
+                    <div class="note-footer">
+                        <span>📷 向生</span>
+                        <span>❤️ 1205</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-card">
+                <div class="note-cover" style="height: 350px; background-image: url('4.png');"></div>
+                <div class="note-info">
+                    <div class="note-title">不知道现在还能吃上吗？<strong>实验初级中学</strong>旁的鸡蛋饼</div>
+                    <div class="note-footer">
+                        <span>☕️ 你美式吧</span>
+                        <span>❤️ 507</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-card">
+                <div class="note-cover" style="height: 350px; background-image: url('2.png');"></div>
+                <div class="note-info">
+                    <div class="note-title">时代的眼泪🧋</div>
+                    <div class="note-footer">
+                        <span>💎 cccrystal</span>
+                        <span>❤️ 792</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-card">
+                <div class="note-cover" style="height: 350px; background-image: url('3.png');"></div>
+                <div class="note-info">
+                    <div class="note-title">上班之后发现这个世界被大人建设得一塌糊涂</div>
+                    <div class="note-footer">
+                        <span>🥦 愤怒西兰花毁灭世界</span>
+                        <span>❤️ 8547</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div>首页</div>
+        <div>市集</div>
+        <div class="add-btn">+</div>
+        <div>消息</div>
+        <div>我</div>
+    </nav>
+
+</body>
+</html>

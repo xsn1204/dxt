@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>收件箱 - QQ邮箱</title>
+    <style>
+        :root {
+            --sidebar-width: 200px;
+            --top-height: 55px;
+            --blue-primary: #3b8ede;
+            --text-main: #333;
+            --text-light: #999;
+            --bg-gray: #f2f5f7;
+            --border-color: #dee4e9;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: "lucida Grande", Verdana, "Microsoft YaHei";
+            background-color: white;
+        }
+
+        /* 顶部导航 */
+        .header {
+            height: var(--top-height);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: #fff;
+            justify-content: space-between;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 40px; }
+        .logo-img { height: 32px; } /* 模拟 Mail Logo */
+        
+        .search-bar {
+            background: var(--bg-gray);
+            border-radius: 4px;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            width: 350px;
+        }
+        .search-bar input {
+            background: transparent; border: none; outline: none; width: 100%;
+            font-size: 13px; color: #666;
+        }
+
+        .header-right { display: flex; align-items: center; gap: 15px; font-size: 13px; }
+        .user-avatar { width: 30px; height: 30px; background: #eee; border-radius: 50%; }
+
+        /* 主体布局 */
+        .container { display: flex; height: calc(100vh - var(--top-height)); }
+
+        /* 侧边栏 - 参考截图左侧全功能 */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-gray);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding-top: 10px;
+        }
+
+        .nav-group { margin-bottom: 15px; }
+        .nav-item {
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            cursor: pointer;
+            color: #444;
+            transition: background 0.2s;
+        }
+        .nav-item:hover { background: #e2e8eb; }
+        .nav-item.active { background: var(--blue-primary); color: white; }
+        .nav-item .icon { width: 18px; margin-right: 10px; text-align: center; }
+        
+        .divider { height: 1px; background: #dce1e6; margin: 10px 20px; }
+        .folder-title { padding: 5px 20px; font-size: 12px; font-weight: bold; color: #666; display: flex; justify-content: space-between; }
+
+        /* 内容区 */
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+
+        /* 邮件操作栏 */
+        .action-bar {
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .btn {
+            padding: 4px 12px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn:hover { background: #f8f8f8; }
+
+        /* 邮件列表 */
+        .mail-list { flex: 1; overflow-y: auto; }
+        .mail-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px dotted #eee;
+            font-size: 13px;
+            transition: background 0.1s;
+        }
+        .mail-row:hover { background: #f5faff; }
+        .mail-row.unread { font-weight: bold; }
+
+        .col-check { width: 30px; }
+        .col-star { width: 30px; color: #ccc; cursor: pointer; }
+        .col-avatar { width: 40px; }
+        .avatar-circle {
+            width: 24px; height: 24px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 10px; font-weight: normal;
+        }
+        .col-sender { width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .col-subject { flex: 1; padding: 0 15px; color: #444; }
+        .col-subject .preview { color: #999; font-weight: normal; }
+        .col-attach { width: 30px; color: #999; }
+        .col-date { width: 80px; text-align: right; color: var(--text-light); font-size: 12px; }
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">15/36</div></head>
+<body>
+
+<header class="header">
+    <div class="header-left">
+        <div style="font-size: 20px; font-weight: bold; color: var(--blue-primary);">MAIL | QQ邮箱</div>
+<div class="search-bar">
+    <span>🔍</span>
+    <input type="text" placeholder="搜索邮件、联系人..." readonly>
+</div>
+    </div>
+
+</header>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="nav-item"><span class="icon">✏️</span>写邮件</div>
+        <div class="nav-item active"><span class="icon">📥</span>收件箱</div>
+        <div class="nav-item"><span class="icon">👤</span>通讯录</div>
+        <div class="divider"></div>
+        
+        <div class="nav-item"><span class="icon">🔖</span>重要联系人</div>
+        <div class="nav-item"><span class="icon">⭐</span>星标邮件</div>
+        <div class="nav-item"><span class="icon">📁</span>群邮件</div>
+        <div class="nav-item"><span class="icon">📤</span>已发送</div>
+        <div class="nav-item"><span class="icon">📝</span>草稿箱</div>
+        <div class="nav-item"><span class="icon">🗑️</span>已删除</div>
+        <div class="nav-item"><span class="icon">🚫</span>垃圾箱</div>
+
+  
+    </aside>
+
+    <main class="main-content">
+        <div class="action-bar">
+            <h3 style="margin:0; font-size:16px; margin-right:20px;">收件箱 (1287)</h3>
+            <button class="btn">全部标为已读</button>
+            <button class="btn">删除</button>
+            <button class="btn">彻底删除</button>
+            <button class="btn">转发</button>
+            <button class="btn">标记为 ▼</button>
+            <button class="btn">移至 ▼</button>
+        </div>
+
+        <div class="mail-list">
+            <div class="mail-row unread">
+                <div class="col-check"><input type="checkbox"></div>
+                <div class="col-star">☆</div>
+                <div class="col-avatar"><div class="avatar-circle" style="background:#f39c12">AD</div></div>
+                <div class="col-sender">广告邮件</div>
+                <div class="col-subject">Amazon.cn, QQ邮箱管理员... <span class="preview">- 尊敬的QQ邮箱用户...</span></div>
+                <div class="col-attach">📎</div>
+                <div class="col-date">01/21</div>
+            </div>
+
+
+            <div class="mail-row unread">
+                
+                <div class="col-check"><input type="checkbox"></div>
+                <div class="col-star">☆</div>
+                <div class="col-avatar"><div class="avatar-circle" style="background:#3498db">QQ</div></div>
+                <div class="col-sender">QQ邮箱管理员</div>
+                <div class="col-subject">祝你生日快乐 <span class="preview">- Hi, 有些事情你可能已经忘...</span></div>
+                <div class="col-attach"></div>
+                <div class="col-date">2025/07/12</div>
+            </div>
+                        <div class="mail-row unread">
+                <div class="col-check"><input type="checkbox"></div>
+                <div class="col-star">⭐</div>
+                <div class="col-avatar"><div class="avatar-circle" style="background:#2ecc71">PM</div></div>
+                <div class="col-sender">PostMaster</div>
+                <div class="col-subject">来自qq.com的退信 <span class="preview">- 很抱歉您发送的邮件被退回...</span></div>
+                <div class="col-attach">📎</div>
+                <div class="col-date">2013/05/11</div>
+            </div>
+
+
+    <div class="mail-row unread"
+     onclick="window.open('mail.html','_blank')"
+     style="cursor: pointer;">
+
+    <div class="col-check" onclick="event.stopPropagation();"><input type="checkbox"></div>
+    <div class="col-star" onclick="event.stopPropagation();">☆</div>
+    <div class="col-avatar"><div class="avatar-circle" style="background:#9b59b6">QQ</div></div>
+    <div class="col-sender">893478266</div>
+    <div class="col-subject">从家里给你写的一封信<span class="preview">- 以然学姐：我回家已经三个...</span></div>
+    <div class="col-attach"></div>
+    <div class="col-date">2012/10/12</div>
+</div>
+
+
+
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

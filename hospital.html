@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>精神科门诊病历记录 - 青医附院</title>
+    <style>
+        /* 基础样式保持医院系统风格 */
+        body {
+            font-family: "Microsoft YaHei", SimSun, "黑体", SimHei;
+            font-size: 14px;
+            line-height: 1.8;
+            background-color: #f5f5f5;
+            margin: 0;
+            color: #333;
+            padding: 20px;
+        }
+        /* 密码验证层样式 */
+        .auth-container {
+            width: 500px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 8px #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .auth-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+        }
+        .auth-form {
+            margin-bottom: 20px;
+        }
+        .form-item {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-item input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-item input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 3px #b3d1ff;
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .auth-btn:hover {
+            background-color: #0052a3;
+        }
+        .error-tip {
+            color: #d9534f;
+            margin-top: 10px;
+            display: none;
+        }
+        /* 病历内容样式 */
+        .medical-record {
+            width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px #eee;
+            display: none; /* 默认隐藏 */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 20px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .basic-info {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .basic-info td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+        }
+        .basic-info td:first-child {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            width: 120px;
+        }
+        .content-title {
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+            font-size: 15px;
+            border-left: 3px solid #000;
+            padding-left: 8px;
+        }
+
+        /* 核心修改：确保所有行左侧对齐，第二行不产生额外空格 */
+        .content-text {
+            margin: 0 0 10px 0;
+            line-height: 2;
+            padding-left: 0; /* 统一的左侧边距 */
+            text-align: justify;
+            display: block;
+            text-indent: 0; /* 强制取消首行缩进 */
+        }
+        
+        /* 列表项同样保持 0 缩进，确保序号与正文第二行在视觉上垂直对齐 */
+        .list-item {
+            text-indent: 0; 
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: right;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .hospital-logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .hospital-logo img {
+            width: 180px;
+            height: 190px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        .hospital-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 0;
+            color: #222;
+            word-wrap: break-word;
+            width: 90%;
+            margin: 0 auto;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">18/36</div></head>
+<body>
+    <div class="auth-container" id="authBox">
+        <div class="hospital-logo">
+            <img src="hospital.png" alt="青医附院标识" title="青医附院标识">
+            <div class="hospital-name">青州医科大学第一附属医院</div>
+        </div>
+        <div class="auth-title">病历档案验证</div>
+        <div class="auth-form">
+            <div class="form-item">
+                <label for="birthYear">出生年份</label>
+                <input type="number" id="birthYear" placeholder="例如：2000" min="1900" max="2024">
+            </div>
+            <div class="form-item">
+                <label for="birthMonth">出生月份</label>
+                <input type="number" id="birthMonth" placeholder="例如：01" min="1" max="12">
+            </div>
+            <div class="form-item">
+                <label for="birthDay">出生日期</label>
+                <input type="number" id="birthDay" placeholder="例如：01" min="1" max="31">
+            </div>
+            <button class="auth-btn" onclick="verifyBirthday()">验证</button>
+            <div class="error-tip" id="errorTip">个人资料输入错误，请重新输入！</div>
+        </div>
+        <p style="font-size: 12px; color: #666;">© 青医附院 版权所有 | 医疗信息管理</p>
+    </div>
+
+    <div class="medical-record" id="medicalRecord">
+        <div class="header">
+            <h1>青医附院精神卫生中心门诊病历</h1>
+            <p>就诊日期：2013年02月10日  编号：20130210078</p>
+        </div>
+
+        <table class="basic-info">
+            <tr>
+                <td>姓名</td>
+                <td>宋以然</td>
+                <td>性别</td>
+                <td>女</td>
+                <td>年龄</td>
+                <td>16岁</td>
+            </tr>
+            <tr>
+                <td>民族</td>
+                <td>汉</td>
+                <td>籍贯</td>
+                <td>临渊省青州市</td>
+                <td>职业</td>
+                <td>高一年级学生</td>
+            </tr>
+
+            <tr>
+                <td>主诉</td>
+                <td colspan="5">反复噩梦、情绪低落3月余，伴兴趣减退、注意力不集中1月</td>
+            </tr>
+        </table>
+
+        <div class="content-title">现病史：</div>
+        <p class="content-text">
+            患者3月前因听闻恶性事件后出现睡眠障碍，主要表现为入睡困难，夜间反复做噩梦，梦境多为事件重现，惊醒后心慌、出汗，难以再次入睡，每日睡眠时间约4-5小时。近1月来出现明显情绪低落，对既往感兴趣的阅读、绘画等活动丧失兴趣，不愿与同学、家人交流，上课注意力不集中，成绩较前明显下降。自述"心里难受"、"总想哭"，曾有自伤念头（未付诸行动）。无发热、头痛、抽搐等症状，饮食量较前减少约1/3，体重近1月下降约2kg。家属曾自行给予安神类中成药，效果不佳，为求进一步诊治来我院门诊。
+        </p>
+
+        <div class="content-title">既往史：</div>
+        <p class="content-text">
+            平素体健，否认手术、外伤、输血史，否认食物、药物过敏史。
+        </p>
+
+        <div class="content-title">个人史：</div>
+        <p class="content-text">
+            生长发育正常，适龄入学，学习成绩较好，性格偏内向，无不良嗜好。父母、姐妹关系和睦，家庭环境良好，否认家庭暴力、虐待等情况。
+        </p>
+
+        <div class="content-title">精神检查：</div>
+        <p class="content-text">
+            情绪低落，面部表情少，语音低，语速慢，思维联想迟缓，未引出幻觉、妄想等精神病性症状。存在明显的创伤后应激反应：对与恶性事件相关的场景、语言表现出明显回避行为。
+        </p>
+
+
+        <div class="content-title">辅助检查：</div>
+        <p class="content-text">
+            SCL-90量表测评：抑郁因子分2.8，焦虑因子分2.5，恐怖因子分2.7；PTSD筛查量表阳性。
+        </p>
+
+        <div class="content-title">诊断：</div>
+        <div class="content-text">1. 创伤后应激障碍（PTSD）</div>
+        <div class="content-text">2. 抑郁状态</div>
+
+        <div class="content-title">处理意见：</div>
+        <div class="content-text">1. 心理治疗：认知行为治疗（CBT），每周1次，每次45分钟，共12周；</div>
+        <div class="content-text">2. 药物治疗：舍曲林片25mg qd，晨起口服，1周后加至50mg qd，注意观察药物不良反应；</div>
+        <div class="content-text">3. 家庭干预：建议家长多陪伴、沟通，避免提及创伤相关内容，营造安全、温馨的家庭环境；</div>
+        <div class="content-text">4. 学校沟通：建议学校给予适当的学习压力调整，避免刺激源，必要时可短期休学调整；</div>
+        <div class="content-text">5. 定期复诊：2周后复诊，评估症状及药物疗效，根据情况调整治疗方案；</div>
+        <div class="content-text">6. 嘱家属密切观察患者情绪变化，如有自伤、自杀倾向，立即来院就诊。</div>
+
+        <div class="footer">
+            <p>医师签名：张康慧</p>
+            <p>执业证书编号：110XXXXXXXXXXXXXXX</p>
+            <p>复诊时间：2013年02月24日</p>
+        </div>
+    </div>
+
+    <script>
+        const correctBirth = {
+            year: 1997,
+            month: 7,
+            day: 12
+        };
+
+        function verifyBirthday() {
+            const year = parseInt(document.getElementById('birthYear').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const day = parseInt(document.getElementById('birthDay').value);
+            const errorTip = document.getElementById('errorTip');
+            
+            errorTip.style.display = 'none';
+
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                errorTip.textContent = '请输入有效的年月日！';
+                errorTip.style.display = 'block';
+                return;
+            }
+
+            if (year === correctBirth.year && month === correctBirth.month && day === correctBirth.day) {
+                document.getElementById('authBox').style.display = 'none';
+                document.getElementById('medicalRecord').style.display = 'block';
+            } else {
+                errorTip.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                verifyBirthday();
+            }
+        });
+    </script>
+</body>
+</html>

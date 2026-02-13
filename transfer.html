@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>玛雅长计历观测站 - 2012真相解密</title>
+    <style>
+        :root {
+            --maya-gold: #c4a46c;
+            --maya-stone: #2d2a26;
+            --maya-text: #e0d7c6;
+        }
+        body {
+            background-color: #1a1815;
+            color: var(--maya-text);
+            font-family: "Microsoft YaHei", serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            border: 4px solid var(--maya-gold);
+            background: var(--maya-stone);
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: var(--maya-gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid var(--maya-gold);
+            padding-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #4a453e;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--maya-gold);
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #1a1815;
+            border: 1px solid var(--maya-gold);
+            color: white;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--maya-gold);
+            color: black;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #e6c17a;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #1a1815;
+            border-left: 4px solid var(--maya-gold);
+            min-height: 24px;
+        }
+        .info {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">extra5/36</div></head>
+<body>
+
+<div class="container">
+    <h1>玛雅长计历观测站</h1>
+    
+    <div class="section">
+        <label>◈ 公元历 → 长计历</label>
+        <input type="date" id="gregorianInput" value="2012-12-21">
+        <button onclick="toLongCount()">开启时空转换</button>
+        <div class="result" id="lcResult">等待推演...</div>
+        <p class="info">注：以2012-12-21作为13.0.0.0.0基准点</p>
+    </div>
+
+    <div class="section">
+        <label>◈ 长计历 → 公元历</label>
+        <input type="text" id="lcInput" placeholder="例如: 13.0.0.0.0">
+        <button onclick="toGregorian()">解析石板密文</button>
+        <div class="result" id="dateResult">等待解码...</div>
+        <p class="info">注：baktun.katun.tun.uinal.kin (共5位数字)</p>
+    </div>
+
+    <div style="text-align: center; color: var(--maya-gold); font-size: 0.8em; margin-top: 20px;">
+        © 玛雅历法研究中心
+    </div>
+</div>
+
+<script>
+    // 基准日期：2012-12-21 对应 13.0.0.0.0
+    // 转换为总天数：13 * 144000 = 1,872,000 天
+    const BASE_DATE = new Date('2012-12-21');
+    const BASE_LC_DAYS = 1872000;
+
+    function getDaysFromLC(parts) {
+        // 规则：第2位(uinal)逢18进1
+        const kin = parseInt(parts[4]);
+        const uinal = parseInt(parts[3]) * 20;
+        const tun = parseInt(parts[2]) * 18 * 20;
+        const katun = parseInt(parts[1]) * 20 * 18 * 20;
+        const baktun = parseInt(parts[0]) * 20 * 20 * 18 * 20;
+        return baktun + katun + tun + uinal + kin;
+    }
+
+    function getLCFromDays(totalDays) {
+        let remaining = totalDays;
+        const baktun = Math.floor(remaining / 144000);
+        remaining %= 144000;
+        const katun = Math.floor(remaining / 7200);
+        remaining %= 7200;
+        const tun = Math.floor(remaining / 360);
+        remaining %= 360;
+        const uinal = Math.floor(remaining / 20); //
+        const kin = remaining % 20;
+        return `${baktun}.${katun}.${tun}.${uinal}.${kin}`;
+    }
+
+    function toLongCount() {
+        const input = new Date(document.getElementById('gregorianInput').value);
+        if (isNaN(input)) return;
+        
+        const diffTime = input.getTime() - BASE_DATE.getTime();
+        const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+        const totalDays = BASE_LC_DAYS + diffDays;
+        
+        document.getElementById('lcResult').innerText = "长计历数字: " + getLCFromDays(totalDays);
+    }
+
+    function toGregorian() {
+        const input = document.getElementById('lcInput').value.split('.');
+        if (input.length !== 5) {
+            document.getElementById('dateResult').innerText = "格式错误，请输入五位数字";
+            return;
+        }
+        
+        const totalDays = getDaysFromLC(input);
+        const diffDays = totalDays - BASE_LC_DAYS;
+        
+        const resultDate = new Date(BASE_DATE);
+        resultDate.setDate(BASE_DATE.getDate() + diffDays);
+        
+        document.getElementById('dateResult').innerText = "公元历日期: " + resultDate.toLocaleDateString();
+    }
+</script>
+
+</body>
+</html>

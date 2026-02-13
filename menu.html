@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地下铁 Drinking Express Menu</title>
+    <style>
+        :root {
+            --black: #1a1a1a;
+            --white: #ffffff;
+            --gray: #f4f4f4;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #ccc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 菜单主容器 */
+        .menu-container {
+            background-color: var(--white);
+            width: 1000px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #999;
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--black);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-size: 18px;
+            letter-spacing: 2px;
+            display: block;
+            margin-top: -5px;
+        }
+
+        .menu-type {
+            font-size: 36px;
+            font-weight: bold;
+            color: #0078d4; /* 模拟图中的蓝色 */
+        }
+
+        /* 栏目布局 */
+        .column {
+            flex: 1;
+            min-width: 220px;
+            padding: 0 10px;
+        }
+
+        /* 板块样式 */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 5px 10px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title .en {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .size-header {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 12px;
+            padding: 2px 5px;
+        }
+
+        .size-header span {
+            width: 25px;
+            text-align: center;
+            margin-left: 10px;
+        }
+
+        /* 菜品行项目 */
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 5px;
+            font-size: 13px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .item-name {
+            flex: 1;
+        }
+
+        .price-group {
+            display: flex;
+        }
+
+        .price {
+            width: 25px;
+            text-align: center;
+            margin-left: 10px;
+        }
+
+        /* 特殊图片占位 */
+.image-placeholder {
+    width: 100%;
+    height: 120px;
+    background: #eee;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    overflow: hidden; /* 核心：确保超出 80px 的部分被隐藏 */
+}
+
+.fitted-img {
+    width: 100%;       /* 宽度强制撑满 */
+    height: 100%;      /* 高度填满容器 */
+    object-fit: cover; /* 保持比例填满，多余部分会被剪裁 */
+    object-position: top; /* 核心：如果发生裁剪，保留图片的最上方 */
+}
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">30/36</div></head>
+<body>
+
+<div class="menu-container">
+    <header class="header">
+        <div class="logo">
+            地下鐵 <span>EXPRESS DRINKING</span>
+        </div>
+        <div class="menu-type">MENU(COLD)</div>
+    </header>
+
+    <div class="column">
+        <div class="section">
+            <div class="section-title">
+                <div>奶茶系列 <span class="en">MILK TEA SERIES</span></div>
+            </div>
+            <div class="size-header"><span>中</span><span>大</span></div>
+            <div class="menu-item"><span class="item-name">烤奶</span><div class="price-group"><span class="price">6</span><span class="price">7</span></div></div>
+            <div class="menu-item"><span class="item-name">珍珠烤奶</span><div class="price-group"><span class="price">7</span><span class="price">8</span></div></div>
+            <div class="menu-item"><span class="item-name">招牌奶茶</span><div class="price-group"><span class="price">5</span><span class="price">6</span></div></div>
+            <div class="menu-item"><span class="item-name">丝袜奶茶</span><div class="price-group"><span class="price">5</span><span class="price">6</span></div></div>
+            <div class="menu-item"><span class="item-name">椰果奶茶</span><div class="price-group"><span class="price">6</span><span class="price">7</span></div></div>
+            <div class="menu-item"><span class="item-name">布丁奶茶</span><div class="price-group"><span class="price">6</span><span class="price">7</span></div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <div>世界风味系列 <span class="en">WORLD FLAVOR SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">抹茶拿铁</span><div class="price-group"><span class="price">10</span><span class="price">10</span></div></div>
+            <div class="menu-item"><span class="item-name">日式抹茶香蕉奶</span><div class="price-group"><span class="price">10</span><span class="price">12</span></div></div>
+        </div>
+    </div>
+
+    <div class="column">
+<div class="image-placeholder">
+    <img src="dxt1.png" alt="饮料插图" class="fitted-img">
+</div>
+        <div class="section">
+            <div class="section-title">
+                <div>苏打系列 <span class="en">SODA SERIES</span></div>
+            </div>
+       
+            <div class="menu-item"><span class="item-name">蓝莓玫瑰苏打</span><div class="price-group"><span class="price">8</span><span class="price">10</span></div></div>
+            <div class="menu-item"><span class="item-name">薄荷苏打</span><div class="price-group"><span class="price">6</span><span class="price">7</span></div></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">
+                <div>特饮系列 <span class="en">SPECIAL DRINK SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">柠檬水</span><div class="price-group"><span class="price">8</span><span class="price">9</span></div></div>
+            <div class="menu-item"><span class="item-name">青苹果甘露</span><div class="price-group"><span class="price">12</span><span class="price">15</span></div></div>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="section">
+            <div class="section-title">
+                <div>复合茶系列 <span class="en">TEA COMPOUND SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">原叶立体茉莉花</span><div class="price-group"><span class="price">5</span><span class="price">6</span></div></div>
+            <div class="menu-item"><span class="item-name">奶盖红茶</span><div class="price-group"><span class="price">-</span><span class="price">10</span></div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <div>柠檬系列 <span class="en">JUICE SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">红颜（七喜、利宾娜）</span><div class="price-group"><span class="price">7</span><span class="price">8</span></div></div>
+                        <div class="menu-item"><span class="item-name">邂逅（七喜、蓝莓）</span><div class="price-group"><span class="price">7</span><span class="price">8</span></div></div>
+            <div class="menu-item"><span class="item-name">
+        <span style="color: #FF69B4; font-weight: bold;">初恋</span>（七喜、番石榴）
+    </span><div class="price-group"><span class="price">7</span><span class="price">8</span></div></div>
+                        <div class="menu-item"><span class="item-name">失恋（柠檬汁）</span><div class="price-group"><span class="price">7</span><span class="price">8</span></div></div>
+            <div class="menu-item"><span class="item-name">暗恋（桃橙汁）</span><div class="price-group"><span class="price">8</span><span class="price">9</span></div></div>
+             <div class="menu-item"><span class="item-name">热恋（橙汁）</span><div class="price-group"><span class="price">8</span><span class="price">9</span></div></div>
+                        <div class="menu-item"><span class="item-name">自恋（草莓番石榴）</span><div class="price-group"><span class="price">8</span><span class="price">9</span></div></div>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="section">
+            <div class="section-title">
+                <div>咖啡系列 <span class="en">COFFEE SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">香港奶茶</span><div class="price-group"><span class="price">10</span><span class="price">11</span></div></div>
+            <div class="menu-item"><span class="item-name">美式咖啡</span><div class="price-group"><span class="price">6</span><span class="price">7</span></div></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                <div>冰砂系列 <span class="en">ICE SAND SERIES</span></div>
+            </div>
+            <div class="menu-item"><span class="item-name">樱花草莓冰砂</span><div class="price-group"><span class="price">-</span><span class="price">10</span></div></div>
+            <div class="menu-item"><span class="item-name">芒果冰砂</span><div class="price-group"><span class="price">-</span><span class="price">10</span></div></div>
+        </div>
+     <div class="image-placeholder">
+    <img src="dxt2.png" alt="饮料插图" class="fitted-img">
+</div>
+    </div>
+</div>
+
+</body>
+</html>

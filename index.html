@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MAS OS - 启动中</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --accent-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .screen {
+            width: 100%;
+            max-width: 650px;
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 2s ease-in;
+        }
+
+        /* 模拟经典的苹果 Logo 占位 */
+        .apple-logo {
+            font-size: 60px;
+            margin-bottom: 50px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            user-select: none;
+        }
+
+        .loading-bar-container {
+            width: 200px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            margin: 0 auto 60px auto;
+            overflow: hidden;
+        }
+
+        .loading-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-color);
+            box-shadow: 0 0 8px var(--accent-color);
+            animation: progress 4s forwards cubic-bezier(0.1, 0.4, 0.4, 1);
+        }
+
+        .intro-text {
+            text-align: left;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .title-group {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-group h1 {
+            font-size: 24px;
+            font-weight: 300;
+            margin: 0;
+            color: #fff;
+        }
+
+        .title-group p {
+            font-size: 13px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .story-content {
+            font-size: 15px;
+            color: #bbb;
+            opacity: 0;
+            animation: textAppear 1.5s forwards 1s;
+        }
+
+        .story-content strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .footer-hint {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            20% { width: 10%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes textAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .highlight {
+            color: #fff;
+            border-bottom: 1px solid #555;
+            padding-bottom: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="screen">
+    <div class="apple-logo"></div>
+    
+    <div class="loading-bar-container">
+        <div class="loading-bar-fill"></div>
+    </div>
+
+    <div class="intro-text">
+        <div class="title-group">
+            <h1>404婚礼来信事件</h1>
+            <p>System Version: 12.12.21</p>
+        </div>
+
+        <div class="story-content">
+            <p>你是<strong>宋以然。</strong></p>
+            <p>学妹婚礼前一月，你被临时拜托整理一份“特别惊喜”，对方只留下一个含糊的线索。</p>
+            <p>你打开电脑试图唤醒尘封的记忆，可那些青春的纪念早已不见踪影，你只好从头开始回忆。层层翻找后，你逐渐意识到：</p>
+            <p>那条线索指向的，是<strong>查无此人</strong>。</p>
+            <p style="text-align: center; margin-top: 40px; font-style: italic; color: #eee;">
+                🔔第一步，不妨试着从搜搜【你自己的名字】开始，祝你好运。
+            </p>
+        </div>
+    </div>
+
+    <div class="footer-hint">
+        点击任意处进入 MAS OS
+    </div>
+</div>
+
+<script>
+    // 捕获整个屏幕的点击事件，包括子元素
+    document.querySelector('.screen').addEventListener('click', function() {
+        // 跳转到下一个页面
+        window.location.href = 'desk.html'; // 替换为你的目标页面
+    });
+
+    // 可选：改变鼠标指针，提示用户可点击
+    document.querySelector('.screen').style.cursor = 'pointer';
+</script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青州市公交站名表</title>
+    <style>
+        :root {
+            --bus-blue: #1a4a9e;
+            --text-black: #333;
+            --border-gray: #ccc;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            font-family: "SimHei", "Microsoft YaHei", sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* 站牌主容器 */
+        .bus-sign {
+            width: 900px;
+            background-color: white;
+            border: 8px solid var(--bus-blue);
+            padding: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            background-color: var(--bus-blue);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            border-bottom: 4px solid #fff;
+        }
+
+        /* 线路网格布局 */
+        .route-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background-color: var(--border-gray);
+            border: 2px solid var(--border-gray);
+        }
+
+        /* 单个线路卡片 */
+        .route-card {
+            background-color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .route-header {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--bus-blue);
+            padding-bottom: 5px;
+        }
+
+        .route-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--text-black);
+            line-height: 1;
+            margin-right: 15px;
+        }
+
+        .route-info {
+            font-size: 14px;
+            color: #666;
+            flex-grow: 1;
+        }
+
+        /* 站点列表排列（竖排文字风格） */
+        .station-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .station-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25px; /* 固定宽度实现竖排感 */
+        }
+
+        .station-name {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-black);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .station-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--bus-blue);
+            border-radius: 50%;
+        }
+
+        /* 下方公益宣传栏 */
+        .footer-banner {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 4px solid var(--bus-blue);
+        }
+
+        .slogan {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--bus-blue);
+        }
+
+        .sub-slogan {
+            font-size: 20px;
+            color: #444;
+        }
+
+        /* 底部装饰 */
+        .bottom-info {
+            background-color: #eee;
+            padding: 5px 20px;
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+        }
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>                             <div class="progress-indicator">1/36</div></head>
+<body>
+
+    <div class="bus-sign">
+        <div class="header">青州公交站站名表</div>
+
+        <div class="route-grid">
+            <div class="route-card">
+                <div class="route-header">
+                    <div class="route-number">101</div>
+                    <div class="route-info">
+                        运行时间: 6:00-19:30<br>
+                        票价: 壹元 (空调开放期间贰元)
+                    </div>
+                </div>
+                <div class="station-list">
+                    <div class="station-item"><div class="station-name">青州火车站</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">海岱路口</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">万年桥</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">青州古城</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">阜财门</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">范公亭公园</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">博物馆</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">南阳桥</div><div class="station-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="route-card">
+                <div class="route-header">
+                    <div class="route-number">117</div>
+                    <div class="route-info">
+                        运行时间: 6:30-18:00<br>
+                        服务热线: 0536-322xxxx
+                    </div>
+                </div>
+                <div class="station-list">
+                    <div class="station-item"><div class="station-name">云门山景区</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">驼山路</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">实验初中</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">泰华城</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">大润发</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">青州汽车站</div><div class="station-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="route-card">
+                <div class="route-header">
+                    <div class="route-number">235</div>
+                    <div class="route-info">
+                        运行时间: 7:00-18:30<br>
+                        经由: 玲珑山路 - 尧王山东路
+                    </div>
+                </div>
+                <div class="station-list">
+                    <div class="station-item"><div class="station-name">龙兴寺</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">偶园</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">衡王府</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">圣水路</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">尧王山</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">凤凰山</div><div class="station-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="route-card">
+                <div class="route-header">
+                    <div class="route-number">508</div>
+                    <div class="route-info">
+                        运行时间: 19:00-22:00<br>
+                        特色: 夜间旅游循环线
+                    </div>
+                </div>
+                <div class="station-list">
+                    <div class="station-item"><div class="station-name">宋城</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">南阳河</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">东门街</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">奎星楼</div><div class="station-dot"></div></div>
+                    <div class="station-item"><div class="station-name">古城北门</div><div class="station-dot"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-banner">
+            <div class="slogan">市民素质高一分 城市形象美十分</div>
+            <div class="sub-slogan">请排队上车 为城市添彩</div>
+        </div>
+
+        <div class="bottom-info">
+            青州市公共交通有限责任公司 &nbsp;&nbsp;&nbsp; 更新日期: 2011年5月
+        </div>
+    </div>
+
+</body>
+</html>
