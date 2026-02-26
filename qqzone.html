@@ -272,11 +272,11 @@ a {
         </div>
 
         <div class="main-column">
-            <div class="card post-box">
-                <textarea id="statusInput" rows="3" placeholder="说点什么吧..."></textarea>
-                <button class="btn-post" onclick="postStatus()">发表</button>
-                <div class="clear"></div>
-            </div>
+     <div class="card post-box">
+    <textarea id="statusInput" rows="3" placeholder="说点什么吧..." readonly></textarea>
+    <button class="btn-post" onclick="postStatus()" disabled>发表</button>
+    <div class="clear"></div>
+</div>
 
             <div id="feedContainer">
 
@@ -323,7 +323,7 @@ a {
                 <!-- 饥饿游戏相关说说 -->
                 <div class="card feed-item">
                     <div style="color:#3498db; font-weight:bold;">不知所以然</div>
-                    <div style="margin-top:8px;">晚上躲在被子里看完了《饥饿游戏》，凯特尼斯太勇敢了。换做是我，我能像她那样豁出一切去守护想要守护的人吗？可现实里的我，明明连踩到蚂蚁都会难过好久……<br>最近一直在单曲循环《Safe and Sound》，Taylor Swift的声音好温柔，我想她以后一定会大火的吧。</div>
+                    <div style="margin-top:8px;">晚上躲在被子里看完了《饥饿游戏》，凯特尼斯太勇敢了。我反问自己，能像她那样豁出一切去守护想要守护的人吗？<br>最近一直在循环《Safe and Sound》，我想Taylor Swift以后一定会大火的吧。</div>
                     <img src="hungry.jpg" class="feed-img">
                     <div style="font-size:12px; color:gray; margin-top:10px;">2012年5月2日 - 浏览 109 次</div>
                     <!-- 评论区 -->
@@ -396,7 +396,7 @@ a {
                 <!-- 几米相关说说 -->
                 <div class="card feed-item">
                     <div style="color:#3498db; font-weight:bold;">不知所以然</div>
-                    <div style="margin-top:8px;">喧嚣了一整天，只有在读几米的时候，内心才会真的平静下来。 <br>「所有的悲伤，总会留下一丝欢乐的线索。所有的遗憾，总会留下一处完美的角落。」 在这个小小的角落里，不需要说话，也不需要成为谁。真好。</div>
+                    <div style="margin-top:8px;">喧嚣了一整天，只有在读几米的时候，内心才会真的平静下来。</div>
                                         <img src="jimi.png" class="feed-img1">
                     <div style="font-size:12px; color:gray; margin-top:10px;">2011年4月26日 - 浏览 96 次</div>
                     <!-- 评论区 -->
@@ -456,8 +456,8 @@ a {
             <div class="card">
                 <h4 style="margin-top:0;">大家都在看</h4>
                 <div style="font-size:13px; line-height:1.6;">
-                    <p>• 二次元老漫说了这句话后...</p>
-                    <p>• 太后版《甄嬛传》原本...</p>
+                    <p>• 看得懂这个梗的基本都是老二次元...</p>
+                    <p>• 14年无人超越，《甄嬛传》到底强在哪？...</p>
                     <p>• 谷歌退出中国后，百度崛起了吗...</p>
                 </div>
             </div>
@@ -481,31 +481,9 @@ a {
         }
 
         // 发表说说功能
-        function postStatus() {
-            const input = document.getElementById('statusInput');
-            const container = document.getElementById('feedContainer');
-            
-            if (input.value.trim() === "") {
-                alert("请输入内容");
-                return;
-            }
-
-            const newPost = document.createElement('div');
-            newPost.className = 'card feed-item';
-            newPost.innerHTML = `
-                <div style="color:#3498db; font-weight:bold;">二次元の梦想家</div>
-                <div style="margin-top:8px;">${input.value}</div>
-                <div style="font-size:12px; color:gray; margin-top:10px;">刚刚 - 浏览 1 次</div>
-                <div class="comment-section">
-                    <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
-                    <button class="btn-comment">评论</button>
-                    <div class="clear"></div>
-                </div>
-            `;
-
-            container.prepend(newPost);
-            input.value = "";
-        }
+function postStatus() {
+    // 什么也不做
+}
     </script>
 </body>
 </html>

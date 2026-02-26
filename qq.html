@@ -124,19 +124,13 @@
         }
         .footer-action { padding: 10px 15px; display: flex; justify-content: flex-end; }
         .btn-send { background: #eee; border: 1px solid #ddd; padding: 4px 15px; border-radius: 3px; color: #bbb; cursor: not-allowed; }
-                .mac-menubar {
-                position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 28px;
-    padding: 0 20px;
-    box-sizing: border-box; /* 关键 */
+                       .mac-menubar {
+            position: absolute; top: 0; left: 0; width: 100%; height: 28px;
             background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 20px; font-size: 13px; color: #333; z-index: 1000;
         }
-        .menubar-left span { margin-right: 15px; font-weight: 600; }
+            .menubar-left span { margin-right: 15px; font-weight: 500; text-shadow: none; }
         .menubar-right span { margin-left: 15px; }
 
                             .progress-indicator {
@@ -239,6 +233,14 @@
                         点击查看详情 >
                     </div>
                 </div>
+                             <div class="system-msg">2025年2月04日 10:00</div>
+               <div class="bubble-row" onclick="window.location.href='news2.html'" style="cursor: pointer;">
+    <div class="bubble-content">
+        <strong>[本地资讯] 芝心芝味破产：一代知名蛋糕品牌为何走到今天？</strong>
+        <br>
+        点击查看详情 &gt;
+    </div>
+</div>
             
             </div>
 
@@ -264,11 +266,21 @@
 
             if(type === 'news') {
                 content.innerHTML = `
-                    <div class="system-msg">2024年12月31日 10:00</div>
+                    <div class="system-msg">2025年12月31日 10:00</div>
                     <div class="bubble-row">
                         <div class="bubble-content"><strong>[今日精选] 时代记忆：那些年我们一起用过的QQ头像</strong><br>点击查看详情 ></div>
                     </div>
+                      <div class="system-msg">2025年2月04日 10:00</div>
+                                   <div class="bubble-row" onclick="window.location.href='news2.html'" style="cursor: pointer;">
+    <div class="bubble-content">
+        <strong>[本地资讯] 芝心芝味破产：一代知名蛋糕品牌为何走到今天？</strong>
+        <br>
+        点击查看详情 &gt;
+    </div>
+</div>
                 `;
+                
+                
             } else if(type === 'mail') {
                 content.innerHTML = `
                     <div class="system-msg">2025年9月28日</div>

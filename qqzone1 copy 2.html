@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Qzone - 模拟空间</title>
+    <style>
+        :root {
+            --qzone-blue: #e1f1f7;
+            --qzone-border: #ddd;
+            --qzone-text: #333;
+            --qzone-link: #d19e03;
+               --qzone-blue: #c4e1f5;
+            --qzone-border: #ddd;
+            --qzone-link: #d19e03;
+            --panel-bg: #fdfdfd; /* 原图米黄色 */
+            --border-color: #e0d8c8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #e1f2ff url('morning.jpg') no-repeat top center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed; /* 关键：滚动时背景不动 */
+            color: #000000;
+        }
+
+        /* 顶部黑色工具栏 */
+        .top-bar {
+            background: #1a1a1a;
+            height: 35px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 12px;
+               margin: 0;
+        }
+        .top-bar span { margin-right: 20px; cursor: pointer; }
+        .top-bar span:hover { color: #fff; }
+        /* 蓝天背景 Banner */
+        .header-wrapper {
+            background: url('pride.jpg') no-repeat center;
+            background-size: cover;
+            height: 220px;
+            max-width: 1000px;
+                margin: 0 auto 0 auto;
+    padding-top: 0;         /* 让 wrapper 本身居中 */
+            border-bottom: 1px solid var(--qzone-border);
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;              /* 内容居中 */
+            position: relative;
+            height: 100%;
+        }
+
+        /* 头像与资料 */
+        .profile-section {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .user-info h2 { margin: 0; color: white; font-size: 24px; }
+        .diamond-tag {
+            display: inline-block;
+            background: #ffaa00;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        /* 导航菜单 */
+        .nav-tabs {
+            position: absolute;
+            bottom: 0;
+            left: 195px;
+            display: flex;
+        }
+        .tab {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--qzone-border);
+            border-bottom: none;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .tab.active { background: #fff; font-weight: bold; }
+        .tab:hover { background: #fff; }
+
+        /* 访客统计 */
+        .visitor-stats {
+            position: absolute;
+            right: 20px;
+            top: 60px;
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+        }
+        .visitor-count { color: #ff8800; font-weight: bold; font-size: 16px; }
+
+        /* 主体布局 */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 180px 1fr 240px;
+            gap: 15px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--qzone-border);
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        .card-header {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 左侧菜单 */
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-list li {
+            padding: 8px 15px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .menu-list li:hover { background: #e8f4fc; color: var(--qzone-link); }
+        .menu-list li i { margin-right: 10px; opacity: 0.7; }
+
+        /* 中间发布框 */
+        .publish-box { padding: 15px; }
+        .publish-box textarea {
+            width: 100%;
+            height: 60px;
+            border: 1px solid #ccc;
+            padding: 8px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .publish-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 右侧签到 */
+        .checkin-area { padding: 15px; text-align: center; }
+        .checkin-btn {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+        .checkin-btn:hover { background: #eee; }
+
+        /* 最近访客 */
+        .visitor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 10px;
+        }
+        .visitor-item { text-align: center; font-size: 11px; }
+        .visitor-item img { width: 50px; height: 50px; border-radius: 2px; }
+
+        /* 按钮样式 */
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+                       /* 顶部导航栏 */
+        .top-nav {
+            background-color: #c9a769;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #b89658;
+            font-size: 12px;
+        }
+
+        .top-nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-left span {
+            margin: 0 8px;
+        }
+
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-nav-right input {
+            height: 20px;
+            width: 150px;
+            padding: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            margin: 0 5px;
+        }
+
+        .top-nav-right a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        /* 新增：音乐/视频卡片样式 */
+        .music-card {
+            background: #f9f0e8;
+            border: 1px solid #f0d9c8;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .music-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 2px;
+        }
+        .music-info {
+            flex: 1;
+        }
+        .music-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #d19e03;
+        }
+        .music-singer {
+            font-size: 11px;
+            color: #666;
+        }
+        .music-source {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .video-card {
+            background: #f0f8fb;
+            border: 1px solid #d9e9f0;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: #eee url('https://via.placeholder.com/400x180?text=爱的供养-杨幂') center/cover no-repeat;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .video-thumbnail::after {
+            content: "▶";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .video-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .video-source {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* 新增：评论区样式 */
+        .comment-section {
+            margin-top: 12px;
+            border-top: 1px dashed #eee;
+            padding-top: 10px;
+        }
+        .comment-input {
+            width: 100%;
+            height: 30px;
+            border: 1px solid #eee;
+            padding: 5px;
+            box-sizing: border-box;
+            font-size: 12px;
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+        .comment-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .comment-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .comment-avatar {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #eee;
+            overflow: hidden;
+        }
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comment-content {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #d19e03;
+            margin-right: 5px;
+        }
+        .comment-time {
+            font-size: 10px;
+            color: #999;
+            margin-left: 5px;
+        }
+        .comment-text {
+            color: #333;
+            line-height: 1.4;
+        }
+        .video-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.video-card {
+    cursor: pointer;
+}
+.music-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.music-card {
+    cursor: pointer;
+}
+
+/* 通用头像样式 - 统一zone1和rizhilist */
+.unified-avatar {
+    width: 130px;
+    height: 130px;
+    background: #fff;
+    padding: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* 通用字体/排版 - 统一全局文本风格 */
+.unified-text {
+    font-family: "Microsoft YaHei", sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+
+/* 通用版面布局容器 - 统一宽度/间距 */
+.unified-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* 通用抬头样式 */
+.unified-header {
+    font-weight: bold;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .sq{
+    width:100%;
+    aspect-ratio:1/1;     /* 关键：1:1 正方形 */
+    object-fit:cover;     /* 防止拉伸变形 */
+    border-radius:2px;
+}
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+/* --- 主体布局：两栏结构 --- */
+        .container {
+            max-width: 1000px;
+            
+            display: grid;
+            grid-template-columns: 280px 1fr; /* 左侧固定，右侧内容 */
+            gap: 20px;
+        }
+
+        /* 左侧侧边栏组件 */
+        .sidebar-section {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            color: #665b44;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            background: white;
+            padding: 15px 0;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .stat-item .num { font-size: 24px; color: #333; }
+        .stat-item .label { font-size: 12px; color: #888; }
+    </style>                             <div class="progress-indicator">22/36</div></head>
+<body>
+
+        <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <span>⭐ QQ空间</span>
+            <span>她的主页 ></span>
+            <span>她的动态 ></span>
+            <span></span>
+        </div>
+        <div class="top-nav-right">
+            <a href="#">不知所以然</a>
+            <a href="#">[退出]</a>
+            <a href="#">⚙️</a>
+        </div>
+    </div>
+
+    <div class="header-wrapper">
+        <div class="header-content">
+<!-- 替换原有profile-section区域 -->
+<div class="profile-section">
+    <img src="avatar1.jpg" class="unified-avatar">
+    <div class="user-info">
+        <h2 class="unified-header">🌻白日梦想家<span style="font-size:12px; color:#666; margin-left:10px;">LV 29</span></h2>
+        <div class="diamond-tag" id="diamond">替她开通黄钻</div>
+    </div>
+</div>
+
+<!-- 替换原有container容器 -->
+<div class="container unified-container">
+<div class="nav-tabs">
+    <div class="tab active">主页</div>
+    <!-- 新增a标签包裹，添加跳转链接 -->
+    <div class="tab">
+        <a href="rizhilist.html" target="_blank" style="text-decoration: none; color: inherit;">日志</a>
+    </div>
+    <div class="tab"> <a href="album.html" target="_blank" style="text-decoration: none; color: inherit;">相册</a></div>
+    <div class="tab">留言板</div>
+    <div class="tab">说说</div>
+    <div class="tab">个人档</div>
+    <div class="tab">音乐</div>
+</div>
+        </div>
+    </div>
+
+    <div class="container">
+      <div class="sidebar">
+            <div class="stats-grid">
+                <div class="stat-item"><div class="num">193</div><div class="label">照片</div></div>
+                <div class="stat-item"><div class="num">97</div><div class="label">说说</div></div>
+                <div class="stat-item"><div class="num">35</div><div class="label">日志</div></div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-title">个人档</div>
+                <div style="font-size:13px; line-height:2.2;">
+                    <div>👩 女</div>
+                    <div>🎂 27岁 白羊座</div>
+                    <div>🩸 血型 未知</div>
+                    <div style="color:var(--qzone-link); cursor:pointer">查看详细资料</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-title">留言板</div>
+                <textarea id="guestbookInput" style="width:100%; height:50px; border:1px solid #ccc; box-sizing:border-box; padding:5px; resize:none;" placeholder="我也留个言吧"></textarea>
+                <button style="float:right; margin-top:5px; background:#c5b496; color:white; border:none; padding:3px 10px; cursor:pointer;">发表</button>
+                <div style="clear:both; padding-top:15px;">
+                    <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
+                        <span style="color:#a67c52; font-weight:bold;">鹅鹅鹅：</span>高考加油！
+                        <div style="color:#999; font-size:10px;">2016-05-03</div>
+                    </div>
+                                        <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
+                        <span style="color:#a67c52; font-weight:bold;">未央：</span>新春快乐哟～
+                        <div style="color:#999; font-size:10px;">2016-02-04</div>
+                    </div>
+                                        <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
+                        <span style="color:#a67c52; font-weight:bold;">夏日逐鹿：</span>路过顺便踩踩，最近怎么没发新说说呀？
+                        <div style="color:#999; font-size:10px;">2015-07-21</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+
+            <div id="feed">
+ 
+             
+     <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">看着初三楼那边大家都在忙着传阅同学录，突然意识到，属于这一届的夏天真的快要画上句点啦。想起来到青实中这个集体的一幕幕，真的好庆幸遇见了你们。中考加油呀！希望你们都能坐上那趟通往梦想高中的列车，去奔向更远的海。虽然以后没法在走廊偶遇了，但我会努力追赶上你们的步伐！祝学姐学长们中考全A，考的全会，蒙的全对！我在初二楼为你们大声应援！o(≧v≦)o</p>
+                 
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2012年5月12日 - 浏览(67)</div>
+                </div>
+                <!-- 说说3：星座杂志+白羊座+想当编辑 -->
+                <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">下周轮到我们组负责午间广播的勤务了，要去广播室那边递点歌纸条和导播单。大家有什么想听的歌吗？在下面留言告诉我，我帮你们写在纸条上递过去。PS：不要太奇怪的歌喔，最好是那种安静一点的。</p>
+                                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:5px;">
+                       <a href="menu.html" target="_blank" rel="noopener noreferrer">
+    <img src="cl.png" style="width:100%;">
+</a>
+
+                    </div>
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2012年3月13日 - 浏览(98)</div>
+                    
+                    <!-- 评论区 -->
+                    <div class="comment-section">
+                    
+                        <ul class="comment-list">
+                
+                            <li class="comment-item">
+
+                                <div class="comment-content">
+                                    <span class="comment-author">离线请留言</span>
+                                    <span class="comment-time">2012年3月13日</span>
+                                    <div class="comment-text">哟哟哟，是想去递歌单呢，还是想借着递纸条去见那位“站长大人”呀？(￣▽￣) 醉翁之意不在酒吧~</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="comment-list">
+                
+                            <li class="comment-item">
+
+                                <div class="comment-content">
+                                    <span class="comment-author">来瓶可乐🥤</span>
+                                    <span class="comment-time">2012年3月13日</span>
+                                    <div class="comment-text">某人今天中午在奶茶店把纸条改了三遍我都看到了……写个歌名而已，手抖什么嘛！</div>
+                                </div>
+                            </li>
+
+                                                  <li class="comment-item">
+                      
+                                <div class="comment-content">
+                                    <span class="comment-author">冷暖自知</span>
+                                    <span class="comment-time">2012年3月14日</span>
+                                    <div class="comment-text">我想听JB的歌，帮我点一下呗！</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                          <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">2012，带着希望前行。<br>如果真的有世界末日，我想在最后的时间和父母和朋友开开心心的呆在一起。世界末日，我一点都不怕!</p>
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2012年1月1日 - 浏览(45)</div>
+                    
+        
+                </div>
+
+                   <!-- 说说2：娃娃脸歌曲分享 -->
+                <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">陈绮贞女神，我一定会攒钱去看你的现场演出(ง •̀_•́)ง</p>
+                    
+               <a class="music-link" href="#" target="_blank">
+    <div class="music-card">
+        <img src="music.png" alt="太聪明封面">
+        <div class="music-info">
+            <div class="music-title"><失明前>我想記得的四十七件事 - 陈绮贞</div>
+            <div class="music-singer">歌手：陈绮贞</div>
+            <div class="music-source">来自 酷我音乐 - 点击听完整版</div>
+        </div>
+    </div>
+</a>
+
+                    
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2011年8月9日 19:45 - 浏览(42)</div>
+                    
+                    <!-- 评论区 -->
+                    <div class="comment-section">
+                    
+                        <ul class="comment-list">
+    
+                            <li class="comment-item">
+                    
+                                <div class="comment-content">
+                                    <span class="comment-author">是柚子吖</span>
+                                    <span class="comment-time">2011年8月9日</span>
+                                    <div class="comment-text">你上次还哼这首歌帮我抄作业。。</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                      <!-- 原有说说 -->
+                <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">原本看到那一满页的完形填空就头大，但这一期的英语报纸太犯规了，居然开始用萌物吸引我的注意力去做题！</p>
+                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:5px;">
+                       <a href="21st.html" target="_blank" rel="noopener noreferrer">
+    <img src="21.png" style="width:100%;">
+</a>
+
+                    </div>
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2011年9月22日 - 浏览(67)</div>
+                </div>
+
+<!-- 说说3：糖果屋同学录 -->
+
+<div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+
+    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+
+    <p style="font-size:13px;">
+        终于放学啦！去校门口文具店扫货~满架子的手账本和各种颜色的中性笔（0.38控在哪里！）。学姐送了我一本糖果屋笔记本，说是祝我下周数学测验RP爆发。看着本子色彩缤纷的内页，真的会让人产生一种“一定要认真记录每一天”的动力诶！~ 周末万岁！
+    </p>
+
+
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:5px; margin:10px 0;">
+  
+    <img src="tgw4.png" class="sq">
+    <img src="tgw5.png" class="sq">
+    <img src="tgw6.png" class="sq">
+</div>
+    <div style="margin-top:10px; font-size:11px; color:#999;">2011年3月1日 - 浏览(52)</div>
+
+    <!-- 评论区 -->
+    <div class="comment-section">
+    
+
+        <ul class="comment-list">
+            <li class="comment-item">
+        
+                <div class="comment-content">
+                    <span class="comment-author">不知所以然</span>
+                    <span class="comment-time">2011年3月1日</span>
+                    <div class="comment-text">笔记要做得漂亮，数学也要考得漂亮，看好你哟~</div>
+                </div>
+            </li>
+        </ul>
+
+
+        <ul class="comment-list">
+            <li class="comment-item">
+        
+                <div class="comment-content">
+                    <span class="comment-author">盐酱Zoe</span>
+                    <span class="comment-time">2011年3月1日</span>
+                    <div class="comment-text">哇，亲家都没送过我这么好看的本子，数学考试一定拿下！</div>
+                </div>
+            </li>
+        </ul>
+
+
+
+    </div>
+
+</div>
+
+
+      
+
+
+
+       
+
+
+
+ 
+       
+                <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
+                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
+                    <p style="font-size:13px;">意识到自己竟然已经记住了班里所有人的名字。那个曾经觉得长得没尽头的走廊，现在去办公室抱作业跑起来的时候，只觉得轻快(◡‿◡✿)我开始喜欢上这里的气息了🍂</p>
+                 
+                    <div style="margin-top:10px; font-size:11px; color:#999;">2010年11月29日 - 浏览(22)</div>
+                </div>
+
+       
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+        
+    </div>
+
+    <script>
+        // 签到逻辑
+        let checkCount = 0;
+        function doCheckin() {
+            if(checkCount === 0) {
+                checkCount = 1;
+                const btn = document.getElementById('checkBtn');
+                btn.innerText = "已签到 (1次)";
+                btn.style.color = "#ff8800";
+                btn.style.fontWeight = "bold";
+                alert("签到成功！获得 10 点空间积分。");
+            } else {
+                alert("今天已经签到过了哦~");
+            }
+        }
+
+        // 黄钻切换特效
+        const diamond = document.getElementById('diamond');
+        diamond.onclick = function() {
+            this.style.background = "#e74c3c";
+            this.innerText = "✨ 尊贵黄钻用户";
+            document.body.style.cursor = "url('https://cur.cursors-4u.net/symbols/sym-1/sym49.cur'), auto";
+            alert("恭喜！您已成功点亮黄钻标识。");
+        };
+
+        // 发布动态
+function postStatus() {
+    // 什么也不做
+}
+        // 模拟访客增加
+        setInterval(() => {
+            const total = document.getElementById('total-visitor');
+            if(Math.random() > 0.8) {
+                total.innerText = parseInt(total.innerText) + 1;
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

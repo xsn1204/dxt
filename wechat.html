@@ -73,7 +73,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 20px; font-size: 13px; color: #333; z-index: 1000;
         }
-        .menubar-left span { margin-right: 15px; font-weight: 600; }
+          .menubar-left span { margin-right: 15px; font-weight: 500; text-shadow: none; }
         .menubar-right span { margin-left: 15px; }
 
 
@@ -487,35 +487,6 @@
     </div>
 
   
-     <div class="desktop-icons-container">
-    
-            <a href="wechat.html" target="_blank" class="desktop-icon-link">
-        <div class="desktop-icon">
-            <div class="icon-image" style="background:var(--wechat-color); color:white; font-size:35px;">微</div>
-            <div class="icon-label">微信</div>
-        </div>
-    </a>
-    <div class="desktop-icon">
-        <div class="icon-image" style="background:var(--dingtalk-color); color:#1e88e5;">🧭</div>
-        <div class="icon-label">Safari</div>
-    </div>
-        </a>
-
-
-    <a href="login.html" target="_blank" class="desktop-icon-link">
-        <div class="desktop-icon">
-            <div class="icon-image" style="background:#fff; color:white; font-size:35px;">🐧</div>
-            <div class="icon-label">QQ</div>
-        </div>
-           </a>
-    <a href="wps.html" target="_blank" class="desktop-icon-link">
-        <div class="desktop-icon">
-            <div class="icon-image" style="background:var(--wps-color); color:white; font-size:35px;">澎</div>
-            <div class="icon-label">澎拜新闻</div>
-        </div>
-
-</div>
-
 
 
     <div class="mac-dock">
@@ -560,14 +531,7 @@
                     </div>
                     <span class="time-stamp">现在</span>
                 </div>
-                <div class="chat-preview" id="chat-team" onclick="showChat('缘来一家人')">
-                    <div class="chat-avatar" style="background: #afb7ff;">🏠</div>
-                    <div class="chat-info">
-                        <h4>缘来一家人</h4>
-                        <p style="color:red; font-weight:600;">[有人@我]单位今年还发了礼品卡，你们赶紧去用掉</p>
-                    </div>
-                    <span class="time-stamp">10:29</span>
-                </div>
+                
                  <div class="chat-preview" id="chat-wang" onclick="showChat('向晴学妹')">
                     <div class="chat-avatar" style="background: #ffccbc;">🍹</div>
         
@@ -575,7 +539,7 @@
                         <h4>向晴学妹</h4>
                         <p>蛮好蛮好</p>
                     </div>
-                    <span class="time-stamp">昨天</span>
+                    <span class="time-stamp">今天</span>
                 </div>
                  <div class="chat-preview" onclick="showChat('宋宁如意')">
                     <div class="chat-avatar" style="background: #b2dfdb;">🍃</div>
@@ -583,15 +547,15 @@
                         <h4>宋宁如意</h4>
                         <p>求别提，已经开始开学焦虑了/p>
                     </div>
-                    <span class="time-stamp">1天前</span>
+                    <span class="time-stamp">今天</span>
                 </div>
                 <div class="chat-preview" onclick="showChat('方越')">
                     <div class="chat-avatar" style="background: #e1f5fe;">🔭</div>
                     <div class="chat-info">
                         <h4>方越</h4>
-                        <p>诶？</p>
+                        <p>太感谢了！</p>
                     </div>
-                    <span class="time-stamp">2天前</span>
+                    <span class="time-stamp">昨天</span>
                 </div>
             </div>
 
@@ -636,8 +600,13 @@
                         <div class="moment-detail">
                             <h5>向晴学妹</h5>
                             <p class="moment-text">
-                        今年决定在青州过年！<br>上一次感受青州的年味还是初二的时候，再后来就是回来上大学。不知不觉中，青州已经变成我的第二故乡了。
+                        今年决定在青州过年！<br>上一次感受青州的年味还是初二的时候，再后来就是回来上大学。不知不觉中，青州已经变成我的第二故乡了。<br>顺便：准备过节二刷《疯狂动物城2》，有想一起去的吗？
                             </p>
+                            <div class="moment-image-grid">
+    <img src="Dr.png" alt="Vacation photo" 
+         onclick="openImage(this.src)" 
+         style="cursor: zoom-in;">
+</div>
                           
                             <div class="moment-footer">
                                 <span>2小时前</span>
@@ -654,7 +623,7 @@
                                 Annual Gala 2025 🥂 <br>又是陪公司跨越寒冬的一年，领到了“最佳执行奖”，也领到了新一年的KPI。<br>感谢战友们的并肩作战，也感谢所有合作伙伴的包容。凡是过往，皆为序章。愿2026，品牌长青，流水长红。
                             </p>
                             <div class="moment-footer">
-                                <span>1天前</span>
+                                <span>昨天</span>
                                 <span>👍 1 | 💬 2</span>
                             </div>
                         </div>
@@ -679,7 +648,7 @@
  <div class="moment-comments">
             <div class="moment-comment">
                 <span class="self-reply">方越</span>
-                <span class="reply-content">补充一句，当天也是向晴的生日😊</span>
+                <span class="reply-content">补充一句：当天也是向晴的生日😊</span>
             </div>
         </div>
 
@@ -732,23 +701,7 @@ const chatData = {
         { sender: 'other', avatar: '☕', color: '#90caf9', text: '还有，官微和各平台的定时发布检查三遍。别大年三十那天出bug，我可不想那时候还在群里call你们' },
     ],
 
-    '缘来一家人': [
-        {
-  sender: 'other',
-  avatar: '👩',
-  color: '#e1bee7',
-  type: 'news',
-  card: {
-    title: '芝心芝味破产：一代知名蛋糕品牌为何走到今天？',
-    source: '凤凰网',
-    link: 'news2.html'
-  }
-},
-        { sender: 'other', avatar: '👩', color: '#e1bee7', text: '@知其然 @宋宁如意 ' },
-        { sender: 'other', avatar: '👩', color: '#e1bee7', text: '你们小时候老去吃'},
-        { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '好多我爱吃的店都做不下去了😣'},
-        { sender: 'other', avatar: '🎣', color: '#90caf9', text: '单位今年还发了礼品卡，你们赶紧去用掉'},
-    ],
+   
     '向晴学妹': [
 { 
     sender: 'self', 
@@ -780,15 +733,12 @@ const chatData = {
     '方越': [
         { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '宋学姐，不好意思这么晚打扰你' },
         { sender: 'self', text: '没事，怎么了？' },
-        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '虽然有些唐突，不过学姐你对<strong>dxt</strong>这个名字有印象吗' },
-        { sender: 'self', text: 'dxt？' },
-        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '向晴前几天拷贝婚礼素材的时候，U盘里传了一个名为【dxt】的上锁文件夹' },
-        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '我问她，她只说是很重要的中学回忆，我想或许是为了婚礼准备的惊喜' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '前几天我和向晴路过一家奶茶店，她突然停下愣了好一会儿。我问她怎么了，她说想起了一个中学时代的朋友，在纠结要不要请来参加婚礼' },
         { sender: 'self', text: '她还说了什么吗？' },
-        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '没有了' },
-        { sender: 'self', text: '抱歉，我没有印象了，也许是她回老家后认识的朋友' },
-        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '那就奇怪了，她说这事只有你一个人知道' },
-        { sender: 'self', text: '诶？' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '她只说那是很重要的人。可惜我没记住那家店的名字，当时只顾着看她脸色了' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '虽然有些唐突，但我只认识学姐你一个她中学时代的朋友，可以拜托你帮忙回忆一下这个人吗？我想联系这位同学，给向晴一个惊喜🙏' },
+        { sender: 'self', text: '我…尽力吧，已经很久没有和初中的人联系了' },
+          { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '太感谢了！' },
     ]
 };
 
@@ -803,7 +753,8 @@ if (message.type === 'xiaohongshu') {
             </div>
 
             <div class="chat-bubble"
-                 onclick="window.location.href='xhspage.html'"
+              onclick="window.open('xhspage.html', '_blank')"
+
                  style="background: white; padding: 0; overflow: hidden; border: 1px solid #eee; width: 240px; cursor: pointer;">
                 
                 <div style="position: relative;">

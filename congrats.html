@@ -9,49 +9,70 @@
             --gold-dark: #d4af37;
             --light-red: #ff3333;
             --deep-orange: #ff8c00;
+            --transition-speed: 4s; /* 异变发生的平滑速度 */
         }
 
         body {
             margin: 0;
             padding: 20px;
-            background-color: #fde6e6; /* 淡粉色背景，不瘆人 */
+            background-color: #fde6e6; 
             font-family: "STKaiti", "KaiTi", "SimSun", serif;
             display: flex;
             justify-content: center;
+            transition: background-color var(--transition-speed) ease;
         }
 
-        /* 主容器：放射状光芒背景，还原 image_da1a6c */
+        /* --- 异变：背景变黑 --- */
+        body.eerie-mode {
+            background-color: #000 !important;
+        }
+
         .glory-container {
             width: 850px;
             min-height: 1100px;
             background: 
-                radial-gradient(circle at 50% 20%, #fff9ad 0%, transparent 60%), /* 中心高光 */
-                linear-gradient(135deg, #ff4444 0%, #ff8c00 100%); /* 橙红渐变 */
+                radial-gradient(circle at 50% 20%, #fff9ad 0%, transparent 60%),
+                linear-gradient(135deg, #ff4444 0%, #ff8c00 100%);
             border: 12px double var(--gold-bright);
             position: relative;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             box-sizing: border-box;
             overflow: hidden;
+            transition: all var(--transition-speed) ease;
         }
 
-        /* 顶部繁花装饰 - 还原原图四周的花朵元素 */
+        /* --- 异变：容器变深、边框黯淡 --- */
+        body.eerie-mode .glory-container {
+            background: #111 !important;
+            border-color: #222 !important;
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+        }
+
         .flower-cluster {
             position: absolute;
             z-index: 5;
             font-size: 80px;
             filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+            transition: all var(--transition-speed) ease;
         }
         .top-left { top: -10px; left: -10px; }
         .top-right { top: -10px; right: -10px; }
         .bottom-left { bottom: -10px; left: -10px; }
         .bottom-right { bottom: -10px; right: -10px; }
 
-        /* 标题：大红立体金边字 */
+        /* --- 异变：花朵枯萎 --- */
+        body.eerie-mode .flower-cluster {
+            filter: grayscale(1) brightness(0.1) blur(3px);
+            transform: scale(0.8) rotate(15deg);
+            opacity: 0.2;
+        }
+
         .title-area {
             text-align: center;
             position: relative;
             margin-bottom: 30px;
+            transition: transform var(--transition-speed);
         }
 
         .main-title {
@@ -66,9 +87,23 @@
                 5px 8px 15px rgba(0,0,0,0.4);
             letter-spacing: 30px;
             padding-left: 30px;
+            transition: all var(--transition-speed) ease;
         }
 
-        /* 喜庆的绸带装饰 */
+        /* --- 异变：喜报变成灰烬碎裂效果 --- */
+        body.eerie-mode .main-title {
+            color: #333 !important;
+            text-shadow: none !important;
+            letter-spacing: 50px;
+            animation: ash-decay 6s forwards;
+        }
+
+        @keyframes ash-decay {
+            0% { transform: translateY(0) skew(0); opacity: 1; }
+            30% { transform: translateY(-10px) skew(5deg); filter: grayscale(1) brightness(0.5); }
+            100% { transform: translateY(-30px) skew(-15deg); opacity: 0.2; filter: grayscale(1) brightness(0) blur(5px); }
+        }
+
         .ribbon {
             background: var(--gold-bright);
             color: #b30000;
@@ -79,15 +114,30 @@
             border-radius: 50px;
             margin-top: -10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all var(--transition-speed) ease;
         }
 
-        /* 内容文本：背景半透明，增加层次感 */
+        /* --- 异变：绸带变为焦灼状 --- */
+        body.eerie-mode .ribbon {
+            background: #1a1a1a;
+            color: #444;
+            box-shadow: none;
+            transform: scaleX(0.9);
+        }
+
         .content-card {
             background: rgba(255, 255, 255, 0.85);
             border-radius: 20px;
             padding: 30px;
             margin-top: 20px;
             border: 3px solid var(--gold-dark);
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* --- 异变：内容卡片沉没感 --- */
+        body.eerie-mode .content-card {
+            background: rgba(10, 10, 10, 0.95);
+            border-color: #222;
         }
 
         .announcement {
@@ -96,9 +146,16 @@
             font-size: 18px;
             text-indent: 2em;
             margin-bottom: 25px;
+            transition: color var(--transition-speed);
         }
 
-        /* 名单表格：参考原图的多列布局 */
+        /* --- 异变：文字变灰，留下诡异感 --- */
+        body.eerie-mode .announcement, 
+        body.eerie-mode .name,
+        body.eerie-mode .footer-info {
+            color: #666 !important;
+        }
+
         .score-table {
             width: 100%;
             border-collapse: collapse;
@@ -111,6 +168,12 @@
             padding: 10px;
             font-size: 20px;
             border-radius: 10px 10px 0 0;
+            transition: all var(--transition-speed);
+        }
+
+        body.eerie-mode .score-table th {
+            background: #222;
+            color: #444;
         }
 
         .score-table td {
@@ -118,58 +181,99 @@
             border-bottom: 1px solid #fecaca;
             text-align: center;
             width: 25%;
+            transition: border var(--transition-speed);
+        }
+
+        body.eerie-mode .score-table td {
+            border-bottom: 1px solid #1a1a1a;
         }
 
         .name { color: #333; font-weight: bold; }
-        .val { color: #e63946; font-family: Arial; font-weight: 900; }
+        .val { color: #e63946; font-family: Arial; font-weight: 900; transition: color var(--transition-speed); }
 
-        /* 底部安全提示：用温暖的颜色块包裹 */
-      .safety-box {
-    margin-top: 30px;
-    background: #fff3cd;
-    border-left: 8px solid #ffc107;
-    padding: 15px;
-    font-size: 14px;
-    color: #856404;
-    line-height: 1.8; /* 行距增加 */
-}
+        /* --- 异变：分数变暗红（血迹色） --- */
+        body.eerie-mode .val {
+            color: #400 !important;
+        }
 
+        .safety-box {
+            margin-top: 30px;
+            background: #fff3cd;
+            border-left: 8px solid #ffc107;
+            padding: 15px;
+            font-size: 14px;
+            color: #856404;
+            line-height: 1.8;
+            transition: all var(--transition-speed);
+        }
 
-        .safety-box b { color: #b30000; font-size: 16px; }
+        body.eerie-mode .safety-box {
+            background: #0a0a0a;
+            border-left-color: #300;
+            color: #444;
+        }
 
-        /* 装饰性的灯笼 */
+        .safety-box b { color: #b30000; font-size: 16px; transition: color var(--transition-speed); }
+        body.eerie-mode .safety-box b { color: #500; }
+
         .lantern {
             position: absolute;
             top: 150px;
             font-size: 40px;
             animation: swing 3s infinite ease-in-out;
+            transition: opacity var(--transition-speed);
         }
+
+        /* --- 异变：灯笼熄灭/消失 --- */
+        body.eerie-mode .lantern {
+            opacity: 0.05;
+            animation: none;
+        }
+
         @keyframes swing {
             0%, 100% { transform: rotate(-5deg); }
             50% { transform: rotate(5deg); }
         }
-.blur-char {
-    display: inline-block;
-    filter: blur(3px);       /* 模糊强度 */
-    user-select: none;       /* 禁止复制 */
-    -webkit-user-select: none;
-}
 
+        .blur-char {
+            display: inline-block;
+            filter: blur(3px);
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-                            .progress-indicator {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    z-index: 9999;
-}
-    </style>                             <div class="progress-indicator">12/36</div></head>
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            z-index: 9999;
+        }
+
+        .no-underline {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .footer-info {
+            text-align: right; 
+            margin-top: 20px; 
+            color: white; 
+            font-weight: bold; 
+            line-height: 1.8;
+            transition: color var(--transition-speed);
+        }
+
+    </style>
+</head>
 <body>
+
+    <div class="progress-indicator">extra2/36</div>
 
     <div class="glory-container">
         <div class="flower-cluster top-left">🌺</div>
@@ -181,11 +285,9 @@
         <div class="lantern" style="right: 20px;">🏮</div>
 
         <div class="title-area">
-<a href="news.html" target="_blank" rel="noopener noreferrer">
-    <h1 class="main-title">喜报</h1>
-</a>
-
-
+            <a href="#" rel="noopener noreferrer" class="no-underline">
+                <h1 class="main-title">喜报</h1>
+            </a>
             <div class="ribbon">荣耀实验 · 筑梦前行</div>
         </div>
 
@@ -219,21 +321,16 @@
                     </tr>
                     <tr>
                         <td><span class="name">刘紫晗</span> <span class="val">685</span></td>
-<td>
-  <span class="name">
-    <span>段</span>
-    <span class="blur-char">宜</span>
-    <span>廷</span>
-  </span>
-  <span class="val">683</span>
-</td>
-
+                        <td>
+                            <span class="name">吴俊杰</span>
+                            <span class="val">683</span>
+                        </td>
                         <td><span class="name">周子璇</span> <span class="val">682</span></td>
                         <td><span class="name">袁文俊</span> <span class="val">680</span></td>
                     </tr>
                     <tr>
                         <td><span class="name">房子豪</span> <span class="val">676</span></td>
-                        <td><span class="name">邹言</span> <span class="val">675</span></td>
+                        <td><span class="name"><span class="blur-char">邹言</span></span> <span class="val">675</span></td>
                         <td><span class="name">王思扬</span> <span class="val">673</span></td>
                         <td><span class="name">吕 洁</span> <span class="val">671</span></td>
                     </tr>
@@ -242,17 +339,24 @@
 
             <div class="safety-box">
                 <b>📢 温馨提示：</b><br>
-        1. 过马路走斑马线，不闯红灯，靠右行走，未满12周岁不骑自行车。<br>
+                1. 过马路走斑马线，不闯红灯，靠右行走，未满12周岁不骑自行车。<br>
                 2. 远离火源，不在河边、工地水坑等区域玩耍，严防事故发生。<br>
                 3. 增强电信网络诈骗防范意识，不轻信网络信息，不参与非法活动。
             </div>
         </div>
 
-        <div style="text-align: right; margin-top: 20px; color: white; font-weight: bold; line-height: 1.8; ">
+        <div class="footer-info">
             青州市实验初级中学<br>
             2012年7月
         </div>
     </div>
+
+    <script>
+        // 5秒钟后启动异变
+        setTimeout(() => {
+            document.body.classList.add('eerie-mode');
+        }, 5000);
+    </script>
 
 </body>
 </html>

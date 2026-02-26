@@ -6,35 +6,19 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, "Helvetica Neue", sans-serif; }
 
-   body {
-         height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-           background-image: url('desk.jpg'); 
-            /* 2. 确保图片覆盖整个屏幕 */
-            background-size: cover; 
-            /* 3. 让图片居中显示 */
-            background-position: center;
-            /* 4. 防止图片在小窗口时重复显示 */
-            background-repeat: no-repeat;
-            display: block;
-            user-select: text;
+        body {
+            height: 100vh; width: 100vw; overflow: hidden;
+            background-image: url('desk.jpg'); 
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            display: block; user-select: text;
         }
 
         .qq-window {
-            width: 380px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            overflow: hidden;
-            border: 0.5px solid rgba(255,255,255,0.4);
-            transition: height 0.3s ease;
-                        position: fixed; 
-            top: 50%;         
-            left: 50%;        
-            transform: translate(-50%, -50%); 
-            z-index: 500; 
+            width: 380px; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px); border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); overflow: hidden;
+            border: 0.5px solid rgba(255,255,255,0.4); transition: height 0.3s ease;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 500; 
         }
 
         .window-bar { height: 38px; padding: 0 12px; display: flex; align-items: center; }
@@ -50,52 +34,55 @@
             font-size: 45px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* 输入框共有样式 */
         .input-box {
-            width: 100%;
-            background: rgba(255,255,255,0.6);
-            border: 1px solid #dcdcdc;
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-size: 14px;
-            margin-bottom: 12px;
-            outline: none;
+            width: 100%; background: rgba(255,255,255,0.6);
+            border: 1px solid #dcdcdc; border-radius: 6px;
+            padding: 10px 12px; font-size: 14px; margin-bottom: 4px; outline: none;
         }
         .input-box:focus { border-color: #007aff; background: #fff; }
+        .input-box:disabled { background: rgba(0,0,0,0.08); color: #666; cursor: not-allowed; border: 1px solid #ccc; }
 
-        /* 验证码行 */
-        .verify-row { display: none; gap: 8px; margin-bottom: 12px; }
+        /* 错误提示文字：调整了 margin-bottom 以缩小间距 */
+        .error-msg { color: #ff3b30; font-size: 12px; text-align: left; height: 14px; margin-bottom: 4px; visibility: hidden; }
+
+        .verify-row { display: none; gap: 8px; margin-bottom: 4px; }
         .verify-row .input-box { margin-bottom: 0; }
         
         .btn-send {
-            width: 110px; background: #fff; border: 1px solid #dcdcdc;
-            border-radius: 6px; font-size: 12px; cursor: pointer;
+            width: 110px; background: #fff; border: 1px solid #007aff;
+            border-radius: 6px; font-size: 12px; cursor: pointer; color: #007aff;
         }
-        .btn-send:disabled { color: #999; background: #f5f5f5; }
 
+        /* 登录按钮：调整了 margin-top */
         .btn-login {
             width: 100%; padding: 10px; background: #007aff; color: white;
             border: none; border-radius: 6px; font-size: 15px; font-weight: 500;
-            cursor: pointer; margin-top: 10px;
+            cursor: pointer; margin-top: 2px; 
         }
 
-        .switch-mode {
-            margin-top: 20px; font-size: 13px; color: #007aff; cursor: pointer;
+        .switch-mode { margin-top: 20px; font-size: 13px; color: #007aff; cursor: pointer; }
+        
+         .mac-menubar {
+                position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    padding: 0 20px;
+    box-sizing: border-box; /* 关键 */
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; font-size: 13px; color: #333; z-index: 1000;
         }
-                            .progress-indicator {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    z-index: 9999;
-}
-    </style>                             <div class="progress-indicator">5/36</div></head>
+            .menubar-left span { margin-right: 15px; font-weight: 500; text-shadow: none; }
+        .menubar-right span { margin-left: 15px; }
+    </style>
+</head>
 <body>
+    <div class="mac-menubar">
+        <div class="menubar-left"><span></span><span>QQ</span><span>登录</span></div>
+        <div class="menubar-right"><span>100%</span><span>Wi-Fi</span><span>2月10日 周二</span></div>
+    </div>
 
     <div class="qq-window">
         <div class="window-bar">
@@ -105,106 +92,100 @@
         <div class="login-content">
             <div class="avatar-container">🐧</div>
             
-            <input type="text" id="account-input" class="input-box" placeholder="QQ号码/手机号">
+            <input type="text" id="account-input" class="input-box" placeholder="QQ号码">
+            <div id="err-account" class="error-msg">手机号不正确</div>
             
             <input type="password" id="password-input" class="input-box" placeholder="请输入密码">
+            <div id="err-pwd" class="error-msg">账号或密码错误</div>
 
             <div id="sms-row" class="verify-row">
                 <input type="text" id="v-code" class="input-box" placeholder="验证码" maxlength="4">
-                <button id="send-btn" class="btn-send" onclick="startTimer()">获取验证码</button>
+                <button id="send-btn" class="btn-send" onclick="window.open('message.html','_blank')">获取验证码</button>
             </div>
+            <div id="err-vcode" class="error-msg">验证码错误</div>
 
-            <button class="btn-login" onclick="handleLogin()">登 录</button>
+            <button id="main-btn" class="btn-login" onclick="handleLogic()">登 录</button>
 
-            <div class="switch-mode" id="mode-text" onclick="toggleMode()">短信验证码登录</div>
+            <div class="switch-mode" id="mode-text" onclick="toggleToForgot()">找回密码</div>
         </div>
     </div>
 
 <script>
-    let isSMSMode = false;
-    let timer = null;
+let currentStep = 'LOGIN'; 
 
-    function toggleMode() {
-        isSMSMode = !isSMSMode;
-        const pwdInput = document.getElementById('password-input');
-        const smsRow = document.getElementById('sms-row');
-        const modeText = document.getElementById('mode-text');
-        const accountInput = document.getElementById('account-input');
+const accountInput = document.getElementById('account-input');
+const pwdInput = document.getElementById('password-input');
+const smsRow = document.getElementById('sms-row');
+const modeText = document.getElementById('mode-text');
+const mainBtn = document.getElementById('main-btn');
 
-        if (isSMSMode) {
-            pwdInput.style.display = 'none';
-            smsRow.style.display = 'flex';
-            modeText.innerText = '账号密码登录';
-            accountInput.placeholder = '手机号';
-        } else {
-            pwdInput.style.display = 'block';
-            smsRow.style.display = 'none';
-            modeText.innerText = '短信验证码登录';
-            accountInput.placeholder = 'QQ号码/手机号';
-        }
-    }
+const errAccount = document.getElementById('err-account');
+const errPwd = document.getElementById('err-pwd');
+const errVcode = document.getElementById('err-vcode');
 
-function startTimer() {
-    const phone = document.getElementById('account-input').value.replace(/\s+/g, ''); 
-    if (phone !== '11211568544') {
-        alert('请输入正确的手机以获取验证码');
-        return;
-    }
-
-    // 1. 发送验证码到本地存储
-    const smsData = {
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        code: '5649'
-    };
-    localStorage.setItem('qq_v_code', JSON.stringify(smsData));
-
-    // 2. 核心修改：跳转到消息页面 (如果你希望在原窗口打开)
-    window.open('message.html', '_blank'); 
-
-
-    // 以下是原有的倒计时逻辑（如果页面跳转了，原页面的倒计时会随之消失）
-    let seconds = 60;
-    const btn = document.getElementById('send-btn');
-    btn.disabled = true;
-    
-    timer = setInterval(() => {
-        seconds--;
-        btn.innerText = `${seconds}s`;
-        if (seconds <= 0) {
-            clearInterval(timer);
-            btn.disabled = false;
-            btn.innerText = "获取验证码";
-        }
-    }, 1000);
+function showError(el, msg) {
+    el.innerText = msg;
+    el.style.visibility = 'visible';
 }
 
-    function handleLogin() {
-        const account = document.getElementById('account-input').value.replace(/\s+/g, '');
-        const btn = document.querySelector('.btn-login');
+function hideErrors() {
+    errAccount.style.visibility = 'hidden';
+    errPwd.style.visibility = 'hidden';
+    errVcode.style.visibility = 'hidden';
+}
 
-        if (isSMSMode) {
-            const code = document.getElementById('v-code').value;
-            if (account === '11211568544' && code === '5649') {
-                loginSuccess(btn);
-            } else {
-                alert('验证码错误，请查看短信');
-            }
+function toggleToForgot() {
+    if (currentStep === 'LOGIN') {
+        currentStep = 'FORGOT';
+        hideErrors();
+        accountInput.value = '';
+        accountInput.placeholder = '输入绑定的手机号';
+        pwdInput.style.display = 'none';
+        modeText.innerText = '返回登录';
+        mainBtn.innerText = '确 认';
+    } else {
+        location.reload(); 
+    }
+}
+
+function handleLogic() {
+    hideErrors();
+    const accountValue = accountInput.value.replace(/\s+/g,'');
+    const pwdValue = pwdInput.value.replace(/\s+/g,'');
+    const vCodeValue = document.getElementById('v-code').value.replace(/\s+/g,'');
+
+    if (currentStep === 'LOGIN') {
+        showError(errPwd, '账号或密码错误');
+    } 
+    else if (currentStep === 'FORGOT') {
+        if (accountValue === '11211568544') {
+            currentStep = 'VERIFY_ALL';
+            accountInput.disabled = true; 
+            pwdInput.style.display = 'block'; 
+            pwdInput.value = '';
+            pwdInput.placeholder = '我的小名+St@yP0$1t!v3';
+            smsRow.style.display = 'flex'; 
+            mainBtn.innerText = '立即找回';
         } else {
-            if (account !== '') {
-                loginSuccess(btn);
-            } else {
-                alert('请输入账号');
-            }
+            showError(errAccount, '该手机号未绑定');
+        }
+    } 
+    else if (currentStep === 'VERIFY_ALL') {
+        let hasError = false;
+        if (pwdValue !== 'guoguostaypositive') {
+            showError(errPwd, '密码错误，请输入英文小写字符');
+            hasError = true;
+        }
+        if (vCodeValue !== '5649') {
+            showError(errVcode, '验证码错误');
+            hasError = true;
+        }
+        if (!hasError) {
+            mainBtn.innerText = '正在跳转...';
+            setTimeout(() => { window.location.href = 'qq.html'; }, 800);
         }
     }
-
-    function loginSuccess(btn) {
-        btn.innerText = '正在登录...';
-        document.body.style.cursor = 'wait';
-        setTimeout(() => {
-            window.location.href = 'qq.html'; // 登录成功跳转
-        }, 1000);
-    }
+}
 </script>
 </body>
 </html>

@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yiting Duan | Department of Chemistry | University of Pennsylvania</title>
+    <title>Dr. Yiting Duan | Perelman School of Medicine | University of Pennsylvania</title>
     <style>
-        /* UPenn 官方色值 */
         :root {
             --upenn-blue: #011F5B;
             --upenn-red: #990000;
@@ -14,7 +13,7 @@
         }
 
         body {
-            font-family: 'EB Garamond', Georgia, serif; /* 宾大偏好这种古典而优雅的衬线字体 */
+            font-family: 'EB Garamond', Georgia, serif;
             line-height: 1.5;
             color: #333;
             margin: 0;
@@ -22,7 +21,6 @@
             background-color: #fff;
         }
 
-        /* 顶部 Logo 与 导航栏 */
         header {
             border-top: 5px solid var(--upenn-red);
             padding: 20px 10%;
@@ -40,11 +38,8 @@
             letter-spacing: 1px;
         }
 
-        .logo-text span {
-            color: var(--upenn-red);
-        }
+        .logo-text span { color: var(--upenn-red); }
 
-        /* 黑色个人姓名横条 - 参考图片样式 */
         .name-banner {
             background-color: #222;
             color: white;
@@ -53,14 +48,12 @@
             font-weight: 300;
         }
 
-        /* 主体布局 */
         .main-container {
             display: flex;
             padding: 40px 10%;
             gap: 50px;
         }
 
-        /* 左侧个人信息卡片 - 参考图片样式 */
         .sidebar {
             width: 300px;
             flex-shrink: 0;
@@ -73,18 +66,15 @@
             background-color: #fff;
         }
 
-.photo-placeholder {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background-color: #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #777;
-    font-size: 14px;
-    position: relative;
-}
-
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
 
         .label-tag {
             position: absolute;
@@ -105,10 +95,7 @@
         .contact-info p { margin: 8px 0; }
         .contact-info a { color: var(--upenn-blue); text-decoration: none; }
 
-        /* 右侧内容区 */
-        .content-area {
-            flex-grow: 1;
-        }
+        .content-area { flex-grow: 1; }
 
         .nav-sub {
             text-align: right;
@@ -116,7 +103,6 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
             font-size: 0.9em;
-            color: var(--upenn-red);
         }
 
         .nav-sub a {
@@ -130,14 +116,24 @@
             color: var(--upenn-blue);
             border-bottom: 2px solid var(--upenn-blue);
             padding-bottom: 5px;
-            margin-top: 0;
+            margin-top: 30px;
         }
+
+        h2:first-of-type { margin-top: 0; }
 
         .pub-list { list-style: none; padding: 0; }
         .pub-list li { margin-bottom: 15px; border-left: 3px solid var(--upenn-red); padding-left: 15px; }
         .me { font-weight: bold; }
 
-        /* 页脚 */
+        /* 荣誉栏样式 */
+        .honor-box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px inline var(--upenn-blue);
+            font-style: italic;
+            color: #444;
+        }
+
         footer {
             background-color: var(--light-grey);
             padding: 40px 10%;
@@ -147,61 +143,50 @@
             display: flex;
             justify-content: space-between;
         }
-                            .progress-indicator {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    z-index: 9999;
-}
-    </style>                             <div class="progress-indicator">extra6/36</div></head>
+    </style>
+</head>
 <body>
 
 <header>
-    <div class="logo-text">Penn <span>Chemistry</span></div>
-    <div style="font-size: 0.9em; color: #666;">University of Pennsylvania</div>
+    <div class="logo-text">Penn <span>Medicine</span></div>
+    <div style="font-size: 0.9em; color: #666;">Perelman School of Medicine</div>
 </header>
 
 <div class="name-banner">
-    Yiting Duan
+    Yiting Duan, Ph.D.
 </div>
 
 <div class="main-container">
     <aside class="sidebar">
         <div class="profile-card">
             <div class="photo-placeholder">
-                <img src="avatar.jpg" alt="Yiting He" style="width:100%; height:100%;">
+                <img src="avatar.jpg" alt="Dr. Yiting Duan" style="width:100%; height:100%; object-fit: cover;">
                 <div class="label-tag">
-                    <strong>Yiting Duan</strong><br>
-                    Postdoctoral Fellow
+                    <strong>Dr. Yiting Duan</strong><br>
+                    Postdoctoral Research Fellow
                 </div>
             </div>
             <div class="contact-info">
-                <p><strong>Department:</strong><br>Chemistry</p>
-                <p>📧 <a href="mailto:Yitingd@sas.upenn.edu">Yitingd@sas.upenn.edu</a></p>
-                <p>📍 231 South 34th Street<br>Philadelphia, PA 19104</p>
-                <p>🔬 <strong>The Kozlowski Lab</strong></p>
+                <p><strong>Department:</strong><br>Dermatology / Bioengineering</p>
+                <p>📧 <a href="mailto:Yitingd@pennmedicine.upenn.edu">Yitingd@pennmedicine.upenn.edu</a></p>
+                <p>📍 Smilow Center for Translational Research<br>Philadelphia, PA 19104</p>
+                <p>🔬 <strong>The Regeneration Lab</strong></p>
             </div>
         </div>
     </aside>
 
     <main class="content-area">
         <div class="nav-sub">
-            <a href="#">Publications</a> | <a href="#">Research</a> | <a href="#">CV</a> | <a href="#">All</a>
+            <a href="#">Research</a> | <a href="#">Publications</a> | <a href="#">Honors</a> | <a href="#">CV</a>
         </div>
 
         <section id="bio">
             <h2>Biography</h2>
             <p>
-                I am a Postdoctoral Fellow in the Department of Chemistry at the University of Pennsylvania, working under the supervision of <strong>Prof. Macus Kozlowski</strong>. My research lies at the interface of <strong>High-Throughput Experimentation (HTE)</strong> and <strong>Oxidative Coupling Catalysis</strong>. 
+                I am a Postdoctoral Research Fellow at the Perelman School of Medicine, University of Pennsylvania. My research focuses on regenerative medicine and tissue engineering</strong>, specifically developing bioactive scaffolds for accelerated skin wound healing and follicle regeneration. 
             </p>
             <p>
-                I received my B.S. in Chemistry from Boston University and my Ph.D. from Scripps Research, where I focused on the total synthesis of complex natural products. Currently, I am developing machine-learning-guided workflows to optimize transition-metal-catalyzed reactions.
+                I received my B.S. in Biomedical Sciences from Boston University and earned my Ph.D. from Johns Hopkins School of Medicine, where my doctoral work centered on stem cell niche modulation and biomaterial interface design.
             </p>
         </section>
 
@@ -209,28 +194,35 @@
             <h2>Selected Publications</h2>
             <ul class="pub-list">
                 <li>
-                    <span class="me">Duan, Y.</span>; Walsh, P. J.; Kozlowski, M. C. "Data-Driven Design of Chiral Ligands for Asymmetric C–C Coupling." 
-                    <em>Journal of the American Chemical Society</em>, <strong>2025</strong>, 147, 1024-1035.
+                    <span class="me">Duan, Y.</span>; Thompson, A.; Miller, R. S. "Bio-inspired Hydrogels with Spatiotemporal Growth Factor Release for Scalable Skin Regeneration." 
+                    <em>Nature Biomedical Engineering</em>, <strong>2025</strong>, 9, 442-456.
                 </li>
                 <li>
-                    <span class="me">Duan, Y.</span>*; Smith, J.*; et al. "Automated Screening of Palladium-Catalyzed C-H Activation." 
-                    <em>Angewandte Chemie International Edition</em>, <strong>2024</strong>, 62, e202301234.
+                    <span class="me">Duan, Y.</span>*; Zhao, L.*; et al. "Single-cell Transcriptomics Reveal Myeloid-driven Mechanisms in Hypertrophic Scarring." 
+                    <em>Journal of Investigative Dermatology</em>, <strong>2024</strong>, 144, 215-228.
                 </li>
             </ul>
+        </section>
+
+        <section id="honors">
+            <h2>Awards & Honors</h2>
+            <div class="honor-box">
+                Dr. Duan is a recipient of the <strong>Penn Medicine Women in Science Award (2025)</strong> and is dedicated to advancing clinical solutions for chronic wound care and reconstructive dermatology.
+            </div>
         </section>
     </main>
 </div>
 
 <footer>
     <div>
-        <strong>Department of Chemistry</strong><br>
+        <strong>Perelman School of Medicine</strong><br>
         University of Pennsylvania<br>
         &copy; 2026 The Trustees of the University of Pennsylvania
     </div>
-    <div style="text-align: right;">
+<div style="text-align: right;">
         <a href="#" style="color:#666; text-decoration:none;">Directory</a> | 
         <a href="#" style="color:#666; text-decoration:none;">Contact Us</a><br>
-        Follow Penn Chemistry on Twitter
+        Follow Penn Medicine on Twitter
     </div>
 </footer>
 

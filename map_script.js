@@ -23,7 +23,7 @@ function loadStoreInfo() {
     const resultsArea = document.getElementById('results');
     resultsArea.innerHTML = `
         <div class="store-card">
-            <div class="title">芝心芝味（总店）</div>
+            <div class="title">芝心芝味（青实中店）</div>
             <div class="info">
                 <p>📍 地址：上海市浦东新区张江高科技园区科苑路88号</p>
                 <p>☎️ 电话：021-12345678</p>

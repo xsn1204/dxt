@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信</title>
+    <style>
+        :root {
+            --wps-color: #E63946;
+            --dingtalk-color: #1e88e5;
+            /* 新增：微信的绿色 */
+            --wechat-color: #07C160; 
+            --secret-color: #a040a0;
+            --desktop-icon-label-color: #333;
+            --shadow-window: 0 20px 60px rgba(0,0,0,0.3); /* 窗口阴影变量 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+        body {
+         height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+           background-image: url('desk.jpg'); 
+            /* 2. 确保图片覆盖整个屏幕 */
+            background-size: cover; 
+            /* 3. 让图片居中显示 */
+            background-position: center;
+            /* 4. 防止图片在小窗口时重复显示 */
+            background-repeat: no-repeat;
+            display: block;
+            user-select: text;
+        }
+        /* --- macOS Dock (底部应用栏) --- */
+        .mac-dock {
+            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
+            height: 64px;
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 18px;
+            display: flex; align-items: center; padding: 0 12px; gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        .mac-dock { display: none; }
+
+/* Dock 链接样式：重要！覆盖 a 标签的默认下划线 */
+        .dock-link {
+            text-decoration: none;
+            color: inherit; 
+        }
+        /* Dock 图标样式 */
+        .dock-icon {
+            width: 48px; 
+            height: 48px; 
+            border-radius: 12px;
+            background: linear-gradient(to bottom, #fff, #f0f0f0);
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            font-size: 26px; 
+            cursor: pointer; 
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .dock-icon:hover { 
+            transform: translateY(-15px) scale(1.1); 
+            margin: 0 5px; 
+        }
+        /* --- macOS Top Bar --- */
+        .mac-menubar {
+            position: absolute; top: 0; left: 0; width: 100%; height: 28px;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; font-size: 13px; color: #333; z-index: 1000;
+        }
+          .menubar-left span { margin-right: 15px; font-weight: 500; text-shadow: none; }
+        .menubar-right span { margin-left: 15px; }
+
+
+       /* --- 桌面图标 --- */
+        /* 移除桌面图标链接的下划线 */
+        .desktop-icon-link {
+            text-decoration: none; 
+        }
+        
+        .desktop-icons-container {
+            position: absolute;
+            top: 40px; 
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .desktop-icon {
+            width: 80px; height: 90px;
+            display: flex; flex-direction: column; align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            text-align: center;
+        }
+        .icon-image {
+            width: 64px; height: 64px; border-radius: 15px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            transition: box-shadow 0.2s;
+            font-weight: 700;
+        }
+        .icon-image:hover { box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); } 
+
+        .icon-label {
+            margin-top: 5px; font-size: 12px; 
+            color: var(--desktop-icon-label-color); 
+            background: rgba(255,255,255,0.6); 
+            padding: 2px 6px; border-radius: 4px;
+            font-weight: 500;
+            text-shadow: none; 
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .icon-folder {
+            background: linear-gradient(to top, #7d7d7d, #a0a0a0);
+            font-size: 35px;
+            padding-top: 5px;
+        }
+        .secret-label {
+            color: #cc0000; 
+            font-weight: 700;
+            background: rgba(255,255,255,0.8);
+        }
+
+
+        /* --- WeChat Application Window --- */
+        .wechat-app {
+            width: 1000px;
+            height: 700px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow-window);
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            position: fixed; 
+            top: 50%;         
+            left: 50%;        
+            transform: translate(-50%, -50%); 
+            z-index: 500; 
+        }
+
+        /* App Header */
+        .app-header {
+            height: 45px;
+            min-height: 45px;      /* 强制最小高度 */
+            flex-shrink: 0;        /* 阻止收缩（最关键的一步） */
+            background: var(--mac-bg);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+        .window-controls { 
+            display: flex; 
+            gap: 8px; 
+            /* 保持左侧间距 */
+            margin-right: 15px; 
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #FF5F56; } .yellow { background: #FFBD2E; } .green { background: #27C93F; }
+        
+        /* 1. 【修改点】删除 .app-title 的居中和 flex-grow，实际上我们在 HTML 中直接移除了这个元素 */
+        /* .app-title { font-size: 14px; font-weight: 500; color: #333; margin-left: 10px; flex-grow: 1; text-align: center; } */
+
+        /* Main Content Split */
+        .wechat-content {
+            flex: 1;
+            display: flex;
+            height: 100%;
+            overflow: hidden;    /* 关键 */
+        }
+
+        /* 1. Left - Sidebar & Chat List */
+        .wechat-sidebar {
+            width: 50px;
+            background: #2e2e2e; /* 深色导航栏 */
+            flex-shrink: 0;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-icon {
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 25px;
+            cursor: pointer;
+            position: relative;
+        }
+        .nav-icon.active { color: var(--wechat-color); } /* 使用 var(--wechat-color) */
+
+        .wechat-list {
+            width: 250px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+        .chat-preview {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .chat-preview.selected { background: #e0e0e0; }
+        .chat-preview.unread { background: #f0f0f0; }
+        .chat-preview:hover { background: #f5f5f5; }
+        
+        /* 3. 【修改点】列表中的所有头像变为大小一致的正方形 (40x40) */
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 4px; /* 保持方角，如果有需求可改为 0 */
+            margin-right: 10px;
+            font-size: 20px;
+            text-align: center;
+            line-height: 40px;
+            flex-shrink: 0; /* 防止被挤压 */
+        }
+        .chat-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        .chat-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .chat-info p {
+            font-size: 12px;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .time-stamp {
+            font-size: 11px;
+            color: #999;
+            flex-shrink: 0;
+            margin-left: 5px;
+        }
+
+        /* 2. Right - Main View (Container for Chat or Moments) */
+        .wechat-main-view {
+            flex: 1;
+            background: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* --- Chat Content Style (Default View) --- */
+/* 聊天视图容器 */
+#chat-view {
+    flex: 1;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* 核心：解决 flex 子容器高度计算异常的问题 */
+}
+
+/* 右侧主视图容器 */
+.wechat-main-view {
+    flex: 1;
+    background: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* 关键：隐藏父容器溢出，让子容器独立滚动 */
+    min-height: 0; /* 核心：修复 flex 布局下高度计算错误 */
+}
+        /* 2. 【修改点】聊天内容标题靠左 */
+        .chat-content-header {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left; /* 靠左对齐 */
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            padding-left: 10px; /* 添加左侧内边距 */
+        }
+.chat-window {
+    flex-grow: 1;
+    overflow-y: auto; /* 核心：垂直方向溢出时显示滚动条 */
+    padding: 10px;
+    background: #f7f7f7;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    /* 新增/补充：确保滚动容器有固定的可滚动高度（基于父容器的 flex 布局） */
+    max-height: calc(100% - 40px); /* 可选：限制最大高度，适配不同屏幕 */
+    scroll-behavior: smooth; /* 可选：让滚动更顺滑 */
+}
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        .chat-message.self {
+            justify-content: flex-end;
+        }
+        /* 3. 【修改点】消息气泡中的头像统一为 30x30 正方形，并调整行高 */
+        .chat-message.other .chat-avatar {
+            width: 30px; 
+            height: 30px; 
+            font-size: 16px; 
+            margin-right: 5px; 
+            line-height: 30px; /* 配合高度调整行高 */
+            border-radius: 4px; /* 保持方角 */
+        }
+
+        .chat-bubble {
+            max-width: 60%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+        .chat-message.other .chat-bubble {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+        .chat-message.self .chat-bubble {
+            background: var(--wechat-color); /* 使用 CSS 变量 */
+            color: white;
+        }
+
+
+        /* --- Moments Style --- */
+        #moments-view {
+            flex: 1; /* 占据 .wechat-main-view 的所有剩余垂直高度 */
+            height: 100%;
+            padding: 20px 40px;           
+            overflow-y: auto; /* **核心：允许滚动** */           
+            background: #f7f7f7;
+            display: flex; 
+            flex-direction: column; 
+            /* 【新增】：防止内部内容影响高度计算 */
+            min-height: 0; 
+        }
+        .moment-post {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            display: flex;
+        }
+        /* 3. 【修改点】朋友圈头像统一为 40x40 正方形 */
+        .moment-avatar-small {
+            width: 40px;
+            height: 40px;
+            background: #ccc;
+            border-radius: 4px; /* 保持方角 */
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .moment-detail { flex: 1; }
+        .moment-detail h5 {
+            color: #576b95;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        .moment-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .moment-image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .moment-image-grid img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #eee;
+        }
+        .moment-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #999;
+        }
+       .wechat-link-card {
+    width: 240px;
+    height:120px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.wechat-link-card:hover {
+    background: #f7f7f7;
+}
+
+.card-header {
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    height: 80px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-source {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+}
+
+/* 朋友圈回复/评论样式 */
+.moment-comments {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+.moment-comment {
+    background: #f7f7f7;
+    border-radius: 4px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+/* 自回复（自己评论自己）的文字颜色区分 */
+.moment-comment .self-reply {
+    color: #576b95; /* 和用户名颜色一致，突出发布者 */
+    font-weight: 500;
+}
+.moment-comment .reply-content {
+    color: #333;
+    margin-left: 4px;
+}
+.progress-indicator {
+    position: fixed;
+    top: 20px; /* 固定在底部 */
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+
+    </style>                            
+    </head>
+     <div class="progress-indicator">2/36</div>
+<body>
+    
+
+    <div class="mac-menubar">
+        <div class="menubar-left">
+            <span></span>
+            <span>微信</span>
+            <span>文件</span>
+            <span>联系人</span>
+        </div>
+        <div class="menubar-right">
+            <span>100%</span>
+            <span>Wi-Fi</span>
+            <span>2月10日 周二</span>
+        </div>
+    </div>
+
+  
+
+
+    <div class="mac-dock">
+        <a href="note.html" target="_blank" class="dock-link">
+            <div class="dock-icon">📝</div> 
+        </a>
+
+
+        <a href="message.html" target="_blank" class="dock-link">
+            <div class="dock-icon">💬</div>
+        </a>
+                <a href="setting.html" target="_blank" class="dock-link">
+            <div class="dock-icon">🧩</div>
+        </a>
+
+    </div>
+    <div class="wechat-app">
+        <div class="app-header">
+            <div class="window-controls">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            </div>
+
+        <div class="wechat-content">
+            
+            <div class="wechat-sidebar">
+                <div class="nav-icon active" id="chat-icon" onclick="showView('chat')">💬</div>
+                <div class="nav-icon" id="contact-icon">👥</div>
+                <div class="nav-icon" id="moments-icon" onclick="showView('moments')">🌐</div>
+                <div style="flex-grow: 1;"></div>
+                <div class="nav-icon" style="margin-bottom: 10px;">⚙️</div>
+            </div>
+
+            <div class="wechat-list">
+                <div class="chat-preview unread" id="chat-ni-xiaoyi" onclick="showChat('Janice（ZG品牌）')">
+                    <div class="chat-avatar" style="background: #e9e7b6;">☕</div>
+                    <div class="chat-info">
+                        <h4>Janice（ZG品牌）</h4>
+                        <p style="color:var(--wechat-color); font-weight:600;">还有，官微和各平台的定时发布检查三遍。别大年三十那天出bug，我可不想那时候还在群里call你们</p>
+                    </div>
+                    <span class="time-stamp">现在</span>
+                </div>
+                <div class="chat-preview" id="chat-team" onclick="showChat('缘来一家人')">
+                    <div class="chat-avatar" style="background: #afb7ff;">🏠</div>
+                    <div class="chat-info">
+                        <h4>缘来一家人</h4>
+                        <p style="color:red; font-weight:600;">[有人@我]单位今年还发了礼品卡，你们赶紧去用掉</p>
+                    </div>
+                    <span class="time-stamp">10:29</span>
+                </div>
+                 <div class="chat-preview" id="chat-wang" onclick="showChat('向晴学妹')">
+                    <div class="chat-avatar" style="background: #ffccbc;">🍹</div>
+        
+                    <div class="chat-info">
+                        <h4>向晴学妹</h4>
+                        <p>蛮好蛮好</p>
+                    </div>
+                    <span class="time-stamp">昨天</span>
+                </div>
+                 <div class="chat-preview" onclick="showChat('宋宁如意')">
+                    <div class="chat-avatar" style="background: #b2dfdb;">🍃</div>
+                    <div class="chat-info">
+                        <h4>宋宁如意</h4>
+                        <p>求别提，已经开始开学焦虑了/p>
+                    </div>
+                    <span class="time-stamp">昨天</span>
+                </div>
+                <div class="chat-preview" onclick="showChat('方越')">
+                    <div class="chat-avatar" style="background: #e1f5fe;">🔭</div>
+                    <div class="chat-info">
+                        <h4>方越</h4>
+                        <p>太感谢了！</p>
+                    </div>
+                    <span class="time-stamp">昨天</span>
+                </div>
+            </div>
+
+            <div class="wechat-main-view">
+                <div id="chat-view">
+                    <div class="chat-content-header" id="chat-header-name">Janice（ZG品牌）</div>
+                    <div class="chat-window" id="chat-messages">
+                        
+                   
+                 
+                             <div class="chat-message other">
+                            <div class="chat-avatar" style="background: #e9e7b6;">☕</div>
+                            <div class="chat-bubble">年前最后捋一下。春节那套“温情回家”的长图文，品牌调性还要再拉高一点，现在的slogan太硬了，再优化一版</div>
+                        </div>
+
+                               <div class="chat-message self">
+                             <div class="chat-bubble">我刚跟文案又对了一下，现在的备选是“他乡亦故乡”，您看是不是更符合今年不回家的那波受众？</div>
+                        </div>
+                        <div class="chat-message other">
+                            <div class="chat-avatar" style="background: #e9e7b6;">☕</div>
+                            <div class="chat-bubble">嗯，这个方向可以。视觉上不要整片大红大绿，太土了。用那种高级灰调的磨砂质感，加点国潮的烫金元素，懂我意思吗？</div>
+                        </div>
+
+                        <div class="chat-message self">
+                             <div class="chat-bubble">好的，我再调调色值</div>
+                        </div>
+                        
+                        <div class="chat-message other">
+                            <div class="chat-avatar" style="background: #e9e7b6;">☕</div>
+                            <div class="chat-bubble">还有，官微和各平台的定时发布检查三遍。别大年三十那天出bug，我可不想那时候还在群里call你们</div>
+                        </div>
+                      
+
+                    </div>
+                </div>
+
+                <div id="moments-view">
+                    <h3 style="color:#555; text-align:center; margin-bottom: 25px;">朋友圈</h3>
+
+                    <div class="moment-post">
+                        <div class="moment-avatar-small" style="background: #ffccbc;"></div>
+                        <div class="moment-detail">
+                            <h5>向晴学妹</h5>
+                            <p class="moment-text">
+                        今年决定在青州过年！<br>上一次感受青州的年味还是初二的时候，再后来就是回来上大学。不知不觉中，青州已经变成我的第二故乡了。<br>顺便：准备过节二刷《疯狂动物城2》，有想一起去的吗？
+                            </p>
+                            <div class="moment-image-grid">
+    <img src="Dr.png" alt="Vacation photo" 
+         onclick="openImage(this.src)" 
+         style="cursor: zoom-in;">
+</div>
+                          
+                            <div class="moment-footer">
+                                <span>2小时前</span>
+                                <span>👍 15 | 💬 5</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="moment-post">
+                        <div class="moment-avatar-small" style="background: #ffe51f;"></div>
+                        <div class="moment-detail">
+                            <h5>Wendy（ZG品牌）</h5>
+                            <p class="moment-text">
+                                Annual Gala 2025 🥂 <br>又是陪公司跨越寒冬的一年，领到了“最佳执行奖”，也领到了新一年的KPI。<br>感谢战友们的并肩作战，也感谢所有合作伙伴的包容。凡是过往，皆为序章。愿2026，品牌长青，流水长红。
+                            </p>
+                            <div class="moment-footer">
+                                <span>昨天</span>
+                                <span>👍 1 | 💬 2</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                     <div class="moment-post">
+                        <div class="moment-avatar-small" style="background: #e1f5fe"></div>
+                        <div class="moment-detail">
+                            <h5>方越</h5>
+                            <p class="moment-text">
+亲爱的家人朋友们：<br>
+当您看到这封邀请函时，我们即将迈上人生新阶段，解锁人生新角色。<br>
+一路走来，感恩大家的支持与祝福！为表谢意，我们将于青州国际大酒店略备喜宴，诚邀您携家人拨冗光临!<br>
+期待与您共聚🥂<br> </p>
+<div class="moment-image-grid">
+    <img src="wedding.jpg" alt="Vacation photo" 
+         onclick="openImage(this.src)" 
+         style="cursor: zoom-in;">
+</div>
+ <div class="moment-comments">
+            <div class="moment-comment">
+                <span class="self-reply">方越</span>
+                <span class="reply-content">补充一句：当天也是向晴的生日😊</span>
+            </div>
+        </div>
+
+
+                            <div class="moment-footer">
+                                <span>3天前</span>
+                                <span>👍 7 | 💬 4</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moment-post">
+                        <div class="moment-avatar-small" style="background: #b2dfdb;"></div>
+                        <div class="moment-detail">
+                            <h5>宋宁如意</h5>
+                            <p class="moment-text">
+                              暂别学术界的几日，这样好的阳光，已经许久没有看过了🥹
+                            </p>
+                            <div class="moment-image-grid">
+    <img src="alr.jpg" alt="Vacation photo" 
+         onclick="openImage(this.src)" 
+         style="cursor: zoom-in;">
+</div>
+                            <div class="moment-footer">
+                                <span>5天前</span>
+                                <span>👍 3 | 💬 2</span>
+                            </div>
+                        </div>
+                    </div>                  
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatView = document.getElementById('chat-view');
+        const momentsView = document.getElementById('moments-view');
+        const chatIcon = document.getElementById('chat-icon');
+        const momentsIcon = document.getElementById('moments-icon');
+        const chatHeaderName = document.getElementById('chat-header-name');
+// --- 新增：模拟聊天数据 ---
+const chatData = {
+    'Janice（ZG品牌）': [
+        { sender: 'other', avatar: '☕', color: '#90caf9', text: '年前最后捋一下。春节那套“温情回家”的长图文，品牌调性还要再拉高一点，现在的slogan太硬了，再优化一版' },
+        { sender: 'self', text: '我刚跟文案又对了一下，现在的备选是“他乡亦故乡”，您看是不是更符合今年不回家的那波受众？' },
+        { sender: 'other', avatar: '☕', color: '#90caf9', text: '嗯，这个方向可以。视觉上不要整片大红大绿，太土了。用那种高级灰调的磨砂质感，加点国潮的烫金元素，懂我意思吗？' },
+        { sender: 'self', text: '好的，我再调调色值' },
+        { sender: 'other', avatar: '☕', color: '#90caf9', text: '还有，官微和各平台的定时发布检查三遍。别大年三十那天出bug，我可不想那时候还在群里call你们' },
+    ],
+
+    '缘来一家人': [
+        {
+  sender: 'other',
+  avatar: '👩',
+  color: '#e1bee7',
+  type: 'news',
+  card: {
+    title: '芝心芝味破产：一代知名蛋糕品牌为何走到今天？',
+    source: '凤凰网',
+    link: 'news2.html'
+  }
+},
+        { sender: 'other', avatar: '👩', color: '#e1bee7', text: '@知其然 @宋宁如意 ' },
+        { sender: 'other', avatar: '👩', color: '#e1bee7', text: '你们小时候老去吃'},
+        { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '好多我爱吃的店都做不下去了😣'},
+        { sender: 'other', avatar: '🎣', color: '#90caf9', text: '单位今年还发了礼品卡，你们赶紧去用掉'},
+    ],
+    '向晴学妹': [
+{ 
+    sender: 'self', 
+    type: 'xiaohongshu', // 新增类型标识
+    post: {
+        cover: 'nian.jpg', // 酒店或菜品精美图
+        title: '青州年味拉满🏮本地人告诉你过年去哪玩✨',
+        author: '趣味生煎',
+        authorAvatar: 'grey.png'
+    }
+},
+  { sender: 'other', avatar: '🍹', color: '#ffccbc', text: '学姐，求问这些地方都推荐去吗？' },
+{ sender: 'self', text: '我看看啊，你今年留在青州过年？' },
+  { sender: 'other', avatar: '🍹', color: '#ffccbc', text: '对的，赶上年后办婚礼，索性就留青州了' },
+  { sender: 'self', text: '蛮好蛮好' },
+    ],
+    '宋宁如意': [
+        { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '狗粮告急！上次买的那袋只剩底了' },
+
+        { sender: 'self', text: '下单了' },
+          { sender: 'self', text: '这个寒假你承包遛狗' },
+        { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '没问题👌' },
+          { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '整个2月都包给我了' },
+        { sender: 'self', text: '你这么晚才返校？' },
+        { sender: 'other', avatar: '🍃', color: '#b2dfdb', text: '求别提，已经开始开学焦虑了' },
+
+
+    ],
+    '方越': [
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '宋学姐，不好意思这么晚打扰你' },
+        { sender: 'self', text: '没事，怎么了？' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '前几天我和向晴路过一家奶茶店，她突然停下愣了好一会儿。我问她怎么了，她说想起了一个中学时代的朋友，在纠结要不要请来参加婚礼' },
+        { sender: 'self', text: '她还说了什么吗？' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '她只说那是很重要的人。可惜我没记住那家店的名字，当时只顾着看她脸色了' },
+        { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '虽然有些唐突，但我只认识学姐你一个她中学时代的朋友，可以拜托你帮忙回忆一下这个人吗？我想联系这位同学，给向晴一个惊喜🙏' },
+        { sender: 'self', text: '我…尽力吧，已经很久没有和初中的人联系了' },
+          { sender: 'other', avatar: '🔭', color: '#e1f5fe', text: '太感谢了！' },
+    ]
+};
+
+// 封装一个函数用于生成单个消息气泡的 HTML
+function createMessageHTML(message) {
+    // 1. 处理小红书卡片类型
+if (message.type === 'xiaohongshu') {
+    return `
+        <div class="chat-message other">
+            <div class="chat-avatar" style="background:#ffccbc;">
+                🍹
+            </div>
+
+            <div class="chat-bubble"
+              onclick="window.open('xhspage.html', '_blank')"
+
+                 style="background: white; padding: 0; overflow: hidden; border: 1px solid #eee; width: 240px; cursor: pointer;">
+                
+                <div style="position: relative;">
+                    <img src="${message.post.cover}" style="width: 100%; height: 150px; object-fit: cover; display: block;">
+                    <div style="position: absolute; top: 8px; left: 8px; background: #ff2442; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold;">小红书</div>
+                </div>
+                
+                <div style="padding: 10px; background: white;">
+                    <div style="color: #333; font-weight: 600; font-size: 13px; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        ${message.post.title}
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <img src="${message.post.authorAvatar}" style="width: 16px; height: 16px; border-radius: 50%;">
+                        <span style="color: #999; font-size: 11px;">${message.post.author}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+if (message.type === 'news') {
+    return `
+        <div class="chat-message other">
+            <div class="chat-avatar" style="background:${message.color}">
+                ${message.avatar}
+            </div>
+            <div class="chat-bubble" style="padding:0; background:transparent; border:none;">
+                <div class="wechat-link-card"
+                     onclick="window.open('${message.card.link}')">
+                    <div class="card-header">
+                        ${message.card.title}
+                    </div>
+                    <div class="card-source">
+                        <div class="source-name">
+                            📰 ${message.card.source}
+                        </div>
+                        <div class="arrow-icon">›</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+
+    // 2. 原有的普通消息逻辑
+    if (message.sender === 'self') {
+        return `
+            <div class="chat-message self">
+                 <div class="chat-bubble">${message.text}</div>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="chat-message other">
+                <div class="chat-avatar" style="background: ${message.color};">${message.avatar}</div>
+                <div class="chat-bubble">${message.text}</div>
+            </div>
+        `;
+    }
+}
+        // --- 切换视图函数 ---
+        function showView(viewName) {
+            
+            // 移除所有导航图标的 active 状态
+            chatIcon.classList.remove('active');
+            momentsIcon.classList.remove('active');
+            
+            // 移除聊天列表的选中状态
+            document.querySelectorAll('.chat-preview').forEach(p => p.classList.remove('selected'));
+
+
+            if (viewName === 'chat') {
+                // 切换到聊天视图
+                momentsView.style.display = 'none';
+                chatView.style.display = 'flex'; // 聊天视图需要 flex 布局
+                chatIcon.classList.add('active');
+                
+                // 默认选中第一个聊天 (江奕云)
+                showChat('Janice（ZG品牌）'); 
+
+            } else if (viewName === 'moments') {
+                // 切换到朋友圈视图
+                chatView.style.display = 'none';
+                momentsView.style.display = 'flex'; // 朋友圈作为信息流，使用 block 或 flex-column 均可，这里使用 block
+                momentsIcon.classList.add('active');
+                
+                // 调整头部标题
+                chatHeaderName.innerHTML = '朋友圈';
+            }
+        }
+        
+
+
+        
+function showChat(name) {
+    // 确保在聊天视图
+    if (chatView.style.display === 'none') {
+         showView('chat');
+    }
+
+    // 1. 更新聊天内容区的显示名
+    chatHeaderName.innerHTML = name;
+    
+    // 2. 切换聊天列表选中背景
+    document.querySelectorAll('.chat-preview').forEach(p => p.classList.remove('selected'));
+    document.querySelector(`[onclick="showChat('${name}')"]`).classList.add('selected');
+    
+    // 3. 核心：加载新的聊天消息
+    const chatWindow = document.getElementById('chat-messages');
+    chatWindow.innerHTML = ''; // 清空现有内容
+
+    const messages = chatData[name] || []; // 获取对应联系人的数据，如果没有则为空数组
+    
+    let chatContentHTML = '';
+    messages.forEach(msg => {
+        chatContentHTML += createMessageHTML(msg);
+    });
+    
+    chatWindow.innerHTML = chatContentHTML; // 插入新内容
+
+    // 4. 模拟清除未读标记 (保持原有逻辑)
+    if (name === 'Janice（ZG品牌）') {
+        const jyyPreview = document.getElementById('chat-ni-xiaoyi');
+        jyyPreview.classList.remove('unread');
+        jyyPreview.querySelector('p').style.color = '#777';
+        jyyPreview.querySelector('p').style.fontWeight = 'normal';
+        jyyPreview.querySelector('p').innerHTML = '还有，官微和各平台的定时发布检查三遍。别大年三十那天出bug，我可不想那时候还在群里call你们？';
+    }
+    
+    // 5. 滚动到聊天窗口底部 (模拟最新消息)
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+        // 默认显示聊天视图，并选中第一个聊天
+        document.addEventListener('DOMContentLoaded', () => {
+            // 只显示聊天视图，不默认选中某人
+            chatView.style.display = 'flex';
+            momentsView.style.display = 'none';
+            chatIcon.classList.add('active');
+        });
+        // 打开大图函数
+// 打开大图
+function openImage(src) {
+    const overlay = document.getElementById('image-overlay');
+    const overlayImg = document.getElementById('overlay-img');
+    
+    overlayImg.src = src;
+    overlay.style.display = 'flex'; // 使用 flex 布局居中显示
+}
+
+// 关闭大图
+function closeImage() {
+    const overlay = document.getElementById('image-overlay');
+    overlay.style.display = 'none';
+}
+
+    </script>
+<div id="image-overlay" onclick="closeImage()" style="
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.9); 
+    z-index: 10000; 
+    cursor: zoom-out; 
+    align-items: center; 
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+">
+    <img id="overlay-img" src="" style="
+        max-width: 95%; 
+        max-height: 95%; 
+        object-fit: contain; 
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    ">
+</div>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+                        .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style>
+</body>
+</html>
