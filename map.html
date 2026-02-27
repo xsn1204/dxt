@@ -133,6 +133,13 @@
 </div>
 
 <script>
+    const bg = new Image();
+bg.src = 'map.png';
+bg.onload = () => {
+    map.style.opacity = '1';
+    loading.style.display = 'none';
+    results.style.display = 'block';
+};
     function initPage() {
         const map = document.getElementById('map-container');
         const loading = document.getElementById('loading');
