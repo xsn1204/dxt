@@ -384,12 +384,16 @@ function handleAction(type) {
     if (type === 'repost') {
         title.innerText = '转发微博';
         input.value = '即便错过了站台，我们还是可以约在出口相见，对吗？//@今日也向晴: 微博视频号';
-        submitBtn.onclick = () => { location.href = 'finalX1.html'; };
+   submitBtn.onclick = () => {
+    window.open('finalX1.html', '_blank');
+};
     } else {
         title.innerText = '发表评论';
         input.value = '';
         input.placeholder = '昨日的悲伤，我已遗忘。可以遗忘的，都不再重要了。';
-        submitBtn.onclick = () => { location.href = 'finalX2.html'; };
+      submitBtn.onclick = () => {
+    window.open('finalX2.html', '_blank');
+};
     }
 }
 
