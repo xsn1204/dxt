@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ending</title>
+    <style>
+        :root {
+            --gold: #c5a059;
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: "Source Han Serif CN", "Songti SC", "serif";
+            overflow: hidden;
+        }
+
+        /* 复古画框容器 */
+        .frame-container {
+            position: relative;
+            padding: 20px;
+            border: 8px double var(--gold); /* 双实线边框模拟复古画框 */
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.5);
+            background: #2a2a2a;
+            margin-bottom: 50px;
+            max-width: 80%;
+            transition: transform 0.8s ease;
+            animation: fadeInFrame 2s ease-out;
+        }
+
+        .frame-container img {
+            display: block;
+            max-width: 500px; /* 你可以根据PNG调整宽度 */
+            height: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 诗意文字区域 */
+        .poem-content {
+            text-align: center;
+            color: var(--text-color);
+            line-height: 2.2;
+            letter-spacing: 0.15em;
+        }
+
+        .line {
+            opacity: 0;
+            transform: translateY(10px);
+            margin-bottom: 15px;
+            filter: blur(5px);
+            animation: appearLine 1.5s forwards;
+        }
+
+        /* 控制每一行的延迟时间 */
+        .line-1 { animation-delay: 1.5s; }
+        .line-2 { animation-delay: 3.5s; }
+        .line-3 { animation-delay: 5.5s; }
+        .line-4 { animation-delay: 7.5s; }
+
+        /* 铃铛按钮 */
+        .bell-btn {
+            display: block;
+            margin-top: 40px;
+            font-size: 28px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--gold);
+            opacity: 0;
+            animation: fadeInBell 1s forwards;
+            animation-delay: 9.5s; /* 在最后一行文字出现后显现 */
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .bell-btn:hover {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 8px var(--gold));
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInFrame {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes appearLine {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes fadeInBell {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="frame-container">
+        <img src="final.png" alt="Ending Image">
+    </div>
+
+    <div class="poem-content">
+        <div class="line line-1">暮色沉入往事的深海</div>
+        <div class="line line-2">星光在笔尖静静徘徊</div>
+        <div class="line line-3">若此去经年，重逢有时</div>
+        <div class="line line-4">愿此刻温柔，长流不败</div>
+        
+        <a href="next_page.html" class="bell-btn" title="进入下一章">🔔</a>
+    </div>
+
+</body>
+</html>

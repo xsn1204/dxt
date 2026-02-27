@@ -128,11 +128,42 @@
             border-bottom: 1px solid #555;
             padding-bottom: 2px;
         }
+                    /* 隐藏的签名图片 */
+        .floating-signature {
+            position: fixed;
+            right: 48px;
+            bottom:  36px; /* 挪到了上方，避免遮挡系统图标 */
+            width: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+        .floating-signature:hover { opacity: 1; }
+        .floating-signature img { width: 100%; display: block; }
+         /* ********************************************* */
+                .next-chapter-teaser {
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(180deg, rgba(192, 57, 43, 0.1) 0%, rgba(0,0,0,0.4) 100%);
+            border: 1px solid var(--blood-red-color);
+            border-radius: 8px;
+            text-align: center;
+        }
 
     </style>
+       <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
-
+  <div style="display: none;">
+    <span id="busuanzi_container_site_pv">
+        <span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span id="busuanzi_container_page_pv">
+        <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
 <div class="screen">
     <div class="apple-logo"></div>
     
@@ -159,6 +190,9 @@
 
     <div class="footer-hint">
         点击任意处进入 MAS OS
+    </div>
+       <div class="floating-signature">
+        <img src="signature.jpg" alt="关键签名">
     </div>
 </div>
 

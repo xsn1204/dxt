@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Ma+Shan+Zheng&family=Long+Cang&display=swap" rel="stylesheet">
+    <title>婚礼来信</title>
+    <style>
+        :root {
+            --tunnel-dark: #1a1c2c; /* 隧道深蓝 */
+            --platform-warm: #ffdca5; /* 站台暖橙 */
+            --light-gold: #ffeaa7; /* 暖光金 */
+            --text-gray: #dfe6e9; /* 米白文字 */
+        }
+
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--tunnel-dark);
+            font-family: "PingFang SC", "STHeiti", sans-serif;
+        }
+
+        /* 场景容器：透视感建立 */
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: 
+                linear-gradient(to bottom, transparent 60%, rgba(243, 156, 18, 0.2) 100%),
+                radial-gradient(circle at 50% 40%, #2c3e50 0%, var(--tunnel-dark) 70%);
+            perspective: 1000px;
+        }
+
+        /* 隧道线条延伸感 */
+        .tunnel-lines {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(255,255,255,0.03) 101px),
+                repeating-linear-gradient(-45deg, transparent, transparent 100px, rgba(255,255,255,0.03) 101px);
+            transform: rotateX(60deg) translateY(-50%);
+            z-index: 1;
+        }
+
+        /* 远处列车灯光：由暗到明 */
+        .train-light {
+            position: absolute;
+            top: 40%;
+            width: 10px;
+            height: 10px;
+            background: var(--light-gold);
+            border-radius: 50%;
+            filter: blur(5px);
+            box-shadow: 0 0 20px 10px var(--light-gold);
+            animation: lightApproach 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            z-index: 2;
+        }
+
+        @keyframes lightApproach {
+            0% { transform: scale(1); opacity: 0.2; filter: blur(10px); }
+            70% { transform: scale(15); opacity: 1; filter: blur(2px); }
+            100% { transform: scale(40); opacity: 0; filter: blur(0px); }
+        }
+
+        /* 尘埃粒子 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+            animation: drift 20s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes drift {
+            from { background-position: 0 0; }
+            to { background-position: 500px 1000px; }
+        }
+
+        /* 中央内容区 */
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        .frame {
+            width: 600px;
+          height: 400p;
+        
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .frame img {
+            max-width: 100%;
+       
+            opacity: 0.8;
+        }
+        .flip-container {
+    perspective: 1000px; /* 创建 3D 空间 */
+    width: 600px; /* 强制宽度 */
+    height: 400px; /* 强制高度 */
+    margin-bottom: 30px;
+    z-index: 10;
+}
+
+/* 实际翻转的卡片 */
+.card {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1); /* 翻转动画 */
+    transform-style: preserve-3d; /* 保持子元素的 3D 位置 */
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* 触发翻转的类 */
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* 正面和背面的共有样式 */
+.front, .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden; /* 隐藏背面 */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 正面样式 */
+.front {
+    z-index: 2;
+    /* 初始 Y 轴旋转为 0 */
+    transform: rotateY(0deg);
+}
+
+/* 背面样式 */
+.back {
+    /* 初始 Y 轴旋转 180 度，使其背对观众 */
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+/* 图片样式 */
+.front img, .back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 核心：确保不同比例的图片都能填满且不缩放变形 */
+    opacity: 0.8;
+}
+
+ .status-code {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: 0.25rem;
+    margin-bottom: 10px;
+    color: var(--platform-warm);
+    text-shadow: 0 0 8px rgba(243, 156, 18, 0.35);
+}
+#typewriterText {
+                position: absolute;
+                top: 0;
+                left: 0;
+                    width: 600px;
+          height: 400p;
+                padding: 20px;
+                box-sizing: border-box;
+                color: #3d3d3d;
+                font-family:  'Ma+Shan+Zheng', 'Ma Shan Zheng', cursive;
+                font-size: 1rem;
+                line-height: 1.8;
+                text-align: left;
+                white-space: pre-wrap;
+                pointer-events: none;
+                z-index: 5;
+                text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+                display: none;
+}
+        .message {
+            font-size: 0.95rem;
+            line-height: 2;
+            font-weight: 300;
+        }
+.bell {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            animation: swing 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+                              .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+        .handwriting-2 {
+            font-family: 'Ma+Shan+Zheng', 'Ma Shan Zheng', cursive;
+            color: #222; /* 碳素墨水 */
+            transform: rotate(1deg);
+            margin-left: 20px;
+            clip-path: polygon(0% 0%, 100% 2%, 98% 98%, 1% 96%);
+        }
+                    /* 隐藏的签名图片 */
+        .floating-signature {
+            position: fixed;
+            right: 48px;
+            bottom:  36px; /* 挪到了上方，避免遮挡系统图标 */
+            width: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+        .floating-signature:hover { opacity: 1; }
+        .floating-signature img { width: 100%; display: block; }
+         /* ********************************************* */
+                .next-chapter-teaser {
+            margin-top: 60px;
+            padding: 30px;
+            background: linear-gradient(180deg, rgba(192, 57, 43, 0.1) 0%, rgba(0,0,0,0.4) 100%);
+            border: 1px solid var(--blood-red-color);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+    </style><div class="progress-indicator">finalX1️⃣</div>
+</head>
+<body>
+
+<div class="scene">
+    <div class="tunnel-lines"></div>
+    <div class="train-light"></div>
+    <div class="particles"></div>
+
+<div class="content">
+        <div class="flip-container">
+            <div class="card" id="card">
+                <div class="front">
+                    <img src="wed.jpg" alt="婚礼请柬正面">
+                </div>
+                <div class="back">
+                    <img src="" alt="" id="backImage">
+                    <div id="typewriterText"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-code">Please RSVP🍾</div>
+        <div class="message" style="color: #feebcd;">我们诚挚邀请您参加我们的婚礼！</div>
+        <div class="bell" id="bellBtn" style="cursor: pointer;">🔔</div>
+    </div>
+</div>
+   <div class="floating-signature">
+        <img src="signature.jpg" alt="关键签名">
+    </div>
+<script>
+    const bellBtn = document.getElementById('bellBtn');
+    const card = document.getElementById('card');
+    const backImg = document.getElementById('backImage');
+    const textContainer = document.getElementById('typewriterText');
+
+    const longMessage = `向晴学妹：
+
+收到你的请柬，一瞬间有些恍惚，脑海里还是你刚刚转校来的样子。一转眼，你也要步入人生的新阶段了。真心地祝福你，一定要幸福。
+
+谢谢你的邀请，我一直想找机会和你们聚聚，之前复健不太方便，就一直拖到了现在。你人生的大日子，我一定准时到场，亲口跟你说声新婚快乐。
+
+对了，这么多年没见，大家都变了不少吧。
+好久没有以然的消息了，不知道这次婚礼，她也会去吗？
+
+婚礼见。
+邹言`;
+
+    bellBtn.onclick = function() {
+        // 1. 触发翻转动画
+        card.classList.add('flipped');
+
+        // 2. 在翻转动画进行到一半时切换图片 (约 500ms，对应 transition: 1s)
+        setTimeout(() => {
+            // 切换背面图片源
+            backImg.src = 'wed1.jpg';
+        }, 500);
+
+        // 3. 动画完成后开始打字机效果 (约 1000ms)
+        setTimeout(() => {
+            textContainer.style.display = 'block';
+            textContainer.innerHTML = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < longMessage.length) {
+                    textContainer.innerHTML += longMessage.charAt(i);
+                    i++;
+                    // 模拟手写停顿感，随机延迟
+                    let delay = (longMessage[i-1] === '。' || longMessage[i-1] === '\n') ? 500 : 60;
+                    setTimeout(typeWriter, delay + Math.random() * 40);
+                }
+            }
+            // 开始打字
+            typeWriter();
+        }, 1000);
+        
+        // 按钮点击后失效，防止重复触发
+        bellBtn.style.pointerEvents = 'none';
+        bellBtn.style.animation = 'none';
+        bellBtn.style.opacity = '0.5';
+    };
+</script>
+
+</body></html>
