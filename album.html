@@ -348,7 +348,7 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style>                             <div class="progress-indicator">24/36</div></head>
+    </style>                             <div class="progress-indicator">25/38</div></head>
 <body>
     <!-- 顶部导航栏 -->
     <div class="top-nav">
@@ -428,9 +428,9 @@
                 <div class="album-card" id="secret-album">
                     <div class="album-card-cover">
                         <div class="cover-disabled">需要回答问题</div>
-                        <div class="album-card-count">8</div>
+                        <div class="album-card-count">6</div>
                     </div>
-                    <div class="album-card-desc">💓</div>
+                    <div class="album-card-desc">📚</div>
                 </div>
 
             </div>
@@ -450,21 +450,14 @@
                 </div>
                 <div class="album-card">
                     <div class="album-card-cover">
-                               <img src="class7.jpg" alt="实中7班">
+                               <img src="wanda.jpg" alt="实中7班">
                         <div class="album-card-count">56</div>
                     </div>
-                    <div class="album-card-desc">实中7班</div>
+                    <div class="album-card-desc">实中</div>
                 </div>
 
      
-                                <div class="album-card" id="unnamed-album">
-                    <div class="album-card-cover">
-                        <img src="wanda.jpg" alt="🍂">
-                        <div class="album-card-count">44</div>
-                    </div>
-                    <div class="album-card-desc">🍂</div>
-                </div>
-                    
+      
           
             </div>
         </div>
@@ -491,8 +484,8 @@
     <div class="password-modal" id="passwordModal">
         <div class="modal-content">
             <div class="modal-title">请输入相册密码</div>
-            <div class="modal-desc">F♯FG<br>G♯GAA♯<br>C♯DD♯</div>
-            <input type="text" class="password-input" id="pwdInput" placeholder="请输入3位字母密码" maxlength="4">
+           
+            <input type="text" class="password-input" id="pwdInput" placeholder="我最爱喝的那款奶茶" maxlength="4">
             <div class="modal-btns">
                 <button class="modal-btn btn-confirm" onclick="checkPassword()">确定</button>
                 <button class="modal-btn btn-cancel" onclick="closeModal()">取消</button>
@@ -534,12 +527,12 @@ function checkPassword() {
         return;
     }
     
-    // 验证密码（4869为正确答案，错误提示APTX）
-    if(password === "LUV") {
+    // 验证密码
+    if(password === "初恋") {
         // 修改点：直接使用 window.location.href 进行跳转
-        window.location.href = "photo.html"; 
+        window.location.href = "photo1.html"; 
     } else {
-        alert("🎹"); // 错误提示
+        alert("不记得了吗？去看看菜单吧💗"); // 错误提示
         pwdInput.value = ""; // 清空输入框
     }
 }

@@ -18,6 +18,38 @@
             color: #fff;
             overflow: hidden; /* 初始状态禁止滚动 */
         }
+        /* 重新设计的“下一步”按钮：极简、冷峻、高级感 */
+.action-trigger {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 14px 50px;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 5px; /* 拉大字间距增加呼吸感 */
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    outline: none;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+/* 悬停时的视觉冲击：反色并产生微弱发光 */
+.action-trigger:hover {
+    color: #000;
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    letter-spacing: 7px; /* 悬停时字间距稍微撑开，增加动感 */
+}
+
+/* 点击时的按下反馈 */
+.action-trigger:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
 
         /* 顶部导航 */
         .top-nav {
@@ -173,18 +205,128 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style>                             <div class="progress-indicator">32/36</div></head>
+/* 遮罩层：更深邃的黑色半透明 */
+#lock-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(5, 8, 15, 0.9); /* 接近黑色的深蓝 */
+    backdrop-filter: blur(20px);
+    transition: all 1s ease;
+}
+
+/* 方框设计：极简、悬浮、冷淡风 */
+.lock-box {
+    background: rgba(255, 255, 255, 0.03); /* 极低透明度的白 */
+    padding: 60px 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* 极细边框 */
+    border-radius: 0; /* 去掉圆角，更显冷峻 */
+    text-align: center;
+    max-width: 450px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 标题：电影感拉满的字体效果 */
+#lock-title {
+    color: #fff;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 6px; /* 增加字间距 */
+    margin-bottom: 40px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 按钮：幽灵按钮风格 */
+.ghost-btn {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 40px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.4s;
+    outline: none;
+}
+
+.ghost-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+/* 输入框：极简底边框 */
+#password-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    padding: 10px 0;
+    width: 200px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+    outline: none;
+    transition: border-bottom 0.4s;
+}
+
+#password-input:focus {
+    border-bottom: 1px solid #fff;
+}
+/* 升级后的“下一步”按钮：极简、冷冽、高质感 */
+#action-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: transparent; /* 去掉蓝色背景 */
+    color: rgba(255, 255, 255, 0.8); /* 柔和的白色文字 */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 极细的半透明边框 */
+    border-radius: 2px; /* 减小圆角，更显硬朗 */
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 4px; /* 拉大字间距，提升高级感 */
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 20px;
+    outline: none;
+}
+
+/* 悬停效果：由虚转实，产生呼吸感 */
+#action-btn:hover {
+    background: #fff; /* 悬停时变为纯白 */
+    color: #122543; /* 文字变为深色，形成强烈反差 */
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* 点击反馈 */
+#action-btn:active {
+    transform: scale(0.97);
+}
+    </style>                             <div class="progress-indicator">33/38</div></head>
 <body>
 
-    <div id="lock-overlay">
-        <div class="lock-box">
-            <h3>确认要开启回忆吗？</h3>
-            <p style="font-size: 14px; opacity: 0.8;">问题：12.19.19.14.15</p>
-            <input type="text" id="password-input" placeholder="输入日期" onkeydown="if(event.keyCode==20121017) checkPassword()">
-            <button onclick="checkPassword()">确认</button>
-            <div id="error-message" class="error-tip">回答错误，请重新输入8位数字</div>
+<div id="lock-overlay">
+    <div class="lock-box">
+        <h3 id="lock-title">停止回忆！停止审判自己！</h3>
+        
+        <div id="password-area" style="display: none;">
+            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 10px;">12.19.19.14.15</p>
+            <input type="text" id="password-input" placeholder="输入日期">
         </div>
+
+       <button id="action-btn" class="action-trigger" onclick="handleStep()">下一步</button>
+        <div id="error-message" class="error-tip">回答错误，请重新输入8位数字</div>
     </div>
+</div>
 
     <div class="top-nav">
         <span style="margin-right:20px; color:#f1c40f;">⭐ QQ空间</span>
@@ -196,27 +338,26 @@
             <div class="card private-log-detail">
         
                 
-                <h2 class="log-detail-title">2012</h2>
+                <h2 class="log-detail-title">世界末日</h2>
                 
                 <div class="log-detail-meta">发布于：2012-12-21 23:18:45</div>
                 
                 <div class="log-detail-content">
-                    2012。
-                    大家都说这一年可能是世界末日。
-                    我听着他们的讨论，看着新闻里夸张的预测，心里却既不害怕，也不期待。
+                    2012，大家都说这一年可能是世界末日。
+                    我听着他们的讨论，看着新闻里夸张的预测，心里既不害怕，也不期待。
                     仿佛无论末日多么轰轰烈烈，都和我无关。
 
-                    可是那一天，听说你发生了意外。那一刻我忽然明白，世界末日，不是电影里轰轰烈烈的情节，而是真的降临在你身上的厄运……
+                    可是那一天，听说你发生了意外。我忽然意识到，世界末日，不是电影里轰轰烈烈的情节，而是真的降临在你身上的厄运。
                     真实得让我窒息。
 
-                    我原本早该伸出的手，却因为退缩、犹豫而没有去做。每一次我看着你和那个恶魔靠近，心里不满却选择沉默。
+                    我早该伸出的手，却因为退缩、犹豫而没有去做。每一次我看着你和那个恶魔靠近，心里不满却选择沉默。
                     我原以为自己是可以温暖别人，保护别人的存在，原以为退后是一种善意，但其实不过是我的自私和伪善。
 
-                    最近总梦到那天的场景，看见你惊恐的表情，再看着你眼里的光熄灭，我想冲过去，却被自己冻住，站在原地。
+                    最近总梦到那天的场景，看见你惊恐的表情，我想冲过去，却被自己冻住，站在原地。
                     我多想把你从那个即将崩塌的世界拽回来，哪怕只有一秒！
                     可是我做不到。我只能站在远处，看着你掉入那个漩涡，而我无能为力。
 
-                    我恨<strong>陶汝昆</strong>，更恨自己……
+                    我恨<strong>陶润</strong>，更恨自己……
                 </div>
                 
                 <div class="log-detail-actions">
@@ -229,29 +370,61 @@
     </div>
 
     <script>
-        function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            const errorMsg = document.getElementById('error-message');
-            const overlay = document.getElementById('lock-overlay');
+       let currentStep = 1;
 
-            if (input === '20121017') {
-                // 解锁逻辑
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-                document.body.style.overflow = 'auto'; // 恢复滚动
-            } else {
-                // 错误提示
-                errorMsg.style.display = 'block';
-                document.getElementById('password-input').value = '';
-                // 简单的抖动反馈
-                document.querySelector('.lock-box').animate([
-                    { transform: 'translateX(-5px)' },
-                    { transform: 'translateX(5px)' },
-                    { transform: 'translateX(-5px)' },
-                    { transform: 'translateX(0)' }
-                ], { duration: 200 });
-            }
+
+
+function handleStep() {
+    const title = document.getElementById('lock-title');
+    const btn = document.getElementById('action-btn');
+    const passwordArea = document.getElementById('password-area');
+
+    // 切换时的淡出效果
+    title.style.opacity = '0';
+    title.style.transform = 'translateY(-5px)';
+
+    setTimeout(() => {
+        if (currentStep === 1) {
+            title.innerText = "你明明走出来了，不是吗？"; // 遵从你要求的文案
+            currentStep = 2;
+        } 
+        else if (currentStep === 2) {
+            title.innerText = "欢迎回到2012";
+            passwordArea.style.display = "block";
+            btn.innerText = "确认"; // 最后一阶段缩短按钮文案，更有力度
+            currentStep = 3;
+        } 
+        else if (currentStep === 3) {
+            checkPassword();
         }
+        // 切换后的淡入效果
+        title.style.opacity = '1';
+        title.style.transform = 'translateY(0)';
+    }, 400);
+}
+
+function checkPassword() {
+    const input = document.getElementById('password-input').value;
+    const errorMsg = document.getElementById('error-message');
+    const overlay = document.getElementById('lock-overlay');
+
+    if (input === '20121017') {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto';
+        }, 600);
+    } else {
+        errorMsg.style.display = 'block';
+        document.getElementById('password-input').value = '';
+        document.querySelector('.lock-box').animate([
+            { transform: 'translateX(-5px)' },
+            { transform: 'translateX(5px)' },
+            { transform: 'translateX(-5px)' },
+            { transform: 'translateX(0)' }
+        ], { duration: 200 });
+    }
+}
     </script>
 </body>
 </html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学妹的视频留言 - macOS Edition</title>
+    <style>
+        /* macOS 系统字体栈 */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: url('desk.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* macOS 窗口容器 */
+        .window {
+            width: 90%;
+            max-width: 900px;
+            background: rgba(40, 40, 40, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 12px;
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            animation: windowAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes windowAppear {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* 标题栏 (Title Bar) */
+        .title-bar {
+            height: 42px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 8px;
+        }
+
+        .light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close { background: #ff5f57; border: 0.5px solid #e0443e; }
+        .minimize { background: #ffbd2e; border: 0.5px solid #dfa123; }
+        .maximize { background: #28c940; border: 0.5px solid #1da02c; }
+
+        .window-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* 视频/内容区域 */
+        .content-area {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8);
+            transition: 0.5s;
+        }
+
+        /* macOS 风格播放按钮 */
+        .play-btn {
+            width: 72px;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .play-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .play-btn svg {
+            fill: white;
+            margin-left: 4px;
+        }
+
+        /* 文稿内容样式 */
+        .transcript {
+            padding: 40px 60px;
+            color: rgba(255, 255, 255, 0.9);
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .transcript.show { display: block; }
+
+        .transcript-content {
+            line-height: 1.8;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .transcript-content p { margin-bottom: 24px; }
+
+        /* macOS 风格验证弹窗 */
+        .verify-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .verify-card {
+            background: rgba(50, 50, 50, 0.8);
+            backdrop-filter: blur(30px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            width: 80%;
+        }
+
+        .poem-text {
+            font-family: "STSong", "SimSun", serif;
+            font-size: 1.25rem;
+            line-height: 2.2;
+            color: #eee;
+            margin-bottom: 30px;
+        }
+
+        .mac-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #ffd700;
+            padding: 5px 10px;
+            width: 100px;
+            text-align: center;
+            font-size: 1em;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .mac-input:focus { border-color: #007aff; }
+
+        .mac-btn {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .mac-btn:hover { background: #0063cc; }
+
+        /* 底部操作栏 */
+        .bottom-bar {
+            padding: 20px;
+            border-top: 0.5px solid rgba(255,255,255,0.1);
+            text-align: right;
+            display: none;
+        }
+
+        .continue-link {
+            color: #007aff;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 进度条样式 */
+        .progress-indicator {
+            position: absolute;
+            top: 55px;
+            right: 20px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+        }
+        .verify-card {
+    /* 使用低不透明度的背景色，并增加毛玻璃模糊度 */
+    background: rgba(45, 45, 45, 0.4); 
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    
+    /* 更加细腻的边框，模拟光线折射 */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    
+    padding: 50px;
+    border-radius: 24px;
+    text-align: center;
+    width: 85%;
+    max-width: 550px;
+    
+    /* 增加一个轻微的入场动画，让半透明感更灵动 */
+    animation: sheetAppear 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+@keyframes sheetAppear {
+    from { 
+        opacity: 0; 
+        transform: scale(1.05) translateY(-10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="title-bar">
+            <div class="traffic-lights">
+                <div class="light close"></div>
+                <div class="light minimize"></div>
+                <div class="light maximize"></div>
+            </div>
+            <div class="window-title">📹 余向晴的视频留言 - 2026年2月</div>
+        </div>
+
+        <div class="content-area">
+            <div class="progress-indicator">1 / 36</div>
+            
+            <div class="video-player" id="videoPlayer">
+                <img src="jimi.png" class="video-cover" alt="Cover">
+                <div class="play-btn" id="playBtn" onclick="openVerifyModal()">
+                    <svg width="24" height="28" viewBox="0 0 24 28">
+                        <path d="M2 1L22 14L2 27V1Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="verify-modal" id="verifyModal">
+                <div class="verify-card">
+                    <div class="poem-text">
+                        我走出地下铁，<br>
+                        阳光温暖地洒下，<br>
+                        叶子掉落的声音，<br>
+                        有一种缓慢而愉快的节奏，<br>
+                        听说这里藏着一片 
+                        <input type="text" class="mac-input" id="answerInput" placeholder="···">
+                        。
+                    </div>
+                    <button class="mac-btn" onclick="checkAnswer()">验证</button>
+                    <div id="errorTip" style="color: #ffd700; margin-top: 15px; display: none; font-size: 14px;">致那趟开往春天的地下铁</div>
+                </div>
+            </div>
+
+            <div class="transcript" id="transcript">
+                <div class="transcript-content">
+                    <p><strong>以然学姐：</strong></p>
+                    <p>录这段视频给你，只希望不会让你太为难。</p>
+                    <p>关于邀请邹言学姐这件事，我犹豫了很久。很怕这个名字会让你难过，或者让你陷入某种愧疚里。</p>
+                    <p>其实，最初是你把邹言学姐介绍给我认识，那时候的你们那么要好，我像个小跟班一样跟在你们身后，可后来，看着你们渐行渐远，我不知道该怎么开口去问。直到这几年，我才知晓她遭遇了那样大的变故；而再次见到你时，我也很难把眼前这个沉默回避的人，和印象中的那个学姐重叠在一起。</p>
+                    <p>我知道，有些心结可能已经在岁月里打成了死扣。但我想告诉你的是，邹言学姐现在正勇敢地回到日常的轨道，分享着自己的生活。看到她，我就想到你当初送我的那本《地下铁》。</p>
+                    <p>在那本书里，我们都曾被那样一段话打动：<strong>“你固定在哪一站上车？在哪一站下车？车站中的人群总是这么匆匆。有人会在地下铁的出口等你吗？”</strong></p>
+                    <p>我想，当一个人努力从黑暗的隧道中走出来时，她内心最深处的渴望，不过于此。</p>
+                    <p>对你们来说，那个在出口等待的人，<strong>如果是彼此，该有多好。</strong></p>
+                    <p>邹言学姐正在努力向外走，如果你也还牵挂着她，也许这就是一个解开心结的机会。我只希望，我们每一个人，都不要留在2012年的遗憾里越走越远。</p>
+                    <p>但无论你愿不愿意走出地下铁，你要相信，我会始终愿意为你撑伞，握着你的手，陪你走一段路，<strong>就像你曾经对我那样。</strong></p>
+                    <p>谢谢你，曾经坐到我身旁。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar" id="bottomBar">
+            <a href="flashback.html" class="continue-link">下一步 
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function openVerifyModal() {
+            document.getElementById('playBtn').style.opacity = '0';
+            document.getElementById('verifyModal').style.display = 'flex';
+            const input = document.getElementById('answerInput');
+            input.focus();
+        }
+
+        function checkAnswer() {
+            const val = document.getElementById('answerInput').value.trim();
+            if (val === '金叶子') {
+                document.getElementById('verifyModal').style.display = 'none';
+                document.getElementById('videoPlayer').style.display = 'none';
+                document.getElementById('transcript').classList.add('show');
+                document.getElementById('bottomBar').style.display = 'block';
+            } else {
+                document.getElementById('errorTip').style.display = 'block';
+            }
+        }
+
+        document.getElementById('answerInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') checkAnswer();
+        });
+    </script>
+</body>
+</html>

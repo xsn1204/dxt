@@ -294,6 +294,7 @@
             color: #666;
             margin-bottom: 10px;
             line-height: 1.5;
+              text-align: center;
         }
         .password-input {
             width: 100%;
@@ -330,7 +331,7 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style>                             <div class="progress-indicator">23/36</div></head>
+    </style>                             <div class="progress-indicator">26/38</div></head>
 <body>
     <div class="top-nav">
         <div class="top-nav-left">
@@ -384,13 +385,10 @@
                 <a href="#">[转] 诺贝尔文学奖作家莫言的必读书单</a>
                 <span class="log-date">2012-12-04 (0/12)</span>
             </div>
+   
             <div class="log-item">
-                <a href="#">再见，夏天。你好，秋天。</a>
-                <span class="log-date">2012-09-16 (0/7)</span>
-            </div>
-            <div class="log-item">
-                <a href="javascript:void(0)" onclick="openLogModal()"><strong>安静地走出来</strong></a>
-                <span class="log-date">2012-06-25 (0/5)</span>
+                <a href="javascript:void(0)" onclick="openLogModal()"><strong>再见，夏天。</strong></a>
+                <span class="log-date">2012-07-26 (0/5)</span>
             </div>
             <div class="log-item">
                 <a href="#">走过路过不要错过哟~余大厨教你做菜（心虚）</a>
@@ -439,7 +437,7 @@
     <div class="password-modal" id="logModal">
         <div class="modal-content">
             <div class="modal-title">访问受限</div>
-            <div class="modal-desc">问题：我最爱喝的奶茶？</div>
+            <div class="modal-desc">ASCII 🔴🟢🟡🔵</div>
             <input type="text" class="password-input" id="logPwdInput" placeholder="请输入答案">
             <div class="modal-btns">
                 <button class="modal-btn btn-confirm" onclick="checkLogAnswer()">确定</button>
@@ -472,7 +470,7 @@
         }
 
         function checkLogAnswer() {
-            if (logPwdInput.value.trim() === "初恋") {
+         if (logPwdInput.value.trim().toLowerCase() === "line") {
                 window.open("dyt.html", "_blank");
                 closeLogModal();
             } else {

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>微博 - 视频详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", -apple-system, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        /* 顶部导航栏 */
+        .weibo-header-top {
+            height: 50px;
+            background-color: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+        .weibo-logo {
+            width: 100px;
+            height: 30px;
+            background: url("https://img.t.sinajs.cn/t6/style/images/global_nav/WB_logo.png") no-repeat center;
+            background-size: contain;
+            margin-right: 20px;
+        }
+        .weibo-nav { display: flex; flex: 1; }
+        .weibo-nav-item { margin-right: 25px; font-size: 14px; color: #333; cursor: pointer; }
+        .weibo-nav-item.active { color: #f42424; font-weight: bold; }
+
+        /* 页面三栏容器 */
+        .page-container {
+            max-width: 1260px;
+            margin: 0 auto;
+            display: flex;
+            padding-top: 60px;
+            padding-left: 15px;
+            padding-right: 15px;
+            gap: 15px;
+        }
+
+        /* 1. 左侧导航栏 */
+        .left-sidebar {
+            width: 180px;
+            background-color: #fff;
+            padding: 20px 0;
+            border-radius: 4px;
+            height: fit-content;
+        }
+        .left-sidebar h2 { font-size: 18px; padding: 0 20px 15px; border-bottom: 1px solid #e5e5e5; margin-bottom: 15px; }
+        .left-sidebar ul { list-style: none; }
+        .left-sidebar ul li { padding: 10px 20px; cursor: pointer; font-size: 14px; }
+        .left-sidebar ul li.active { background-color: #f9f9f9; color: #f42424; font-weight: bold; }
+
+        /* 2. 中间内容区 */
+        .main-content {
+            flex: 1;
+            max-width: 680px;
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #e5e5e5;
+        }
+        .main-header .back-btn { font-size: 14px; color: #666; margin-right: 20px; cursor: pointer; }
+        
+        .video-card {
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .weibo-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .weibo-header .avatar { width: 48px; height: 48px; border-radius: 50%; margin-right: 12px; }
+        .weibo-header .user-name { font-size: 14px; font-weight: bold; color: #333; }
+        .weibo-header .post-time { font-size: 12px; color: #999; margin-top: 2px; }
+
+        .weibo-text { font-size: 15px; line-height: 1.6; color: #333; margin-bottom: 15px; }
+        .topic { color: #f42424; }
+
+        /* 视频播放核心 - 初始态 */
+        .video-player-container {
+            width: 100%;
+            min-height: 380px; /* 初始维持约 16:9 的高度 */
+            background: url("jimi.png") no-repeat center;
+            background-size: cover;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            transition: all 0.5s ease; /* 增加平滑过渡 */
+        }
+        
+        /* 验证成功后的状态：高度自动，背景变为浅色 */
+        .video-player-container.unlocked {
+            height: auto;
+            min-height: unset;
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+
+        .play-btn {
+            width: 65px; height: 65px; background: rgba(244, 36, 36, 0.9);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; border: none; z-index: 5; transition: transform 0.2s;
+        }
+        .play-btn:hover { transform: scale(1.1); }
+
+        .verify-overlay {
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            color: white; z-index: 10; padding: 20px; text-align: center;
+        }
+        .poem-line { font-size: 14px; margin-bottom: 8px; color: #ccc; }
+        .wb-input { padding: 8px 15px; border-radius: 20px 0 0 20px; border: none; outline: none; width: 140px; }
+        .wb-submit { background: #f42424; color: white; border: none; padding: 8px 20px; border-radius: 0 20px 20px 0; cursor: pointer; font-weight: bold; }
+
+        /* 解锁后的半透明文稿 */
+        .unlocked-content {
+            display: none; width: 100%; padding: 25px;
+            background: rgba(255, 255, 255, 0.95); color: #333;
+        }
+        .transcript-p { margin-bottom: 15px; line-height: 1.8; font-size: 14px; }
+
+        /* 底部互动区增强 */
+        .wb-actions { border-top: 1px solid #eee; margin-top: 15px; padding-top: 10px; display: flex; font-size: 14px; color: #666; }
+        .action-item { 
+            flex: 1; 
+            text-align: center; 
+            cursor: pointer; 
+            padding: 10px 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        .action-item:hover { background-color: #f8f8f8; color: #f42424; }
+        .action-item:not(:last-child) { border-right: 1px solid #eee; }
+
+        /* 3. 右侧侧边栏 */
+        .right-sidebar {
+            width: 290px;
+        }
+        .side-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e5e5e5;
+        }
+        .side-card h3 { font-size: 14px; margin-bottom: 12px; border-left: 3px solid #f42424; padding-left: 8px; }
+        .recommend-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 13px; }
+        .recommend-item .name { font-weight: bold; flex: 1; }
+        .follow-btn { color: #f42424; border: 1px solid #f42424; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+
+                            .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+   /* 自定义音频播放器样式（针对 Chrome/Edge/Safari） */
+audio::-webkit-media-controls-enclosure {
+    background-color: #f8f8f8;
+}
+audio::-webkit-media-controls-play-button {
+    background-color: #f42424;
+    border-radius: 50%;
+}
+.music-player-section {
+    animation: fadeIn 0.8s ease; /* 增加一点出现时的过渡感 */
+}
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-50px); }
+}
+
+.float-animation {
+    animation: floatUp 0.8s forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+   </style>     <div class="progress-indicator">38/38</div></head>
+</head>
+<body>
+
+    <div class="weibo-header-top">
+        <div class="weibo-logo"></div>
+        <div class="weibo-nav">
+         <div class="weibo-nav-item active">首页</div>
+            <div class="weibo-nav-item">热门</div>
+            <div class="weibo-nav-item">发现</div>
+            <div class="weibo-nav-item">视频</div>
+            <div class="weibo-nav-item">游戏</div>
+            <div class="weibo-nav-item">会员</div>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <div class="left-sidebar">
+            <h2>个人主页</h2>
+            <ul>
+                  <li>她的主页</li>
+                <li>她的关注</li>
+                <li>她的粉丝</li>
+                <li class="active">她的收藏</li>
+                <li>她的赞</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="video-card">
+                <div class="weibo-header">
+                    <img src="6.png" class="avatar">
+                    <div class="user-info">
+                        <div class="user-name">今日也向晴</div>
+                        <div class="post-time">2026-02-09 来自 微博视频号</div>
+                    </div>
+                </div>
+
+                <div class="weibo-text">
+                    录这段视频给你，只希望不会让你太为难。<span class="topic">#那趟开往春天的地下铁#</span>
+                </div>
+
+                <div class="video-player-container" id="videoZone">
+                    <button class="play-btn" id="playBtn" onclick="showVerify()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                    </button>
+
+                    <div class="verify-overlay" id="verifyOverlay">
+                        <p class="poem-line">我走出地下铁</p>
+                        <p class="poem-line">阳光温暖地洒下</p>
+                        <p class="poem-line">叶子掉落的声音，</p>
+                        <p class="poem-line">一种缓慢而愉快的节奏</p>
+                        <p class="poem-line">听说这里藏着一片_ _ _</p>
+
+                        <div style="display:flex; margin-top:15px;">
+                            <input type="text" id="ansInput" class="wb-input" placeholder="输入关键词">
+                            <button class="wb-submit" onclick="checkAns()">验证</button>
+                        </div>
+                        <p id="error-msg" style="color:#f42424; font-size:12px; margin-top:10px; display:none;">请输入三个字的关键词</p>
+                    </div>
+
+                    <div class="unlocked-content" id="unlockedContent">
+
+                        <p class="transcript-p"><strong>以然学姐：</strong></p>
+                        <p class="transcript-p">录这段视频给你，只希望不会让你太为难。</p>
+                        <p class="transcript-p">关于邀请邹言学姐来婚礼这件事，我犹豫了很久。很怕这个名字会让你难过，或者让你陷入某种愧疚里。</p>
+                        <p class="transcript-p">其实，最初是你把邹言学姐介绍给我认识，那时候的你们那么要好，我像个小跟班一样跟在你们身后，可后来，看着你们渐行渐远，我不知道该怎么开口去问。直到这几年，我才知晓她遭遇了那样大的变故；而再次见到你时，我也很难把眼前这个沉默回避的人，和印象中的那个学姐重叠在一起。</p>
+                        <p class="transcript-p">我知道，有些心结可能已经在岁月里打成了死扣。但我想告诉你的是，邹言学姐现在正勇敢地回到日常的轨道，分享着自己的生活。看到她，我就想到你当初送我的那本《地下铁》。</p>
+                        <p class="transcript-p">在那本书里，我们都曾被那样一段话打动：<strong>“你固定在哪一站上车？在哪一站下车？车站中的人群总是这么匆匆。有人会在地下铁的出口等你吗？”</strong></p>
+                        <p class="transcript-p">我想，当一个人努力从黑暗的隧道中走出来时，她内心最深处的渴望，不过于此。</p>
+                        <p class="transcript-p">对你们来说，那个在出口等待的人，<strong>如果是彼此，该有多好。</strong></p>
+                        <p class="transcript-p">邹言学姐正在努力向外走，如果你也还牵挂着她，也许这就是一个解开心结的机会。我只希望，我们每一个人，都不要留在2012年的遗憾里越走越远。</p>
+                        <p class="transcript-p">但无论你愿不愿意走出地下铁，你要相信，我会始终愿意为你撑伞，握着你的手，陪你走一段路，<strong>就像你曾经对我那样。</strong></p>
+                        <p class="transcript-p">谢谢你，曾经坐到我身旁。</p>
+                                                       <div class="music-player-section" style="margin-top: 20px; padding: 15px; background: #f8f8f8; border-radius: 8px; border: 1px solid #eee;">
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <div style="width: 40px; height: 40px; background: #f42424; border-radius: 4px; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+            <span style="color: white; font-size: 20px;">♪</span>
+        </div>
+        <div>
+            <div style="font-size: 14px; font-weight: bold; color: #333;">《地下铁》原声带</div>
+            <div style="font-size: 12px; color: #999;">正在播放 - 《（失明前）我想记得的47件事》</div>
+        </div>
+    </div>
+    <audio id="bgMusic" controls style="width: 100%; height: 35px;">
+        <source src="music.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+</div>
+                    </div>
+                </div>
+
+
+<div class="wb-actions">
+    <div class="action-item" onclick="handleAction('repost')">
+        <span>🔁</span> 转发
+    </div>
+    <div class="action-item" onclick="handleAction('comment')">
+        <span>💬</span> 评论
+    </div>
+    <div class="action-item" onclick="handleLike(this)">
+        <span id="like-icon">❤️</span> <span id="like-text">赞</span>
+    </div>
+</div>
+
+<div id="wbModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; justify-content:center; align-items:center;">
+    <div style="background:#fff; width:450px; border-radius:8px; padding:20px; position:relative;">
+        <h3 id="modalTitle" style="font-size:16px; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">转发微博</h3>
+        <textarea id="modalInput" style="width:100%; height:100px; padding:10px; border:1px solid #ddd; border-radius:4px; resize:none; outline:none;" placeholder="写点什么吧..."></textarea>
+        <div style="display:flex; justify-content:flex-end; margin-top:15px; gap:10px;">
+            <button onclick="closeModal()" style="padding:6px 15px; border:1px solid #ddd; background:#fff; cursor:pointer;">取消</button>
+            <button id="modalSubmit" style="padding:6px 15px; background:#f42424; color:#fff; border:none; cursor:pointer; font-weight:bold;">发送</button>
+        </div>
+    </div>
+</div>
+
+<div id="plusOne" style="display:none; position:fixed; color:#f42424; font-weight:bold; font-size:20px; pointer-events:none; z-index:300;">+1</div>
+       </div> </div>
+        <div class="right-sidebar">
+            <div class="side-card">
+                <h3>视频简介</h3>
+                <p style="font-size: 13px; color: #666; line-height: 1.5;">
+                    这段视频包含了一段特别的留言。
+                </p>
+            </div>
+            <div class="side-card">
+                <h3>相关推荐</h3>
+                <div class="recommend-item"><span class="name">• 几米插画作品集</span></div>
+                <div class="recommend-item"><span class="name">• 陈绮贞版《地下铁》音乐剧</span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function showVerify() {
+            document.getElementById('playBtn').style.display = 'none';
+            document.getElementById('verifyOverlay').style.display = 'flex';
+            document.getElementById('ansInput').focus();
+        }
+        function checkAns() {
+    const val = document.getElementById('ansInput').value.trim();
+    if (val === '金叶子') {
+        const videoZone = document.getElementById('videoZone');
+        document.getElementById('verifyOverlay').style.display = 'none';
+        document.getElementById('unlockedContent').style.display = 'block';
+        videoZone.classList.add('unlocked');
+
+        // --- 新增代码：验证通过后自动播放音乐 ---
+        const audio = document.getElementById('bgMusic');
+        audio.play().catch(error => {
+            console.log("浏览器拦截了自动播放，需用户手动点击播放。");
+        });
+        // ------------------------------------
+        
+    } else {
+        document.getElementById('error-msg').style.display = 'block';
+    }
+    
+}
+// 弹窗处理逻辑
+function handleAction(type) {
+    const modal = document.getElementById('wbModal');
+    const title = document.getElementById('modalTitle');
+    const input = document.getElementById('modalInput');
+    const submitBtn = document.getElementById('modalSubmit');
+
+    modal.style.display = 'flex';
+    
+    if (type === 'repost') {
+        title.innerText = '转发微博';
+        input.value = '即便错过了站台，我们还是可以约在出口相见，对吗？//@今日也向晴: 微博视频号';
+        submitBtn.onclick = () => { location.href = 'finalX1.html'; };
+    } else {
+        title.innerText = '发表评论';
+        input.value = '';
+        input.placeholder = '昨日的悲伤，我已遗忘。可以遗忘的，都不再重要了。';
+        submitBtn.onclick = () => { location.href = 'finalX2.html'; };
+    }
+}
+
+function closeModal() {
+    document.getElementById('wbModal').style.display = 'none';
+}
+
+// 点赞动效逻辑
+function handleLike(element) {
+    const plus = document.getElementById('plusOne');
+    const rect = element.getBoundingClientRect();
+    
+    // 定位 +1 效果
+    plus.style.left = (rect.left + rect.width / 2) + 'px';
+    plus.style.top = rect.top + 'px';
+    plus.style.display = 'block';
+    plus.classList.add('float-animation');
+
+    // 变红反馈
+    document.getElementById('like-icon').style.color = '#f42424';
+    document.getElementById('like-text').style.color = '#f42424';
+
+    // 延迟跳转
+setTimeout(() => {
+    window.open('finalX3.html', '_blank');
+}, 800);
+}
+    </script>
+</body>
+</html>

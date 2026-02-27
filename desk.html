@@ -202,42 +202,17 @@
             margin-left: auto;
         }
 
-        /* --- 悬浮便签 (修复的样式) --- */
-        .sticky-note {
-            position: fixed;
-            top: 60px; 
-            right: 40px;
-            width: 250px;
-            min-height: 140px;
-            background: #fff9c4; /* 便签纸的淡黄色 */
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            color: #333;
-            font-size: 13px;
-            line-height: 1.5;
-            z-index: 50;
-            border-left: 5px solid #ffcc00; /* 黄色侧边栏 */
-        }
-        .sticky-note h4 {
-            color: #b35900;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        .sticky-note strong { 
-            color: var(--dingtalk-color); /* QQ蓝强调色 */
-        }
-        /* 修复列表格式 */
-        .sticky-note ul {
-            list-style-type: none; /* 移除默认圆点 */
-            padding-left: 0;
-            margin-top: 8px;
-        }
-        .sticky-note li {
-            margin-bottom: 5px;
-            text-align: left;
-        }
+/* 历史记录项的专属图标颜色 */
+.history-icon {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    color: #666 !important;
+    font-size: 12px;
+}
 
+/* 悬停效果优化 */
+.result-item:hover {
+    background-color: rgba(0, 122, 255, 0.1);
+}
 
 /* 导航栏基础样式 */
 #game-nav {
@@ -329,8 +304,19 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
+        /* 右侧便签：核心线索区 */
+        .sticky-note {
+            position: absolute; right: 30px; top: 40px;
+            width: 260px; background: #fdf6b2; padding: 15px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            color: #1a1a1a;
+            border-bottom-right-radius: 20px 5px;
+        }
+        .sticky-note h4 { margin: 0 0 10px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 5px; color: #92400e; font-size: 14px; }
+        .sticky-note p { font-size: 12px; margin: 5px 0; line-height: 1.6; }
+        .sticky-note .urgent { color: #dc2626; font-weight: bold; }
 
-    </style>                             <div class="progress-indicator">1/36</div></head>
+    </style>                             <div class="progress-indicator">1/38</div></head>
 
 
 <body>
@@ -371,17 +357,23 @@
             <div class="icon-label">QQ</div>
         </div>
            </a>
-    <a href="宋宁如意.html" target="_blank" class="desktop-icon-link">
-        <div class="desktop-icon">
-            <div class="icon-image" style="background:var(--宋宁如意-color); color:white; font-size:35px;">🧩</div>
-            <div class="icon-label">🧩</div>
-            </a>
         </div>
 
 
 
     
 </div>
+    <div class="sticky-note">
+        <h4>🔑 备忘</h4>
+        <p>善用内部搜索（Spotlight），以及外部搜索（真实互联网）以获取信息。</p>
+        <p><strong>第4/10页中，分别可进行一次页面内搜索。</strong></p>
+        <p>共设置7个extra页面，extra页面不包含关键词，不影响线索推进。</p>
+        <p>若点击无响应，则表示该信息无关，无需使用F12或查看源码以获取线索。</p>
+         <p>部分素材来源自网络，如涉侵权请联系删除。</p>
+                <p style="font-size:10px; color:#666;">AAA地下党 2026/2</p>
+    </div>
+
+
 
     <div class="spotlight-search">
         <span>🔍</span>
@@ -494,7 +486,7 @@
                 icon: "🔗", 
                 color: "#a040a0" 
             },
-                       "陶汝昆": { 
+                       "陶润": { 
                 file: "2012fire.html", 
                 label: "少女拒求爱遭毁容，被害者承认曾被迫交往", 
                 type: "网页", 
@@ -518,88 +510,106 @@
         };
 
  
+const MAX_HISTORY = 6;
+
+// 获取历史记录
+function getHistory() {
+    const history = localStorage.getItem('search_history');
+    return history ? JSON.parse(history) : [];
+}
+
+// 保存历史记录
+function saveHistory(query) {
+    if (!query) return;
+    let history = getHistory();
+    history = history.filter(item => item !== query);
+    history.unshift(query);
+    history = history.slice(0, MAX_HISTORY);
+    localStorage.setItem('search_history', JSON.stringify(history));
+}
+
+// 核心搜索与展示函数
 function searchSpotlight() {
     const input = document.getElementById('spotlight-input');
     const resultsDiv = document.getElementById('spotlight-results');
     const query = input.value.trim().toLowerCase();
+    
     resultsDiv.innerHTML = '';
 
+    // 情况 A：输入框为空
     if (query.length === 0) {
-        resultsDiv.style.display = 'none';
+        const history = getHistory();
+        // 关键修改：只有当存在历史记录时才显示
+        if (history.length > 0) {
+            resultsDiv.style.display = 'block';
+            history.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'result-item';
+                // 点击历史记录项：填入文字并触发搜索
+                itemEl.onmousedown = (e) => { 
+                    e.preventDefault(); // 防止失去焦点导致的列表消失
+                    input.value = item;
+                    searchSpotlight();
+                };
+                itemEl.innerHTML = `
+                    <div class="result-icon history-icon">🕒</div>
+                    <div style="flex-grow:1">
+                        <div class="result-label">${item}</div>
+                        <div class="result-detail">历史搜索</div>
+                    </div>
+                `;
+                resultsDiv.appendChild(itemEl);
+            });
+        } else {
+            resultsDiv.style.display = 'none';
+        }
         return;
     }
 
-    // --- 记录搜索关键词 (优化后的代码，确保不阻塞搜索) ---
-    fetch("https://script.google.com/macros/s/AKfycbw2YW2wCu3_dl7j-ynmDLxHWil6CUUJxyB-mR_O9LJxsv5l_cX0tPbLbAZ7oH34ZAr-/exec", {
-            method: "POST",
-            mode: 'no-cors', // 增加这一行，避免跨域报错中断逻辑
-            headers: { "Content-Type": "text/plain" }, // 改为 text/plain 绕过预检
-            body: JSON.stringify({ keyword: query })
-        })
-        .then(() => console.log("发送请求完成"))
-        .catch(err => console.error("记录失败:", err));
-
-    // --- 核心搜索逻辑 ---
+    // 情况 B：有输入内容，执行匹配逻辑
     let found = false;
-
     for (const keyword in FILE_DATABASE) {
-        const keywordLower = keyword.toLowerCase().trim();
-
-        // 检查输入是否完全匹配关键词
-        if (keywordLower === query) {
-            const dataList = Array.isArray(FILE_DATABASE[keyword])
-                ? FILE_DATABASE[keyword]
-                : [FILE_DATABASE[keyword]];
-
+        if (keyword.toLowerCase().trim() === query) {
+            saveHistory(query); // 匹配成功才存入历史记录
+            const dataList = Array.isArray(FILE_DATABASE[keyword]) ? FILE_DATABASE[keyword] : [FILE_DATABASE[keyword]];
+            
             dataList.forEach(data => {
                 found = true;
-
                 const resultItem = document.createElement('a');
                 resultItem.className = 'result-item';
                 resultItem.href = data.file;
                 resultItem.target = '_blank';
-
                 resultItem.innerHTML = `
-                    <div class="result-icon" style="background-color: ${data.color};">
-                        ${data.icon}
-                    </div>
+                    <div class="result-icon" style="background-color: ${data.color};">${data.icon}</div>
                     <div style="flex-grow:1">
                         <div class="result-label">${data.label}</div>
-                        <div class="result-detail">${data.type}文件</div>
+                        <div class="result-detail">${data.type}</div>
                     </div>
                 `;
-
                 resultsDiv.appendChild(resultItem);
             });
         }
     }
 
-    if (found) {
-        resultsDiv.style.display = 'block';
-    } else {
-        resultsDiv.style.display = 'block';
-        resultsDiv.innerHTML = '<div style="padding: 8px 15px; color: #666;">未找到匹配结果</div>';
+    resultsDiv.style.display = 'block';
+    if (!found) {
+        resultsDiv.innerHTML = '<div style="padding: 10px 15px; color: #999; font-size: 13px;">未找到结果</div>';
     }
 }
 
-        // 额外的功能：当搜索框失去焦点且没有输入内容时，隐藏结果框
-        document.getElementById('spotlight-input').addEventListener('blur', () => {
-             // 使用 setTimeout 确保点击链接有时间注册
-            setTimeout(() => {
-                if (document.getElementById('spotlight-input').value.trim() === '') {
-                    document.getElementById('spotlight-results').style.display = 'none';
-                }
-            }, 100);
-        });
-        
-        // 当重新聚焦时，显示结果框（如果内容不为空）
-        document.getElementById('spotlight-input').addEventListener('focus', () => {
-            if (document.getElementById('spotlight-input').value.trim() !== '') {
-                searchSpotlight(); 
-            }
-        });
-        
+// 事件监听优化
+const spotlightInput = document.getElementById('spotlight-input');
 
+// 聚焦时直接调用搜索函数以判断是否显示历史记录
+spotlightInput.addEventListener('focus', searchSpotlight);
+
+// 失去焦点时隐藏
+spotlightInput.addEventListener('blur', () => {
+    // 延迟隐藏，给点击列表留出反应时间
+    setTimeout(() => {
+        document.getElementById('spotlight-results').style.display = 'none';
+    }, 200);
+});
     </script>
 
 </body>
