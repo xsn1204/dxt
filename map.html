@@ -133,25 +133,20 @@
 </div>
 
 <script>
-    const bg = new Image();
-bg.src = 'map.png';
-bg.onload = () => {
-    map.style.opacity = '1';
-    loading.style.display = 'none';
-    results.style.display = 'block';
-};
-    function initPage() {
-        const map = document.getElementById('map-container');
-        const loading = document.getElementById('loading');
-        const results = document.getElementById('results-list');
+    
+function initPage() {
+    const map = document.getElementById('map-container');
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results-list');
 
-        // 1. 强制 1秒 延迟后显示背景
-        setTimeout(() => {
-            map.style.opacity = '1'; // 背景淡入
-            loading.style.display = 'none'; // 隐藏加载状态
-            results.style.display = 'block'; // 显示搜索结果
-        }, 1000);
-    }
+    const bg = new Image();
+    bg.src = 'map.png';  // 你的地图背景图
+    bg.onload = () => {   // 图片加载完成后执行
+        map.style.opacity = '1';     // 淡入地图
+        loading.style.display = 'none'; // 隐藏加载状态
+        results.style.display = 'block'; // 显示搜索结果
+    };
+}
 
     // 搜索按钮逻辑
     document.getElementById('searchBtn').onclick = function() {

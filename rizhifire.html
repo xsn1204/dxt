@@ -316,14 +316,14 @@
 
 <div id="lock-overlay">
     <div class="lock-box">
-        <h3 id="lock-title">停止回忆！停止审判自己！</h3>
+        <h3 id="lock-title">立刻退出！停止回忆！</h3>
         
         <div id="password-area" style="display: none;">
             <p style="font-size: 14px; opacity: 0.8; margin-bottom: 10px;">12.19.19.14.15</p>
             <input type="text" id="password-input" placeholder="输入日期">
         </div>
 
-       <button id="action-btn" class="action-trigger" onclick="handleStep()">下一步</button>
+       <button id="action-btn" class="action-trigger" onclick="handleStep()">继续</button>
         <div id="error-message" class="error-tip">回答错误，请重新输入8位数字</div>
     </div>
 </div>
@@ -385,7 +385,7 @@ function handleStep() {
 
     setTimeout(() => {
         if (currentStep === 1) {
-            title.innerText = "你明明走出来了，不是吗？"; // 遵从你要求的文案
+            title.innerText = "你还想要审判自己？"; // 遵从你要求的文案
             currentStep = 2;
         } 
         else if (currentStep === 2) {
