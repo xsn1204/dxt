@@ -3,346 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登机牌 - 宋以然</title>
+    <title>出差申请</title>
     <style>
-        body {
-            margin: 0;
+        /* --- 页面基础与切换动画 --- */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow-x: hidden; }
+        
+        #page-oa {
+            display: block;
+            transition: opacity 2s ease-in-out;
+            background-color: #f4f7f9;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #page-ticket {
+            display: none;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-            display: flex;
-            flex-direction: column; 
+            min-height: 100vh;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            font-family: "SimSun", "STSong", serif; /* 保持字体 */
-            color: #fff; /* 保持文字颜色 */
             padding: 40px 20px;
-        }
-
-        /* --- 深蓝色机票样式 --- */
-        .air-ticket {
-            width: 700px;
-            height: 250px;
-            background: #fff;
-            border-radius: 15px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5); /* 保持阴影 */
-            margin-bottom: 60px;
-            color: #1a2a44; /* 深蓝色文字 */
-            transition: all 0.3s ease; /* 添加过渡效果 */
-        }
-
-        /* 左侧主要区域 */
-        .ticket-main {
-            flex: 1.6;
-            padding: 25px;
             position: relative;
         }
 
-        /* 右侧存根区域（深蓝色背景） */
-        .ticket-stub {
-            flex: 0.7;
-            background: #1a2a44; /* 保持深蓝色主题 */
-            color: #fff;
-            padding: 25px;
-            border-left: 2px dashed #ccc;
-            position: relative;
-        }
-
-        /* 详情排版 */
-        .info-header { font-size: 10px; color: #888; letter-spacing: 1px; margin-bottom: 2px; text-transform: uppercase; }
-        .info-value { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .stub-value { font-size: 14px; color: #fff; font-weight: bold; margin-bottom: 12px; }
-
-        .route-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .city-name { font-size: 27px; font-weight: 900; letter-spacing: -1px; }
-        
-        /* 飞行图标装饰 */
-        .flight-path {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            border-bottom: 1px dashed #ddd;
-            margin: 0 20px;
-            padding-bottom: 5px;
-        }
-        .flight-path::after {
-            content: '✈';
-            color: #1a2a44;
-            font-size: 18px;
-        }
-
-        /* 底部提示词 */
-        .ticket-footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 10px;
-            color: #aaa;
-            letter-spacing: 1px;
-        }
-
-        /* 二维码 */
-        .qr-placeholder {
-            position: absolute;
-            bottom: 20px;
-            right: 25px;
-            width: 50px;
-            height: 50px;
-            background: #1a2a44;
-            padding: 3px;
-        }
-
-        /* --- 文案样式 --- */
-        .poem-container {
-            text-align: center;
-            line-height: 2.2;
-            letter-spacing: 3px;
-            color: #666; /* 初始暗淡 */
-            max-width: 600px;
-            font-style: italic;
-        }
-
-        .poem-line {
-            margin-bottom: 10px;
-            transition: all 1s ease; /* 保持过渡 */
-        }
-
-        .highlight { color: #aaa; } /* 保持高亮颜色 */
-
-        /* 新增：进度指示器样式 */
-        .progress-indicator {
+        /* 纯黑过渡遮罩 */
+        #blackout {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            z-index: 9999;
-        }
-
-        body::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.03) 0px,
-            rgba(255, 255, 255, 0.03) 1px,
-            transparent 1px,
-            transparent 2px
-        );
-        pointer-events: none;
-        z-index: 10;
-    }
-    @keyframes flicker {
-            0% { opacity: 0.1; }
-            5% { opacity: 0.05; }
-            10% { opacity: 0.1; }
-            15% { opacity: 0.08; }
-            20% { opacity: 0.1; }
-            100% { opacity: 0.1; }
-        }
-
-        /* 新增：迷宫感、扭曲感、孤独冷漠效果 */
-        .air-ticket {
-            position: relative;
-        }
-        .air-ticket::after {
-            content: "";
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(0,0,0,0.2) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.2)),
-                        linear-gradient(45deg, rgba(0,0,0,0.2) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.2));
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            opacity: 0.3;
-            pointer-events: none; /* 允许点击穿透 */
-            animation: maze-drift 10s infinite linear; /* 添加迷宫漂移动画 */
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 1.5s ease-in-out;
         }
 
-    /* 核心：诗句容器与打字机光标 */
-    .poem-container {
-        text-align: center; /* 左对齐更有公文/告示感 */
-        min-height: 300px;
-        width: 500px;
+        /* --- Final.html 样式 --- */
+        .form-container { max-width: 850px; margin: 0 auto; background: #fff; border: 1px solid #dcdfe6; box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1); }
+        .form-header { background-color: #005696; color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        .form-header h2 { margin: 0; font-size: 18px; letter-spacing: 1px; color: white; }
+        .form-body { padding: 25px; }
+        .form-row { display: flex; border-bottom: 1px solid #ebeef5; }
+        .label { width: 120px; background-color: #f9fafc; padding: 12px 15px; font-weight: bold; font-size: 14px; border-right: 1px solid #ebeef5; display: flex; align-items: center; color: #333; }
+        .content { flex: 1; padding: 12px 15px; font-size: 14px; color: #333; }
+        .highlight-red { color: #f56c6c; margin-right: 4px; }
+        .footer { padding: 20px; text-align: right; background: #f9fafc; border-top: 1px solid #ebeef5; }
+        button { padding: 8px 20px; border-radius: 4px; border: none; cursor: pointer; font-size: 14px; margin-left: 10px; }
+        .btn-print { background-color: #909399; color: white; }
+        .btn-submit { background-color: #005696; color: white; }
 
-    }
-
-    .poem-line {
-        min-height: 1.5em;
-        margin-bottom: 12px;
-        opacity: 0.8;
-        position: relative;
-        display: block;
-    }
-
-    /* 信号故障动画 (Glitch) */
-    @keyframes glitch {
-        0% { transform: translate(0); text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9; }
-        20% { transform: translate(-2px, 2px); }
-        40% { transform: translate(-2px, -2px); text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9; }
-        60% { transform: translate(2px, 2px); }
-        80% { transform: translate(2px, -2px); }
-        100% { transform: translate(0); }
-    }
-
-    .glitch-active {
-        animation: glitch 0.2s infinite;
-        color: #fff !important;
-    }
-
-    /* 光标 */
-    .cursor {
-        display: inline-block;
-        width: 8px;
-        height: 1.2em;
-        background: #666;
-        margin-left: 4px;
-        vertical-align: middle;
-        animation: blink 0.8s infinite;
-    }
-
-    @keyframes blink {
-        50% { opacity: 0; }
-    }
-</style>
-
-<body>
-<div class="progress-indicator">finalX2️⃣</div>
-
-<div class="air-ticket">
-    <div class="ticket-main">
-        <div style="display: flex; justify-content: space-between;">
-            <div>
-                <div class="info-header">Name of Passenger</div>
-                <div class="info-value">宋以然 / SONG YIRAN</div>
-            </div>
-            <div style="text-align: right;">
-                <div class="info-header">Flight</div>
-                <div class="info-value">MU5318</div>
-            </div>
-        </div>
-
-        <div class="route-section">
-            <div class="city-name">青州</div>
-            <div class="flight-path"></div>
-            <div class="city-name">香港</div>
-        </div>
-
-        <div style="display: flex; gap: 65px;">
-            <div>
-                <div class="info-header">Date</div>
-               <div class="info-value" style="color: #8B0000;">25 MAR</div>
-            </div>
-            <div>
-                <div class="info-header">Boarding Time</div>
-                <div class="info-value">🔔09:40</div>
-            </div>
-            <div>
-                <div class="info-header">Gate</div>
-                <div class="info-value">B22</div>
-            </div>
-                       <div>
-                <div class="info-header">Seat</div>
-                <div class="info-value">17A</div>
-            </div>
-        </div>
-
-        <div class="ticket-footer">PLEASE ARRIVE AT THE GATE 30 MINUTES BEFORE DEPARTURE.</div>
-    
-    </div>
-
-    <div class="ticket-stub">
-        <div class="info-header" style="color: rgba(255,255,255,0.5);">Passenger</div>
-        <div class="stub-value">宋以然 / SONG YIRAN</div>
+        /* --- FinalX2.html 样式 --- */
+        .air-ticket {
+            width: 700px; height: 250px; background: #fff; border-radius: 15px;
+            display: flex; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            margin-bottom: 60px; color: #1a2a44; position: relative;
+        }
+        .ticket-main { flex: 1.6; padding: 25px; position: relative; }
+        .ticket-stub { flex: 0.7; background: #1a2a44; color: #fff; padding: 25px; border-left: 2px dashed #ccc; position: relative; }
+        .info-header { font-size: 10px; color: #888; letter-spacing: 1px; margin-bottom: 2px; text-transform: uppercase; }
+        .info-value { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .stub-value { font-size: 14px; color: #fff; font-weight: bold; margin-bottom: 12px; }
+        .route-section { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; }
+        .city-name { font-size: 27px; font-weight: 900; letter-spacing: -1px; }
+        .flight-path { flex: 1; text-align: center; position: relative; border-bottom: 1px dashed #ddd; margin: 0 20px; padding-bottom: 5px; }
+        .flight-path::after { content: '✈'; color: #1a2a44; font-size: 18px; }
+        .ticket-footer { position: absolute; bottom: 20px; font-size: 10px; color: #aaa; letter-spacing: 1px; }
+        .progress-indicator { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.6); color: #fff; padding: 6px 10px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; z-index: 9999; }
         
-        <div class="info-header" style="color: rgba(255,255,255,0.5); margin-top: 15px;">Route</div>
-        <div class="stub-value">QINGZHOU TO SHANGHAI</div>
+        /* 扫描线效果 */
+        #page-ticket::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 10;
+        }
 
-        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-            <div>
-                <div class="info-header" style="color: rgba(255,255,255,0.5);"> SERIAL No.</div>
-                <div class="stub-value">080</div>
+        /* 迷宫漂移动画 */
+        .air-ticket::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1)),
+                        linear-gradient(45deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1));
+            background-size: 20px 20px; background-position: 0 0, 10px 10px;
+            opacity: 0.3; pointer-events: none; animation: maze-drift 10s infinite linear;
+        }
+        @keyframes maze-drift { from { background-position: 0 0; } to { background-position: 100px 100px; } }
+
+        .poem-container { text-align: center; min-height: 300px; width: 500px; color: #fff; }
+        .poem-line { min-height: 1.5em; margin-bottom: 12px; opacity: 0.8; position: relative; font-family: "SimSun", serif; letter-spacing: 3px; font-style: italic; }
+        .highlight-poem { color: #aaa; }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9; }
+            40% { transform: translate(-2px, -2px); text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9; }
+            100% { transform: translate(0); }
+        }
+        .glitch-active { animation: glitch 0.2s infinite; }
+        .cursor { display: inline-block; width: 8px; height: 1.2em; background: #666; margin-left: 4px; vertical-align: middle; animation: blink 0.8s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+      <div class="progress-indicator">finalX2️⃣</div>
+</head>
+<body>
+
+<div id="blackout"></div>
+
+<div id="page-oa">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>出差申请单 (Business Travel Request)</h2>
+            <span>单据编号：BT-20260318-042</span>
+        </div>
+        <div class="form-body">
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>申请人</div>
+                <div class="content">宋以宁</div>
+                <div class="label"><span class="highlight-red">*</span>工号</div>
+                <div class="content">ZD9527</div>
             </div>
-            <div>
-                <div class="info-header" style="color: rgba(255,255,255,0.5);">Class</div>
-                <div class="stub-value">Y</div>
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>所属部门</div>
+                <div class="content">品牌中心</div>
+                <div class="label">职位</div>
+                <div class="content">高级经理</div>
+            </div>
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>出差事由</div>
+                <div class="content">参加2026年度行业博览会，并对接上海分部Q2季度品牌联名方案。</div>
+            </div>
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>出差时间</div>
+                <div class="content">2026-03-25 至 2026-03-27 (共 3 天)</div>
+            </div>
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>目的地</div>
+                <div class="content">青州 → 上海</div>
+            </div>
+            <div class="form-row">
+                <div class="label"><span class="highlight-red">*</span>交通工具</div>
+                <div class="content">飞机 (经济舱)</div>
+                <div class="label">预订方式</div>
+                <div class="content">平台代理预订</div>
+            </div>
+            <div class="form-row">
+                <div class="label">去程航班</div>
+                <div class="content"><strong>MU3243</strong> | 2026-03-25</div>
+                <div class="label">费用所属</div>
+                <div class="content">部门营销预算 - 品牌推广项目</div>
+            </div>
+            <div class="form-row" style="border-bottom: none;">
+                <div class="label">备注说明</div>
+                <div class="content">随行人员：无。上海期间住宿由分公司行政部统一协调。</div>
+            </div>
+            <div style="margin-top: 30px; border-top: 2px solid #005696; padding-top: 15px;">
+                <p style="font-weight: bold; font-size: 14px; color: #666;">审批节点：</p>
+                <p style="font-size: 13px; color: #666;">1. 部门主管 (已核准) 2. 财务部 (抄送)</p>
             </div>
         </div>
-
-       <div style="position: absolute; bottom: 20px; right: 25px; width: 50px;">
-    <img src="qr.png" alt="二维码" style="width: 100%; height: auto; display: block;">
-</div>
+        <div class="footer">
+            <button class="btn-print">打印单据</button>
+            <button class="btn-submit" onclick="startTransition()">提交申请 🔔</button>
+        </div>
     </div>
 </div>
 
-<div class="poem-container" id="typewriter-text"></div>
+<div id="page-ticket">
+  
+    <div class="air-ticket" id="ticket-obj">
+        <div class="ticket-main">
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <div class="info-header">Name of Passenger</div>
+                    <div class="info-value">宋以然 / SONG YIRAN</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="info-header">Flight</div>
+                    <div class="info-value">MU5318</div>
+                </div>
+            </div>
+            <div class="route-section">
+                <div class="city-name">青州</div>
+                <div class="flight-path"></div>
+                <div class="city-name">上海</div>
+            </div>
+            <div style="display: flex; gap: 65px;">
+                <div>
+                    <div class="info-header">Date</div>
+                    <div class="info-value" style="color: #8B0000;">25 MAR</div>
+                </div>
+                <div>
+                    <div class="info-header">Boarding Time</div>
+                    <div class="info-value">09:40</div>
+                </div>
+                <div>
+                    <div class="info-header">Gate</div>
+                    <div class="info-value">B22</div>
+                </div>
+                <div>
+                    <div class="info-header">Seat</div>
+                    <div class="info-value">17A</div>
+                </div>
+            </div>
+            <div class="ticket-footer">PLEASE ARRIVE AT THE GATE 30 MINUTES BEFORE DEPARTURE.</div>
+        </div>
+        <div class="ticket-stub">
+            <div class="info-header" style="color: rgba(255,255,255,0.5);">Passenger</div>
+            <div class="stub-value">宋以然 / SONG YIRAN</div>
+            <div class="info-header" style="color: rgba(255,255,255,0.5); margin-top: 15px;">Route</div>
+            <div class="stub-value">QINGZHOU TO SHANGHAI</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                <div>
+                    <div class="info-header" style="color: rgba(255,255,255,0.5);"> SERIAL No.</div>
+                    <div class="stub-value">080</div>
+                </div>
+                <div>
+                    <div class="info-header" style="color: rgba(255,255,255,0.5);">Class</div>
+                    <div class="stub-value">Y</div>
+                </div>
+            </div>
+   <div style="position: absolute; bottom: 20px; right: 25px; width: 50px; height: 50px;">
+    <img src="qr.png" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+</div>
+        </div>
+    </div>
+    <div class="poem-container" id="typewriter-text"></div>
+</div>
 
 <script>
-const lines = [
-    "世界突然暗了！",
-    "是谁在恶作剧？",
-    "我茫然摸索，",
-    "再也找不到光的源头。",
-    "走道转角传来低声吟唱的悲凉歌声，",
-    "她也有着与我相同的忧伤吗？",
-    "——几米《地下铁》"
-];
+    const lines = [
+        "世界突然暗了！",
+        "是谁在恶作剧？",
+        "我茫然摸索，",
+        "再也找不到光的源头。",
+        "走道转角传来低声吟唱的悲凉歌声，",
+        "她也有着与我相同的忧伤吗？",
+        "——几米《地下铁》"
+    ];
 
-const container = document.getElementById('typewriter-text');
+    function startTransition() {
+        const blackout = document.getElementById('blackout');
+        const oaPage = document.getElementById('page-oa');
+        const ticketPage = document.getElementById('page-ticket');
 
-async function typeEffect() {
-    for (let i = 0; i < lines.length; i++) {
-        const lineDiv = document.createElement('div');
-        lineDiv.className = 'poem-line';
-        if (i === 0 || i === 5) lineDiv.classList.add('highlight');
-        container.appendChild(lineDiv);
+        // 1. 触发全屏变暗
+        blackout.style.opacity = '1';
+        blackout.style.pointerEvents = 'all';
 
-        const text = lines[i];
-        for (let char of text) {
-            // 模拟信号断裂：随机触发抖动
-            if (Math.random() > 0.96) {
-                lineDiv.classList.add('glitch-active');
-                await new Promise(r => setTimeout(r, 150));
-                lineDiv.classList.remove('glitch-active');
-            }
-
-            lineDiv.innerHTML = text.substring(0, text.indexOf(char) + 1) + '<span class="cursor"></span>';
-            await new Promise(r => setTimeout(r, 100 + Math.random() * 100)); // 随机打字速度
-        }
-        
-        // 移除当前行的光标，准备下一行
-        lineDiv.querySelector('.cursor').remove();
-        await new Promise(r => setTimeout(r, 500)); // 行间停顿
+        setTimeout(() => {
+            // 2. 隐藏 OA，显示机票页
+            oaPage.style.display = 'none';
+            ticketPage.style.display = 'flex';
+            
+            // 3. 逐渐亮起机票页
+            setTimeout(() => {
+                blackout.style.opacity = '0';
+                ticketPage.style.opacity = '1';
+                typeEffect();
+                startTicketFlicker();
+            }, 500);
+        }, 1500);
     }
-}
 
-// 启动效果
-window.onload = () => {
-    typeEffect();
-    
-    // 偶尔让机票也闪烁一下，增加整体不稳定性
-    setInterval(() => {
-        if(Math.random() > 0.9) {
-            document.getElementById('ticket').style.opacity = '0.7';
-            setTimeout(() => document.getElementById('ticket').style.opacity = '1', 50);
+    async function typeEffect() {
+        const container = document.getElementById('typewriter-text');
+        for (let i = 0; i < lines.length; i++) {
+            const lineDiv = document.createElement('div');
+            lineDiv.className = 'poem-line';
+            if (i === 0 || i === 5) lineDiv.classList.add('highlight-poem');
+            container.appendChild(lineDiv);
+
+            const text = lines[i];
+            for (let char of text) {
+                if (Math.random() > 0.96) {
+                    lineDiv.classList.add('glitch-active');
+                    await new Promise(r => setTimeout(r, 150));
+                    lineDiv.classList.remove('glitch-active');
+                }
+                lineDiv.innerHTML = text.substring(0, text.indexOf(char) + 1) + '<span class="cursor"></span>';
+                await new Promise(r => setTimeout(r, 80 + Math.random() * 80));
+            }
+            if (lineDiv.querySelector('.cursor')) lineDiv.querySelector('.cursor').remove();
+            await new Promise(r => setTimeout(r, 600));
         }
-    }, 2000);
-};
+    }
+
+    function startTicketFlicker() {
+        const ticket = document.getElementById('ticket-obj');
+        setInterval(() => {
+            if(Math.random() > 0.92) {
+                ticket.style.opacity = '0.6';
+                setTimeout(() => ticket.style.opacity = '1', 70);
+            }
+        }, 2500);
+    }
 </script>
+
 </body>
+</html>
