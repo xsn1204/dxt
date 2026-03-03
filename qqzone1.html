@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Qzone</title>
+    <title>QQ空间-🌻白日梦想家</title>
     <style>
         :root {
             --qzone-blue: #e1f1f7;
@@ -484,6 +484,111 @@
         }
         .stat-item .num { font-size: 24px; color: #333; }
         .stat-item .label { font-size: 12px; color: #888; }
+        /* “大家都在看”板块深度定制 */
+        .card.recommendation {
+            background-color: #fff;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .recommendation h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #665b44; /* 深褐色，与左侧标题一致 */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 模拟当年的小图标火苗或星星 */
+        .recommendation h4::before {
+            content: "🔥"; 
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .recommend-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .recommend-item {
+            font-size: 12px;
+            line-height: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-bottom: 1px dashed #f0f0f0; /* 经典的虚线分割 */
+            padding: 2px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .recommend-item:last-child {
+            border-bottom: none;
+        }
+
+        .recommend-item a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s;
+        }
+
+        .recommend-item a:hover {
+            color: var(--qzone-link);
+            text-decoration: underline;
+        }
+
+        /* 模拟列表前缀的小圆点或小箭头 */
+        .recommend-item::before {
+            content: "•";
+            color: #ccc;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        /* 这里的热度标签 */
+        .hot-tag {
+            font-size: 10px;
+            background: #ffede5;
+            color: #ff5500;
+            padding: 0 4px;
+            border-radius: 2px;
+            margin-left: auto;
+            transform: scale(0.9);
+        }
+       
+/* 作者名称样式 */
+.comment-author {
+    color: #d19e03; /* 你定义的金黄色 --qzone-link */
+    font-weight: bold;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.comment-author:hover {
+    text-decoration: underline;
+}
+
+/* “回复”两个字的特殊灰色 */
+.reply-text {
+    color: #999;
+    margin: 0 3px;
+}
+
+/* 评论内容样式 */
+.comment-text {
+    margin-top: 5px;
+    color: #333;
+    word-break: break-all;
+}
+
+/* 模拟回复缩进（可选） */
+.comment-item.reply {
+    padding-left: 20px;
+}
     </style>                             <div class="progress-indicator">24/38</div></head>
 <body>
 
@@ -548,24 +653,21 @@
                 </div>
             </div>
 
-            <div class="sidebar-section">
-                <div class="section-title">留言板</div>
-                <textarea id="guestbookInput" style="width:100%; height:50px; border:1px solid #ccc; box-sizing:border-box; padding:5px; resize:none;" placeholder="我也留个言吧"></textarea>
-                <button style="float:right; margin-top:5px; background:#c5b496; color:white; border:none; padding:3px 10px; cursor:pointer;">发表</button>
-                <div style="clear:both; padding-top:15px;">
-                    <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
-                        <span style="color:#a67c52; font-weight:bold;">鹅鹅鹅：</span>高考加油！
-                        <div style="color:#999; font-size:10px;">2016-05-03</div>
-                    </div>
-                                        <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
-                        <span style="color:#a67c52; font-weight:bold;">未央：</span>新春快乐哟～
-                        <div style="color:#999; font-size:10px;">2016-02-04</div>
-                    </div>
-                                        <div style="font-size:12px; border-bottom:1px dashed #ddd; padding-bottom:5px; margin-bottom:8px;">
-                        <span style="color:#a67c52; font-weight:bold;">夏日逐鹿：</span>路过顺便踩踩，最近怎么没发新说说呀？
-                        <div style="color:#999; font-size:10px;">2015-07-21</div>
-                    </div>
-                </div>
+            <div class="card recommendation">
+                <h4>大家都在看</h4>
+                <ul class="recommend-list">
+                    <li class="recommend-item">
+                        <a href="news.html" target="_blank">满屏都是“青实中凉了”，青实中到底...</a>
+                        <span class="hot-tag">热</span>
+                    </li>
+                    <li class="recommend-item">
+                        <a href="#">14年无人超越，《甄嬛传》到底强在哪？</a>
+                    </li>
+                    <li class="recommend-item">
+                        <a href="#">谷歌退出中国后，百度崛起了吗？</a>
+                    </li>
+              
+                </ul>
             </div>
         </div>
         <div class="main-content">
@@ -587,6 +689,29 @@
                     
                     
 
+<div class="comment-section">
+    
+
+        <li class="comment-item">
+            <div class="comment-content">
+                <span class="comment-author">盐酱Zoe</span>
+                <span class="comment-time">2012年6月13日</span>
+                <div class="comment-text">抱抱，太别难过 </div>
+        </li>
+
+        <li class="comment-item">
+            <div class="comment-content">
+                <span class="comment-author">🌻白日梦想家</span>
+                            <span class="comment-time">2012年6月13日</span>
+            
+               
+                <div class="comment-text">回复 <span class="comment-author">盐酱Zoe</span>：😭</div>
+            </div>
+        </li>
+    </ul>
+
+
+    </div>
 
 
    
@@ -675,16 +800,7 @@
         </ul>
 
 
-        <ul class="comment-list">
-            <li class="comment-item">
-        
-                <div class="comment-content">
-                    <span class="comment-author">盐酱Zoe</span>
-                    <span class="comment-time">2011年3月1日</span>
-                    <div class="comment-text">哇，亲家都没送过我这么好看的本子，数学考试一定拿下！</div>
-                </div>
-            </li>
-        </ul>
+       
 
 
 
