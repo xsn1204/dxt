@@ -383,6 +383,30 @@
                 justify-content: center;
             }
         }
+        .img-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.img-modal img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 6px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 32px;
+    color: #fff;
+    cursor: pointer;
+}
                             .progress-indicator {
     position: fixed;
     top: 20px;
@@ -450,8 +474,8 @@
                 <div class="album-detail">
                     <h2>📚</h2>
                     <div class="album-meta">
-                        <span>创建时间：2011-05-18</span>
-                        <span>照片数量：6张</span>
+                        <span>创建时间：2011-03-18</span>
+                        <span>照片数量：7张</span>
                         <span>访问权限：仅自己可见</span>
                     </div>
                 </div>
@@ -497,6 +521,22 @@
                     <div class="photo-time">2011-06-12 10:00</div>
                 </div>
             </div>
+      <div class="photo-item">
+    <div class="photo-img">
+        <img src="piano.jpg" alt="照片5" onclick="openModal(this.src)">
+    </div>
+    <div class="photo-info">
+        <div class="photo-name">琴谱</div>
+        <div class="photo-time">2011-08-09 16:45</div>
+    </div>
+</div>
+
+<!-- 放大预览层 -->
+<div id="imgModal" class="img-modal" onclick="closeModal()">
+    <span class="close-btn" onclick="closeModal(event)">×</span>
+    <img id="modalImg">
+</div>
+
 
             <!-- 照片项4 -->
             <div class="photo-item">
@@ -520,6 +560,7 @@
                 </div>
             </div>
 
+              
  <!-- 照片项6 -->
 <div class="photo-item">
     <a href="21st.html" target="_blank" style="text-decoration:none; color:inherit;">
@@ -552,5 +593,19 @@
             <a href="#" class="page-btn">下一页</a>
         </div>
     </div>
+
 </body>
+<script>
+function openModal(src) {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    modalImg.src = src;
+    modal.style.display = 'flex';
+}
+
+function closeModal(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('imgModal').style.display = 'none';
+}
+</script>
 </html>

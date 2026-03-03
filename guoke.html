@@ -38,6 +38,36 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
+/* 禁用评论区头像和 ID 的跳转 */
+.cmt-img a, .cmt-author {
+    pointer-events: none; /* 禁止所有鼠标点击事件 */
+    cursor: default;      /* 将鼠标指针改回普通箭头 */
+    text-decoration: none; /* 去掉 ID 的下划线 */
+    color: inherit;        /* 保持颜色不变成链接色 */
+}
+/* 找到 .document 下的所有段落 */
+.document p {
+    margin-top: 5px;    /* 上间距改为 5px，原本通常是 16px 左右 */
+    margin-bottom: 5px; /* 下间距改为 5px */
+    line-height: 1.6;   /* 顺便调整行高，让文字看起来更紧凑舒适 */
+}
+/* 针对底部导航区域的优化 */
+.gbottom {
+    padding-top: 5x !important; /* 强制覆盖原有的较大间距 */
+    padding-bottom: 10px !important;
+ margin-top: 10px !important; /
+}
+
+.gbottom-nav {
+    line-height: 1.5 !important; /* 减小行高 */
+    margin: 0 auto !important;   /* 确保居中并清除多余外边距 */
+    font-size: 12px;             /* 适当减小字号可以让视觉更紧凑 */
+}
+
+.gbottom-nav span {
+    margin: 0 10px !important;   /* 调整各项之间的左右间距 */
+    display: inline-block;       /* 确保间距生效 */
+}
     </style>
 
     <script async src="httsp://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -130,7 +160,7 @@
                                         </div>
                                         
                                         <div class="section" id="id7">
-                                            <h1>三，结论</h1>
+                                            <h1>结论</h1>
                                             <p>编辑的话：我们都还记得，上世纪90年代，格里高利历（公历）快要进入新千年之前，一样是谣言四起，预言2000年会发生这样那样的大灾祸，比如“千年虫”引发电脑崩溃、导致全球大混乱什么的。如今十几年过去，我们正好可以问问那些轻信这一类谣言的人：当年千禧年谣言传播的时候，你信了吗？</p>
                                             <div class="line-block">
                                                 <div class="line"> </div>
@@ -187,7 +217,7 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/1751016025/" target="_blank">Raeka</a>
                                 
                                 <div class="cmt-content cmtContent"><p>你们不要这样嘛，搞得神棍都木有饭吃了~<br>P.S.正文颜色看着有点浅了呀</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                     
                             </div>
                         </li>
                         
@@ -214,10 +244,10 @@
                                 <span class="cmt-info">2011-11-29 10:02</span>
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/0153862519/" target="_blank">烧鸡X</a>
                                 
-                                <span class="cmt-auth" title="给水排水专业">给水排水专业<a href="/nuts/" title="果壳达人" target="_blank" class="cmt-auth-vip gicon-sai">ψ</a></span>
+                                <span class="cmt-auth" title="给水排水专业">给水排水专业</span>
                                 
                                 <div class="cmt-content cmtContent"><p>总是抑制不住少女情怀泪眼婆娑地说一句:"就算到了世界末日...我特么也要和你在一起!!"</p><p>鼓掌~~~~~~~~</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                                
                             </div>
                         </li>
                         
@@ -243,7 +273,7 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/1278508988/" target="_blank">天行有常</a>
                                 
                                 <div class="cmt-content cmtContent"><p>千年虫好像是指计算机的，因为以前记年都是两位数的，到了2000年时候就变成00，会导致混乱，还有很多记账什么的年份都是19_ _，后来就全部换掉。</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                               
                             </div>
                         </li>
                         
@@ -266,7 +296,7 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/0557321259/" target="_blank">泡沫小童</a>
                                 
                                 <div class="cmt-content cmtContent"><p>意思就是说到大循环结束时，玛雅人就要开个party庆祝庆祝，是么？</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                                
                             </div>
                         </li>
                         
@@ -287,10 +317,10 @@
                                 <span class="cmt-info">2011-11-29 15:08</span>
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/0450908140/" target="_blank">跃迁层</a>
                                 
-                                <span class="cmt-auth" title="管理学专业，科幻控">管理学专业，科幻控<a href="/nuts/" title="果壳达人" target="_blank" class="cmt-auth-vip gicon-sai">ψ</a></span>
+                                <span class="cmt-auth" title="管理学专业，科幻控">管理学专业，科幻控</span>
                                 
                                 <div class="cmt-content cmtContent"><p>其实有的人相信2012就如三体里的ETO的降临派，觉得这世界没救了，需要一些外部介入而已。</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                            
                             </div>
                         </li>
                         
@@ -310,7 +340,7 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/1994444149/" target="_blank">supotco</a>
                                 
                                 <div class="cmt-content cmtContent"><p>本来想着欠银行的房贷可以赖掉，看来不行了~~~</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+                     
                             </div>
                         </li>
                         
@@ -328,31 +358,11 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/0946392883/" target="_blank">王保保</a>
                                 
                                 <div class="cmt-content cmtContent"><p>本来还不想高考了，看来也不行了啊<br></p><blockquote>引用supotco的回应：本来想着欠银行的房贷可以赖掉，看来不行了~~~</blockquote></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+
                             </div>
                         </li>
                         
-           
-                        
-                        
-                        
-                
-                        
-                      
-                        
-                        
-                   
-                        
-                        
-                        
-                       
-                        
-                        
-                        
 
-                        
-                        
-                        
                    
                         
                         <li id="reply582446">
@@ -367,7 +377,7 @@
                                 <a class="cmt-author cmtAuthor" href="http://www.guokr.com/i/2002925580/" target="_blank">kalekale</a>
                                 
                                 <div class="cmt-content cmtContent"><p>哈哈，如果有末日的话，可能就在下一秒，你担心又有何用。<br>如果没有什么末日，那就更不用担心了。<br>所以说是福不是祸，是祸躲不过，活着的时候就要好好活，好好活才是最真实的。</p></div>
-                                <span class="cmt-do"><a class="cmt-do-quote" href="javascript:void 0;" data-operation="quoteComment">评论</a></span>
+
                             </div>
                         </li>
                         
