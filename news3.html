@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗前沿 - 疤痕天使慈善基金会官方网站</title>
+    <style>
+        :root {
+            --primary-blue: #1a3352;    /* 严谨的深蓝色 */
+            --accent-gold: #c5a059;     /* 沉稳的金色 */
+            --text-main: #2c3e50;
+            --text-light: #606f7b;
+            --bg-gray: #f4f7f9;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: "PingFang SC", "Lantinghei SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+            margin: 0; padding: 0; background-color: #fff; color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 顶部顶部条 */
+        .top-bar {
+            background: #f8f9fa; border-bottom: 1px solid var(--border-color);
+            padding: 8px 0; font-size: 13px; color: var(--text-light);
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+        /* 头部 Logo 区域 */
+        header { padding: 25px 0; background: #fff; }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box .icon { 
+            width: 48px; height: 48px; background: var(--primary-blue); 
+            border-radius: 4px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 24px;
+        }
+        .logo-text h1 { font-size: 26px; margin: 0; color: var(--primary-blue); font-weight: 700; letter-spacing: -0.5px; }
+        .logo-text p { font-size: 12px; margin: 0; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* 导航条 - 官网严肃风格 */
+        nav { background: var(--primary-blue); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-inner { display: flex; }
+        .nav-inner a { 
+            color: rgba(255,255,255,0.9); text-decoration: none; padding: 15px 25px; 
+            font-size: 15px; transition: all 0.3s; border-bottom: 3px solid transparent;
+        }
+        .nav-inner a:hover { background: rgba(255,255,255,0.1); border-bottom-color: var(--accent-gold); color: #fff; }
+        .nav-inner a.active { border-bottom-color: var(--accent-gold); }
+
+        /* 内容布局 */
+        .main-wrapper { display: grid; grid-template-columns: 1fr 300px; gap: 50px; margin: 40px auto; }
+
+        /* 文章主体 */
+        .article-header { margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 25px; }
+        .breadcrumb { font-size: 14px; color: #999; margin-bottom: 15px; }
+        .breadcrumb a { color: #999; text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent-gold); }
+        
+        .article-title { font-size: 32px; color: #111; margin: 10px 0; line-height: 1.3; }
+        .meta-info { font-size: 14px; color: var(--text-light); display: flex; gap: 20px; }
+
+        .content-body { font-size: 17px; line-height: 1.8; color: #333; }
+        .content-body p { margin-bottom: 25px; }
+
+        /* 科学严谨的科普框 */
+        .tech-box {
+            background: var(--bg-gray); border: 1px solid var(--border-color);
+            padding: 30px; margin: 35px 0; border-radius: 2px;
+            position: relative;
+        }
+        .tech-box h4 { 
+            margin-top: 0; color: var(--primary-blue); font-size: 18px; 
+            display: flex; align-items: center; gap: 8px;
+        }
+        .tech-box h4::before { content: ""; width: 4px; height: 18px; background: var(--accent-gold); display: inline-block; }
+
+        /* 案例引用块 */
+        .case-study {
+            border-left: 4px solid var(--accent-gold); background: #fdfaf4;
+            padding: 25px 35px; margin: 40px 0; font-style: normal;
+        }
+        .case-study strong { color: var(--primary-blue); }
+
+        /* 侧边栏样式 */
+        .sidebar-section { margin-bottom: 40px; }
+        .section-title { 
+            font-size: 18px; font-weight: bold; padding-bottom: 12px; 
+            border-bottom: 2px solid var(--primary-blue); margin-bottom: 20px;
+        }
+
+        /* 进度条卡片 */
+        .status-card {
+            border: 1px solid var(--border-color); padding: 20px; border-radius: 4px;
+        }
+        .progress-bar { height: 6px; background: #eee; border-radius: 10px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: #95a5a6; width: 100%; }
+        
+        .btn-status {
+            display: block; width: 100%; padding: 12px 0; text-align: center;
+            background: #f8f9fa; color: #adb5bd; text-decoration: none;
+            border: 1px solid var(--border-color); border-radius: 4px; font-weight: 600;
+            cursor: not-allowed; margin-top: 15px;
+        }
+
+        /* 页脚 */
+        footer {
+            background: var(--primary-blue); color: rgba(255,255,255,0.7);
+            padding: 60px 0; font-size: 14px; border-top: 5px solid var(--accent-gold);
+        }
+        footer p { margin: 8px 0; }
+        footer .legal-links { margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        ul.tech-list { padding-left: 20px; }
+        ul.tech-list li { margin-bottom: 10px; }
+        ul.tech-list li b { color: var(--primary-blue); }
+
+                                             .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style><div class="progress-indicator">33/39</div>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="container flex-between">
+        <div>统一社会信用代码：XXXXXXXXXXXXXXXXXX</div>
+        <div>爱心咨询：400-062-XXXX (工作日 9:00-18:00)</div>
+    </div>
+</div>
+
+<header>
+    <div class="container">
+        <div class="logo-box">
+            <div class="icon">⚕</div>
+            <div class="logo-text">
+                <h1>疤痕天使慈善基金会</h1>
+                <p>Scar Angel Charity Foundation</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+            <a href="#">机构首页</a>
+            <a href="#">救助项目</a>
+            <a href="#" class="active">救助进展</a>
+            <a href="#">信息公开</a>
+            <a href="#">医疗合作</a>
+            <a href="#">关于我们</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="main-wrapper">
+        <main>
+            <div class="article-header">
+                <div class="breadcrumb">
+                    您的位置：<a href="#">首页</a> / <a href="#">救助进展</a> / 医疗前沿
+                </div>
+                <h2 class="article-title">【前沿】让生命重绽笑颜：生物活性支架开启烧伤康复新篇章</h2>
+                <div class="meta-info">
+                    <span>发布日期：2014-05-20</span>
+                    <span>来源：疤痕天使救助中心</span>
+                    <span>类别：技术临床进展</span>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <p>烧烫伤对于每一个家庭来说都是沉重的负担。在以往的救治中，医疗界面临的最大难题不仅是保住生命，更是如何实现高质量的组织修复，让患者在术后能够像健康人一样成长，融入社会。</p>
+
+                <div class="tech-box">
+                    <h4>临床释义：生物活性支架技术</h4>
+                    <p>生物活性支架是一种新型的组织工程材料。其工作原理类似于为受损皮肤构建一套<strong>“三维仿生生长空间”</strong>。该材料的核心优势在于能从分子水平抑制纤维组织过度增生，使新生组织在弹性与色泽上更趋近于原生皮肤。</p>
+                </div>
+
+                <p>在临床综合治疗方案中，除支架植入外，基金会定点合作医疗机构还采用了以下配套先进技术：</p>
+                <ul class="tech-list">
+<li><strong>超薄皮片移植手术：</strong> 减少供区损伤。</li>
+                <li><strong>水动力清创系统：</strong> 精确去除坏死组织，保留健康基底。</li>
+                <li><strong>压力治疗：</strong> 术后配合压力衣，巩固支架生长效果。</li>
+                </ul>
+
+                <div class="case-study">
+                    <p><strong>个案进展：</strong></p>
+                    <p>患者<strong>邹言</strong>（已征得当事人同意），15岁，因意外导致全身大面积深二度至三度烧伤。入院初期，由于大面积皮肤缺失，传统植皮方案面临供皮不足的瓶颈。经“疤痕天使基金”专家组评估，为其制定了<strong>“生物活性支架联合手术重建”</strong>的诊疗方案。</p>
+                    <p>现在，邹言已经完成了第三次皮肤重建。临床观察显示，生物活性支架的介入有效预防了关节部位的严重瘢痕挛缩，这为她未来的生活质量打下了坚实基础。</p></p>
+                </div>
+
+                <p style="color: #666; font-style: italic; border-top: 1px solid #eee; padding-top: 20px;">
+                    结语：我们将持续关注全球烧伤医学前沿，通过技术赋能慈善，为更多“疤痕天使”开启通往康复的大门。
+                </p>
+            </div>
+        </main>
+
+        <aside>
+            <div class="sidebar-section">
+                <div class="section-title">救助信息公示</div>
+                <div class="status-card">
+                    <div style="font-size: 15px; font-weight: bold; margin-bottom: 10px;">特定患者救助项目</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="flex-between" style="font-size: 13px;">
+                        <span>目标：300,000 元</span>
+                        <span style="color: var(--text-light);">已筹满</span>
+                    </div>
+                    <div class="btn-status">募捐已圆满结束</div>
+                    <div style="text-align: center; font-size: 12px; color: #999; margin-top: 15px;">
+                        共计 4,215 位捐赠人参与支持
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="section-title">官方联系方式</div>
+                <div style="text-align: center; background: var(--bg-gray); padding: 20px;">
+                    <div style="width: 140px; height: 140px; background: #fff; margin: 0 auto 15px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #ccc;">
+                        [ 官方公众号二维码 ]
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-light); margin: 0;">关注“疤痕天使”</p>
+                    <p style="font-size: 12px; color: #999;">获取年度审计与救助年报</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="flex-between">
+            <div>
+                <p><strong>北京疤痕天使慈善基金会</strong></p>
+                <p>地址：北京市朝阳区学术交流中心 XXX 楼</p>
+                <p>邮编：100020 | 办公电话：010-XXXX-XXXX</p>
+            </div>
+            <div style="text-align: right;">
+                <p>具有公开募捐资格的慈善组织</p>
+                <p>京ICP备XXXXXXXX号-1</p>
+                <p>© 2014 Scar Angel Charity Foundation. All Rights Reserved.</p>
+            </div>
+        </div>
+        <div class="legal-links">
+            <span style="margin-right: 20px;">法律声明</span>
+            <span style="margin-right: 20px;">隐私政策</span>
+            <span style="margin-right: 20px;">廉洁举报</span>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

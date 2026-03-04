@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'EB Garamond', Georgia, serif;
+            font-family: 'EB Garamond', Georgia, "Microsoft YaHei", serif;
             line-height: 1.5;
             color: #333;
             margin: 0;
@@ -40,6 +40,19 @@
 
         .logo-text span { color: var(--upenn-red); }
 
+        .lang-switch {
+            background: var(--upenn-blue);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .lang-switch:hover { background: var(--upenn-red); }
+
         .name-banner {
             background-color: #222;
             color: white;
@@ -54,10 +67,7 @@
             gap: 50px;
         }
 
-        .sidebar {
-            width: 300px;
-            flex-shrink: 0;
-        }
+        .sidebar { width: 300px; flex-shrink: 0; }
 
         .profile-card {
             border: 1px solid var(--border-color);
@@ -70,9 +80,6 @@
             width: 100%;
             aspect-ratio: 1 / 1;
             background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
         }
 
@@ -87,11 +94,7 @@
             width: calc(100% - 30px);
         }
 
-        .contact-info {
-            padding: 20px;
-            font-size: 0.95em;
-        }
-
+        .contact-info { padding: 20px; font-size: 0.95em; }
         .contact-info p { margin: 8px 0; }
         .contact-info a { color: var(--upenn-blue); text-decoration: none; }
 
@@ -119,17 +122,14 @@
             margin-top: 30px;
         }
 
-        h2:first-of-type { margin-top: 0; }
-
         .pub-list { list-style: none; padding: 0; }
         .pub-list li { margin-bottom: 15px; border-left: 3px solid var(--upenn-red); padding-left: 15px; }
         .me { font-weight: bold; }
 
-        /* 荣誉栏样式 */
         .honor-box {
             background-color: #f9f9f9;
             padding: 20px;
-            border: 1px inline var(--upenn-blue);
+            border: 1px solid #eee;
             font-style: italic;
             color: #444;
         }
@@ -143,7 +143,12 @@
             display: flex;
             justify-content: space-between;
         }
-              .progress-indicator {
+
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+                                            .progress-indicator {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -155,18 +160,16 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style> <div class="progress-indicator">extra8/38</div>
+    </style><div class="progress-indicator">32/39</div>
 </head>
 <body>
 
 <header>
     <div class="logo-text">Penn <span>Medicine</span></div>
-    <div style="font-size: 0.9em; color: #666;">Perelman School of Medicine</div>
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">中文</button>
 </header>
 
-<div class="name-banner">
-    Yiting Duan
-</div>
+<div class="name-banner" id="userName">Yiting Duan</div>
 
 <div class="main-container">
     <aside class="sidebar">
@@ -174,36 +177,44 @@
             <div class="photo-placeholder">
                 <img src="avatar.jpg" alt="Dr. Yiting Duan" style="width:100%; height:100%; object-fit: cover;">
                 <div class="label-tag">
-                    <strong>Dr. Yiting Duan</strong><br>
-                    Postdoctoral Research Fellow
+                    <strong id="cardName">Dr. Yiting Duan</strong><br>
+                    <span class="translate" data-en="Postdoctoral Research Fellow" data-zh="博士后研究员">Postdoctoral Research Fellow</span>
                 </div>
             </div>
             <div class="contact-info">
-                <p><strong>Department:</strong><br>Dermatology / Bioengineering</p>
+                <p><strong class="translate" data-en="Department:" data-zh="院系：">Department:</strong><br>
+                <span class="translate" data-en="Dermatology / Bioengineering" data-zh="皮肤病学 / 生物工程学">Dermatology / Bioengineering</span></p>
                 <p>📧 <a href="mailto:Yitingd@pennmedicine.upenn.edu">Yitingd@pennmedicine.upenn.edu</a></p>
-                <p>📍 Smilow Center for Translational Research<br>Philadelphia, PA 19104</p>
-                <p>🔬 <strong>The Regeneration Lab</strong></p>
+                <p>📍 <span class="translate" data-en="Smilow Center for Translational Research, Philadelphia, PA 19104" data-zh="宾夕法尼亚州费城 Smilow 转化研究中心 19104">Smilow Center for Translational Research, Philadelphia, PA 19104</span></p>
+                <p>🔬 <strong class="translate" data-en="The Regeneration Lab" data-zh="再生医学实验室">The Regeneration Lab</strong></p>
             </div>
         </div>
     </aside>
 
     <main class="content-area">
         <div class="nav-sub">
-            <a href="#">Research</a> | <a href="#">Publications</a> | <a href="#">Honors</a> | <a href="#">CV</a>
+            <a href="#" class="translate" data-en="Research" data-zh="研究方向">Research</a> | 
+            <a href="#" class="translate" data-en="Publications" data-zh="发表论文">Publications</a> | 
+            <a href="#" class="translate" data-en="Honors" data-zh="荣誉奖项">Honors</a> | 
+            <a href="#" class="translate" data-en="CV" data-zh="个人简历">CV</a>
         </div>
 
         <section id="bio">
-            <h2>Biography</h2>
-            <p>
-                I am a Postdoctoral Research Fellow at the Perelman School of Medicine, University of Pennsylvania. My research focuses on regenerative medicine</strong>, specifically developing bioactive scaffolds for accelerated skin wound healing. 
+            <h2 class="translate" data-en="Biography" data-zh="个人简介">Biography</h2>
+            <p class="translate" 
+               data-en="I am a Postdoctoral Research Fellow at the Perelman School of Medicine, University of Pennsylvania. My research focuses on regenerative medicine, specifically developing <strong>bioactive scaffolds</strong> for accelerated skin wound healing." 
+               data-zh="我是宾夕法尼亚大学佩雷尔曼医学院的博士后研究员。我的研究重点是再生医学，特别是开发用于加速皮肤伤口愈合的<strong>生物活性支架</strong>。">
+               I am a Postdoctoral Research Fellow at the Perelman School of Medicine, University of Pennsylvania. My research focuses on regenerative medicine, specifically developing <strong>bioactive scaffolds</strong> for accelerated skin wound healing.
             </p>
-            <p>
-                I received my B.S. in Biomedical Sciences from Boston University and earned my Ph.D. from Johns Hopkins School of Medicine, where my doctoral work centered on stem cell niche modulation and biomaterial interface design.
+            <p class="translate" 
+               data-en="I received my B.S. in Biomedical Sciences from Boston University and earned my Ph.D. from Johns Hopkins School of Medicine, where my doctoral work centered on stem cell niche modulation and biomaterial interface design." 
+               data-zh="我本科毕业于波士顿大学生物医学专业，并在约翰霍普金斯大学医学院获得博士学位。我的博士研究集中在干细胞微环境调控和生物材料界面设计。">
+               I received my B.S. in Biomedical Sciences from Boston University and earned my Ph.D. from Johns Hopkins School of Medicine, where my doctoral work centered on stem cell niche modulation and biomaterial interface design.
             </p>
         </section>
 
         <section id="publications">
-            <h2>Selected Publications</h2>
+            <h2 class="translate" data-en="Selected Publications" data-zh="精选论文">Selected Publications</h2>
             <ul class="pub-list">
                 <li>
                     <span class="me">Duan, Y.</span>; Thompson, A.; Miller, R. S. "Bio-inspired Hydrogels with Spatiotemporal Growth Factor Release for Scalable Skin Regeneration." 
@@ -217,9 +228,11 @@
         </section>
 
         <section id="honors">
-            <h2>Awards & Honors</h2>
-            <div class="honor-box">
-                Dr. Duan is a recipient of the <strong>Penn Medicine Women in Science Award (2025)</strong> and is dedicated to advancing clinical solutions for chronic wound care and reconstructive dermatology.
+            <h2 class="translate" data-en="Awards & Honors" data-zh="奖项与荣誉">Awards & Honors</h2>
+            <div class="honor-box translate" 
+                 data-en="Dr. Duan is a recipient of the Penn Medicine Women in Science Award (2025) and is dedicated to advancing clinical solutions for chronic wound care and reconstructive dermatology."
+                 data-zh="段博士是 2025 年宾夕法尼亚大学医学院“女性科学奖”获得者，致力于推动慢性伤口护理和重建皮肤病的临床解决方案。">
+                Dr. Duan is a recipient of the Penn Medicine Women in Science Award (2025) and is dedicated to advancing clinical solutions for chronic wound care and reconstructive dermatology.
             </div>
         </section>
     </main>
@@ -227,16 +240,45 @@
 
 <footer>
     <div>
-        <strong>Perelman School of Medicine</strong><br>
-        University of Pennsylvania<br>
+        <strong class="translate" data-en="Perelman School of Medicine" data-zh="佩雷尔曼医学院">Perelman School of Medicine</strong><br>
+        <span class="translate" data-en="University of Pennsylvania" data-zh="宾夕法尼亚大学">University of Pennsylvania</span><br>
         &copy; 2026 The Trustees of the University of Pennsylvania
     </div>
-<div style="text-align: right;">
-        <a href="#" style="color:#666; text-decoration:none;">Directory</a> | 
-        <a href="#" style="color:#666; text-decoration:none;">Contact Us</a><br>
-        Follow Penn Medicine on Twitter
-    </div>
 </footer>
+
+<script>
+    // 默认设置为英文
+    let currentLang = 'en';
+
+    function toggleLanguage() {
+        const btn = document.getElementById('langBtn');
+        const elements = document.querySelectorAll('.translate');
+        const userName = document.getElementById('userName');
+        const cardName = document.getElementById('cardName');
+        
+        if (currentLang === 'en') {
+            // 切换到中文
+            elements.forEach(el => {
+                // 【核心修改】：使用 innerHTML 替代 textContent，以解析 <strong> 标签
+                el.innerHTML = el.getAttribute('data-zh');
+            });
+            userName.textContent = "段宜庭";
+            cardName.innerHTML = "<strong>段宜庭 博士</strong>";
+            btn.textContent = "English";
+            currentLang = 'zh';
+        } else {
+            // 切换回英文
+            elements.forEach(el => {
+                // 【核心修改】：使用 innerHTML 替代 textContent
+                el.innerHTML = el.getAttribute('data-en');
+            });
+            userName.textContent = "Yiting Duan";
+            cardName.innerHTML = "<strong>Dr. Yiting Duan</strong>";
+            btn.textContent = "中文";
+            currentLang = 'en';
+        }
+    }
+</script>
 
 </body>
 </html>

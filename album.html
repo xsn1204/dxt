@@ -348,7 +348,7 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style>                             <div class="progress-indicator">25/38</div></head>
+    </style>                             <div class="progress-indicator">26/39</div></head>
 <body>
     <!-- 顶部导航栏 -->
     <div class="top-nav">
@@ -429,8 +429,8 @@
                 <!-- 需要回答问题相册（加密相册） -->
                 <div class="album-card" id="secret-album">
                     <div class="album-card-cover">
-                        <div class="cover-disabled">需要回答问题</div>
-                        <div class="album-card-count">6</div>
+                         <img src="21.png" alt="家人">
+                        <div class="album-card-count">7</div>
                     </div>
                     <div class="album-card-desc">📚</div>
                 </div>
@@ -483,17 +483,7 @@
     </div>
 
     <!-- 密码弹窗（移到body内，修复位置错误） -->
-    <div class="password-modal" id="passwordModal">
-        <div class="modal-content">
-            <div class="modal-title">请输入相册密码</div>
-           
-            <input type="text" class="password-input" id="pwdInput" placeholder="我最爱喝的那款奶茶" maxlength="4">
-            <div class="modal-btns">
-                <button class="modal-btn btn-confirm" onclick="checkPassword()">确定</button>
-                <button class="modal-btn btn-cancel" onclick="closeModal()">取消</button>
-            </div>
-        </div>
-    </div>
+
 
     <script>
         // 黄钻切换特效
@@ -506,45 +496,14 @@
         };
 
         // 加密相册弹窗逻辑
-        const secretAlbum = document.getElementById('secret-album');
-        const passwordModal = document.getElementById('passwordModal');
-        const pwdInput = document.getElementById('pwdInput');
+ const secretAlbum = document.getElementById('secret-album');
+secretAlbum.onclick = function() {
+    // 删掉弹窗代码，改为直接跳转
+    window.location.href = "photo1.html"; 
+};
+       
 
-        // 打开密码弹窗
-        secretAlbum.onclick = function() {
-            passwordModal.style.display = "flex";
-            pwdInput.value = ""; // 清空输入框
-        };
 
-        // 关闭弹窗
-        function closeModal() {
-            passwordModal.style.display = "none";
-        }
-
-      // 验证密码
-function checkPassword() {
-    const password = pwdInput.value.trim();
-    if(!password) {
-        alert("请输入密码！");
-        return;
-    }
-    
-    // 验证密码
-    if(password === "初恋") {
-        // 修改点：直接使用 window.location.href 进行跳转
-        window.location.href = "photo1.html"; 
-    } else {
-        alert("不记得了吗？去看看菜单吧💗"); // 错误提示
-        pwdInput.value = ""; // 清空输入框
-    }
-}
-
-        // 点击弹窗外层关闭
-        passwordModal.onclick = function(e) {
-            if(e.target === passwordModal) {
-                closeModal();
-            }
-        };
     </script>
 </body>
 </html>
