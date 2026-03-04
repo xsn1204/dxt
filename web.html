@@ -14,14 +14,17 @@
 
         body {
             margin: 0; padding: 0;
-            font-family: "SimSun", "STSong", serif; /* 还原传统门户网站的中文字体感 */
+            font-family: "SimSun", "STSong", serif; 
             background-color: #fff;
             color: #333;
             font-size: 14px;
         }
 
-        a { text-decoration: none; color: var(--link-blue); }
-        a:hover { text-decoration: underline; }
+        /* 基础链接样式 */
+        a { text-decoration: none; color: inherit; }
+        
+        /* 仅在悬停时显示下划线，模拟普通文本感 */
+        a[href^="http"]:hover { text-decoration: underline; }
 
         /* 顶部 Logo 与导航 */
         .top-nav {
@@ -52,7 +55,6 @@
             font-size: 13px;
         }
 
-        /* 路径导航 */
         .breadcrumb {
             width: 1000px;
             margin: 0 auto 20px;
@@ -62,7 +64,6 @@
             padding-top: 10px;
         }
 
-        /* 主体布局 */
         .main-container {
             width: 1000px;
             margin: 0 auto;
@@ -71,7 +72,6 @@
             gap: 20px;
         }
 
-        /* 左侧正文区 */
         .content-area {
             border-right: 1px solid var(--border-color);
             padding-right: 20px;
@@ -111,7 +111,6 @@
 
         .article-body p { margin-bottom: 20px; }
 
-        /* 右侧列表区 */
         .sidebar-box {
             margin-bottom: 25px;
             border: 1px solid var(--border-color);
@@ -146,7 +145,6 @@
             font-weight: bold;
         }
 
-        /* 页脚 */
         .footer {
             margin-top: 50px;
             padding: 20px 0;
@@ -156,20 +154,24 @@
             color: var(--text-gray);
             line-height: 2;
         }
-                            .progress-indicator {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-family: monospace;
-    font-size: 0.85rem;
-    z-index: 9999;
-}
-    </style>                             <div class="progress-indicator">21/38</div></head>
+
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            z-index: 9999;
+        }
+    </style>
+</head>
 <body>
+
+<div class="progress-indicator">21/38</div>
 
 <div class="top-nav">
     <div class="logo-area">
@@ -177,10 +179,10 @@
         <div style="font-size:10px">haiwai.people.com.cn</div>
     </div>
     <div class="nav-grid">
-        <a href="#">时政</a><a href="#">国际</a><a href="#">财经</a><a href="#">台湾</a>
-        <a href="#">港澳</a><a href="#">华人</a><a href="#">西藏</a><a href="#">新疆</a>
-        <a href="#">评论</a><a href="#">体育</a><a href="#">军事</a><a href="#">留学</a>
-        <a href="#">创投</a><a href="#">旅游</a><a href="#">文史</a><a href="#">娱乐</a>
+        <a>时政</a><a>国际</a><a>财经</a><a>台湾</a>
+        <a>港澳</a><a>华人</a><a>西藏</a><a>新疆</a>
+        <a>评论</a><a>体育</a><a>军事</a><a>留学</a>
+        <a>创投</a><a>旅游</a><a>文史</a><a>娱乐</a>
     </div>
 </div>
 
@@ -192,7 +194,7 @@
     <main class="content-area">
         <h2 class="article-title">2012年：没有任何东西会撞上地球</h2>
         <div class="article-info">
-            2012年8月1日 09:32 &nbsp;&nbsp; 来源：《光明日报》 &nbsp;&nbsp; <a href="#">手机看新闻</a>
+            2012年8月1日 09:32 &nbsp;&nbsp; 来源：《光明日报》 &nbsp;&nbsp; <a>手机看新闻</a>
         </div>
 
         <div class="tool-bar">
@@ -206,42 +208,38 @@
             <p>NASA还解释道，太阳活动有一个规律的周期，每11年达到一个高峰期。每当接近一个高峰时，太阳耀斑会造成卫星通讯中断。虽然我们的工程师知道如何建立电子保护装备抵挡太阳风暴，但是也会有少部分的特殊情况出现。但是这和2012年没任何关系。这一次的太阳活跃期是2012年-2014年，是之前就预测好的太阳活动周期，和以往历史上的周期时间没任何出入。</p>
             <p style="text-align:right; font-weight:bold;">(责任编辑：罗俊)</p>
         </article>
-
-
     </main>
 
     <aside>
-                        <div class="sidebar-box">
+        <div class="sidebar-box">
             <div class="box-title">环球人物</div>
             <ul class="news-list">
-               <li><a href="#">韩国歌手PSY《江南Style》全球爆火</a></li>
-                <li><a href="#">伦敦奥运会闭幕：菲尔普斯遥遥领先</a></li>
-                <li><a href="#">史蒂夫·乔布斯去世一周年：iPhone 5将发布</i></a></li>
-                 <li><a href="#">拉登最宠爱妻子回忆拉登凄凉晚年</a></li>
+               <li><a>韩国歌手PSY《江南Style》全球爆火</a></li>
+                <li><a>伦敦奥运会闭幕：菲尔普斯遥遥领先</a></li>
+                <li><a>史蒂夫·乔布斯去世一周年：iPhone 5将发布</a></li>
+                 <li><a>拉登最宠爱妻子回忆拉登凄凉晚年</a></li>
             </ul>
         </div>
 
         <div class="sidebar-box">
             <div class="box-title">地方新闻</div>
             <ul class="news-list">
-                <li><a href="#">北京遭遇暴雨引发关注</a></li>
-                <li>    <a href="http://www.chinataiwan.cn/jl/ll/201301/t20130107_3520548.htm" target="_blank">大陆居民赴台游人次创历史新高</a></li>
-                <li><a href="#">“成都造”下周起9小时直抵巴黎</a></li>
-                <li><a href="#">武汉一小学取消三道杠等官本位思想</a></li>
+                <li><a>北京遭遇暴雨引发关注</a></li>
+                <li><a href="http://www.chinataiwan.cn/jl/ll/201301/t20130107_3520548.htm" target="_blank" style="color: inherit; text-decoration: none;">大陆居民赴台游人次创历史新高</a></li>
+                <li><a>“成都造”下周起9小时直抵巴黎</a></li>
+                <li><a>武汉一小学取消三道杠等官本位思想</a></li>
             </ul>
         </div>
 
         <div class="sidebar-box">
             <div class="box-title">理财热点</div>
             <ul class="news-list">
-                <li><a href="#">市场观察：购买黄金目前是好时机吗</a></li>
-                <li><a href="#">深发展客户理财亏损无果</a></li>
-                <li><a href="#">第四套人民币传即退市 身价陡增</a></li>
-               <li><a href="#">私人银行投资移民攻略</a></li>
+                <li><a>市场观察：购买黄金目前是好时机吗</a></li>
+                <li><a>深发展客户理财亏损无果</a></li>
+                <li><a>第四套人民币传即退市 身价陡增</a></li>
+               <li><a>私人银行投资移民攻略</a></li>
             </ul>
         </div>
-
-
     </aside>
 </div>
 
