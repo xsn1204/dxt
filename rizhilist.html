@@ -331,7 +331,7 @@
     font-size: 0.85rem;
     z-index: 9999;
 }
-    </style>                             <div class="progress-indicator">26/39</div></head>
+    </style>                             <div class="progress-indicator">25/39</div></head>
 <body>
     <div class="top-nav">
         <div class="top-nav-left">
@@ -438,8 +438,12 @@
     <div class="password-modal" id="logModal">
         <div class="modal-content">
             <div class="modal-title">访问受限</div>
-
-            <input type="text" class="password-input" id="logPwdInput" placeholder="我最爱喝的那款奶茶名">
+        <div class="musical-notes">
+            F<b>♯</b>FG<br>
+            G<b>♯</b>GAA<b>♯</b><br>
+            C<b>♯</b>DD<b>♯</b><br>
+        </div>
+            <input type="text" class="password-input" id="logPwdInput" placeholder="请输入访问密码">
             <div class="modal-btns">
                 <button class="modal-btn btn-confirm" onclick="checkLogAnswer()">确定</button>
                 <button class="modal-btn btn-cancel" onclick="closeLogModal()">取消</button>
@@ -471,11 +475,11 @@
         }
 
         function checkLogAnswer() {
-         if (logPwdInput.value.trim().toLowerCase() === "初恋") {
+         if (logPwdInput.value.trim().toLowerCase() === "luv") {
                 window.open("dyt.html", "_blank");
                 closeLogModal();
             } else {
-                alert("答案错误，去菜单里找找线索吧！");
+                alert("🎹答案错误，请重试");
                 logPwdInput.value = "";
             }
         }

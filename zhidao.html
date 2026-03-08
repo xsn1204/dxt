@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>百度知道</title>
+    <style>
+        body { font-family: "Lantinghei SC", "Microsoft YaHei", Arial, sans-serif; background-color: #fff; margin: 0; padding: 0; color: #333; }
+        a { text-decoration: none; color: #2d64b3; }
+        
+        /* 顶部 Logo 与 搜索 */
+        .top-wrap { width: 1000px; margin: 15px auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-area { display: flex; align-items: center; }
+        .logo-img { font-size: 30px; font-weight: bold; color: #e10602; margin-right: 5px; }
+        .logo-txt { font-size: 24px; color: #2d64b3; font-weight: bold; }
+        .search-bar { display: flex; border: 1px solid #ccc; height: 34px; width: 500px; }
+        .search-input { border: none; flex: 1; padding: 0 10px; outline: none; }
+        .search-btn { background: #f5f5f5; border: none; border-left: 1px solid #ccc; padding: 0 20px; cursor: pointer; color: #666; }
+
+        /* 绿色导航栏 */
+        .nav-bar { background-color: #00a000; height: 38px; line-height: 38px; color: #fff; }
+        .nav-container { width: 1000px; margin: 0 auto; display: flex; font-size: 15px; font-weight: bold; }
+        .nav-item { padding: 0 20px; cursor: pointer; }
+        .nav-item:hover { background: #008800; }
+
+        /* 主体内容区 */
+        .main-container { width: 1000px; margin: 20px auto; display: flex; }
+        .content-left { width: 720px; padding-right: 30px; }
+        .content-right { width: 250px; border-left: 1px solid #eee; padding-left: 20px; }
+
+        /* 问题区 */
+        .question-header { margin-bottom: 20px; }
+        .q-icon { display: inline-block; width: 22px; height: 22px; background: #50bb3b; color: #fff; text-align: center; border-radius: 50%; margin-right: 10px; }
+        .q-title { font-size: 20px; font-weight: normal; color: #000; }
+        .q-meta { font-size: 12px; color: #999; margin-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
+
+        /* 最佳答案区 - 模仿截图里的“提问者采纳” */
+        .best-answer-box { background: #fffcf3; border: 1px solid #f8e8c8; border-radius: 4px; padding: 20px; margin-top: 20px; position: relative; }
+        .best-tag { display: flex; align-items: center; margin-bottom: 15px; color: #666; font-size: 14px; }
+        .best-tag img { width: 80px; margin-right: 10px; } /* 这里模拟截图里的勋章 */
+        .best-content { line-height: 1.8; font-size: 15px; margin-bottom: 20px; color: #333; }
+        
+        /* 回答者信息 */
+        .answer-footer { border-top: 1px dotted #ccc; padding-top: 15px; display: flex; align-items: center; font-size: 12px; color: #666; }
+        .avatar { width: 45px; height: 45px; background: #eee; margin-right: 10px; border: 1px solid #ddd; }
+        .user-detail span { margin-right: 15px; }
+
+        /* 右侧模拟 */
+        .side-title { font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+        .side-list { font-size: 13px; color: #2d64b3; list-style: none; padding: 0; }
+        .side-list li { margin-bottom: 10px; cursor: pointer; }
+          .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style> <div class="progress-indicator">31/39</div></head>
+</head>
+<body>
+
+<div class="top-wrap">
+    <div class="logo-area"><span class="logo-img">Baidu</span><span class="logo-txt">知道</span></div>
+    <div class="search-bar">
+        <input type="text" class="search-input" value="为什么朋友突然变冷淡了？">
+        <button class="search-btn">搜索答案</button>
+    </div>
+    <div style="font-size: 12px; color: #666;"></a></div>
+</div>
+
+<div class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-item">首页</div>
+        <div class="nav-item">分类</div>
+        <div class="nav-item">公社</div>
+        <div class="nav-item">问医生</div>
+        <div class="nav-item">问律师</div>
+        <div class="nav-item">问作业</div>
+        <div class="nav-item">经验</div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="content-left">
+        <div class="question-header">
+            <h1 class="q-title"><span class="q-icon">?</span>为什么朋友突然变冷淡了？</h1>
+            <div class="q-meta">
+                Quokka | 分类：情感 | 浏览 154 次 | 2011-09-12 18:45
+            </div>
+            <div style="margin-top:15px; line-height:1.6;">
+                她算是我学姐，平时见面机会不多。今天下雨，我在校门口看到她，就赶上去想跟她一起走。结果她看到我，先是很惊讶，又露出很为难的神色。<br><br>
+                她跟我说让我自己回家，我们不顺路。我说我可以送她去公交站，但她还是坚持不走，后面直接把我的手推开了。很怕别人知道我们认识的样子。<br><br>
+                然后她就一个人冲到雨里去了，甚至没带伞……但是我后来看到有个男生过来把她接走了。我真的很难受，是我做错什么了吗？急，在线等！QAQ
+            </div>
+        </div>
+
+        <div class="best-answer-box">
+            <div class="best-tag">
+                <div style="background:#f60; color:#fff; padding:2px 8px; font-size:12px; border-radius:2px; margin-right:10px;">提问者采纳</div>
+                <span>2011-09-13 09:12</span>
+            </div>
+            <div class="best-content">
+                我感觉更像是学姐想让你赶紧回家，别在校门口逗留。<br><br>
+                <strong>建议：</strong>不用急着找她问原因，如果是误会，相信迟早会和你解释的。
+            </div>
+            <div class="answer-footer">
+                <div class="avatar"></div>
+                <div class="user-detail">
+                    <span style="font-weight:bold; color:#2d64b3;">忧郁小王子215</span>
+                    <span>十二级</span>
+                    <span>采纳率：33%</span>
+                </div>
+            </div>
+            </div>
+            <div style="margin-top: 30px; border-top: 2px solid #50bb3b; padding-top: 10px;">
+            <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">其他回答 (2)</div>
+            
+
+
+            <div style="padding: 15px 0; border-bottom: 1px dotted #e0e0e0;">
+                <div style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                    <span style="color: #2d64b3; font-weight: bold;">唯美の星空</span> | 二级 | 2011-09-14 20:30
+                </div>
+                <div style="line-height: 1.6; font-size: 14px;">
+                    我也遇到过类似的事。有的学姐就是把我们当消遣，有了更有趣的朋友就把我们踢开了。
+                    既然她都这样对你了，你也没必要再贴上去了。学生阶段的友谊本来就很脆弱的。
+                    抱抱楼主，你自己打伞回家，别感冒了。
+                </div>
+                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                    <button style="background: #fff; border: 1px solid #ccc; padding: 2px 10px; font-size: 12px; cursor: pointer;">评论</button>
+                    <button style="background: #fff; border: 1px solid #ccc; padding: 2px 10px; font-size: 12px; cursor: pointer;">赞(0)</button>
+                </div>
+            </div>
+
+            <div style="padding: 15px 0; border-bottom: 1px dotted #e0e0e0;">
+                <div style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                    <span style="color: #2d64b3; font-weight: bold;">阳光少男99</span> | 四级 | 2011-09-13 19:10
+                </div>
+                <div style="line-height: 1.6; font-size: 14px;">
+                   1. 大多数人在恋爱后可能会与朋友疏远，尤其是在热恋期间。<br>
+2. 这种现象是可以理解的，因为恋情往往占据人们大部分的注意力和时间。<br>
+3. 刚恋爱时，人们往往希望有更多独处的时间，因此与朋友的交往可能会减少。<br>
+4. 但这并不意味着疏远朋友，因为朋友之间通常保持一定的距离，不会过分干涉彼此的生活。<br>
+5. 朋友在需要时会出现，但在日常生活中可能不会有太多的交集。<br>
+                </div>
+                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                    <button style="background: #fff; border: 1px solid #ccc; padding: 2px 10px; font-size: 12px; cursor: pointer;">评论</button>
+                    <button style="background: #fff; border: 1px solid #ccc; padding: 2px 10px; font-size: 12px; cursor: pointer;">赞(2)</button>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    
+
+    <div class="content-right">
+        <div class="side-title">等您帮助的提问</div>
+        <ul class="side-list">
+            <li>校园霸凌要告诉家长吗？</li>
+            <li>谈恋爱后，是否应该和朋友疏远？</li>
+            <li>初中女生之间吵架了怎么和好？</li>
+            <li>怎么挑选晴雨伞？</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

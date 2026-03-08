@@ -417,8 +417,8 @@
 
                 <!-- 公开相册卡片 -->
                 <div class="album-card" id="public-album">
-                   <div class="album-card-cover"   onclick="window.open('https://movie.douban.com/subject/1309203/', '_blank')">
-    <img src="lena.jpg" alt="公开相册">
+                   <div class="album-card-cover">
+    <img src="beaches.png" alt="公开相册">
     <div class="album-card-count">26</div>
 </div>
 
@@ -435,6 +435,17 @@
                     <div class="album-card-desc">📚</div>
                 </div>
 
+                <div class="password-modal" id="passwordModal">
+    <div class="modal-content">
+        <div class="modal-title">访问受限</div>
+        <div class="modal-desc">问题：我最爱喝的奶茶名</div>
+        <input type="text" class="password-input" id="passwordInput" placeholder="请输入答案">
+        <div class="modal-btns">
+            <button class="modal-btn btn-confirm" id="confirmBtn">确定</button>
+            <button class="modal-btn btn-cancel" id="cancelBtn">取消</button>
+        </div>
+    </div>
+</div>
             </div>
         </div>
 
@@ -495,13 +506,38 @@
             alert("恭喜！您已成功点亮黄钻标识。");
         };
 
-        // 加密相册弹窗逻辑
- const secretAlbum = document.getElementById('secret-album');
+  const secretAlbum = document.getElementById('secret-album');
+const modal = document.getElementById('passwordModal');
+const confirmBtn = document.getElementById('confirmBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const passwordInput = document.getElementById('passwordInput');
+
+// 点击相册打开弹窗
 secretAlbum.onclick = function() {
-    // 删掉弹窗代码，改为直接跳转
-    window.location.href = "photo1.html"; 
+    modal.style.display = 'flex';
+    passwordInput.value = ''; // 清空上次输入
 };
-       
+
+// 点击取消关闭弹窗
+cancelBtn.onclick = function() {
+    modal.style.display = 'none';
+};
+
+// 点击确定验证密码
+confirmBtn.onclick = function() {
+    if (passwordInput.value === '初恋') {
+        window.location.href = "photo1.html"; 
+    } else {
+        alert("答案错误，去菜单里找找线索吧！");
+    }
+};
+
+// 点击弹窗外部也可以关闭（可选增强体验）
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
 
 
     </script>

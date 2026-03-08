@@ -589,6 +589,26 @@
 .comment-item.reply {
     padding-left: 20px;
 }
+
+.comment-item {
+    border-bottom: 1px dashed #eee;
+    padding: 8px 0;
+}
+.comment-author {
+    color: var(--qzone-link);
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 5px;
+}
+.comment-time {
+    color: #bbb;
+    font-size: 10px;
+}
+.comment-text {
+    margin-top: 4px;
+    color: #333;
+    line-height: 1.5;
+}
     </style>                             <div class="progress-indicator">24/39</div></head>
 <body>
 
@@ -675,48 +695,10 @@
             <div id="feed">
 
 
-            
-                <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
-                    <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
-                    <p style="font-size:13px;">最后一次在校门口和Eden喝奶茶了，Eden以前只喝布丁奶茶，明明平时最怕酸的人，这一次却点了我最常喝的。我也跟着尝了一口，总觉得这次的<strong>番石榴</strong>味格外涩，大概是我的心情成了调味剂。</p>
-                                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:5px;">
-                      
-    <img src="cl.png" style="width:100%;">
-</a>
-
-                    </div>
-                    <div style="margin-top:10px; font-size:11px; color:#999;">2012年6月13日 - 浏览(98)</div>
-                    
-                    
-
-<div class="comment-section">
-    
-
-        <li class="comment-item">
-            <div class="comment-content">
-                <span class="comment-author">盐酱Zoe</span>
-                <span class="comment-time">2012年6月13日</span>
-                <div class="comment-text">抱抱，太别难过 </div>
-        </li>
-
-        <li class="comment-item">
-            <div class="comment-content">
-                <span class="comment-author">🌻白日梦想家</span>
-                            <span class="comment-time">2012年6月13日</span>
-            
-               
-                <div class="comment-text">回复 <span class="comment-author">盐酱Zoe</span>：😭</div>
-            </div>
-        </li>
-    </ul>
-
-
-    </div>
-
 
    
 
-                </div>
+           
                           <div class="card" style="padding:15px; animation: fadeIn 0.5s;">
                     <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
                     <p style="font-size:13px;">2012，带着希望前行。<br>如果真的有世界末日，我想在最后的时间和父母和朋友开开心心的呆在一起。世界末日，我一点都不怕!</p>
@@ -732,7 +714,7 @@
                     <div style="color:var(--qzone-link); font-weight:bold; font-size:14px;">🌻白日梦想家</div>
                     <p style="font-size:13px;">陈绮贞女神，我一定会攒钱去看你的现场演出(ง •̀_•́)ง</p>
                     
-               <a class="music-link" href="poster.html" target="_blank">
+               <a class="music-link">
     <div class="music-card">
         <img src="music.png" alt="太聪明封面">
         <div class="music-info">
@@ -759,6 +741,26 @@
                                     <div class="comment-text">你上次还哼这首歌帮我抄作业。。</div>
                                 </div>
                             </li>
+                
+<li class="comment-item">
+    <div class="comment-content">
+        <span class="comment-author">今日也向晴</span>
+        <span class="comment-time">2011年8月9日 20:15</span>
+        <div class="comment-text">
+            最近正在练习这首歌的谱子٩(๑❛ᴗ❛๑)۶
+            <div style="margin-top: 8px;">
+                <img src="piano.jpg" alt="曲谱" 
+                     style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 1px solid #ddd; padding: 2px; background: #fff;" 
+                     onclick="showBigImg(this.src)">
+            </div>
+        </div>
+    </div>
+</li>
+
+<div id="imgModal" onclick="closeModal()" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.85); align-items:center; justify-content:center;">
+    <span style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; font-weight:bold; cursor:pointer; font-family:Arial;">&times;</span>
+    <img id="modalImg" style="max-width:90%; max-height:90%; border:5px solid #fff; box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+</div>
                         </ul>
                     </div>
                 </div>
@@ -845,8 +847,28 @@
 
         
     </div>
+<script>
+// 打开图片
+function showBigImg(src) {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    modal.style.display = "flex";
+    modalImg.src = src;
+    // 禁止页面滚动（可选，增加体验）
+    document.body.style.overflow = 'hidden';
+}
+
+// 关闭图片
+function closeModal() {
+    const modal = document.getElementById('imgModal');
+    modal.style.display = "none";
+    // 恢复页面滚动
+    document.body.style.overflow = 'auto';
+}
+</script>
 
     <script>
+        
         // 签到逻辑
         let checkCount = 0;
         function doCheckin() {

@@ -41,7 +41,7 @@
         .d-avatar { width: 80px; height: 80px; background: #fff; border: 1px solid #ccc; padding: 4px; position: relative; }
         .d-avatar-box { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #999; }
         .user-name { margin-top: 10px; color: #2d64b3; font-size: 13px; font-weight: bold; text-decoration: none; max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
-        .user-level { margin-top: 5px; background: url('https://tb2.bdstatic.com/tb/static-common/img/user_level_6f6f6f.png') no-repeat; padding-left: 20px; font-size: 11px; color: #ff9900; }
+        .user-level { margin-top: 5px; background: url('https://tb2.bdstatic.com/tb/static-common/img/user_level_6f6f6f.png') no-repeat; padding-left: 20px; font-size: 11px; color: #ff9900;display: inline-block; }
         
         .d-post-content { flex: 1; padding: 20px 25px; position: relative; display: flex; flex-direction: column; }
         .post-text { font-size: 15px; color: #333; line-height: 1.8; flex: 1; margin-bottom: 30px; word-break: break-all; }
@@ -69,7 +69,7 @@
     z-index: 9999;
 }
 
-    </style><div class="progress-indicator">30/39</div>
+    </style><div class="progress-indicator">32/39</div>
 </head>
 <body>
 
@@ -186,7 +186,7 @@
             <div class="post-text">
             感谢LS帮顶，露珠最喜欢的几米的作品，是《地下铁》，也是对我有特别意义的一本书！
                 <br><br>
-                讲真的，我原本以为这只是家奶茶店的名字（捂脸），毕竟校门口那家地下铁我常喝。后来也是好朋友送了我这本书，一向泪点很高的我居然边看边哭得稀里哗啦ミ﹏ミ（也是代入了露珠的一些亲身经历吧） <br><br>特别喜欢书里对盲眼女孩这个角色的塑造，画面和文字都很温暖，特别适合在感到孤独或迷茫的时候看。强推给大家！
+                讲真的，我原本以为这只是家奶茶店的名字（捂脸），毕竟校门口那家地下铁我常喝。后来也是好朋友送了我这本书，一向泪点很高的我居然边看边哭得稀里哗啦ミ﹏ミ <br><br>
             </div>
             <div class="post-footer"><span class="post-tail">106楼</span><span class="post-tail">2012-02-14 22:55</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
         </div>
@@ -199,27 +199,88 @@
         <div class="d-post-content">
               <span class="louzhu-icon">楼主</span>
             <div class="post-text">
-                接上楼，露珠刚转来这间学校的时候，其实非常不适应。也是受到了这本书的鼓舞吧，后来鼓起勇气去参加了校乐团的面试。候场的时候意外认识了一位也喜欢几米的台湾借读生。入团之后，我们经常在排练间隙交换些插画和专辑，回想起来真的太有缘分了！<br><br>不多说，继续上图！
+                接上楼，露珠刚转来这间学校的时候，其实非常不适应，所以对书里盲眼女孩这个角色特别有感触（也是代入了露珠的一些亲身经历吧）。整本书的画面和文字都很温暖，特别适合在感到孤独或迷茫的时候看。强推给大家！<br><br>不多说，继续上图！
             </div>
             <div class="post-footer"><span class="post-tail">107楼</span><span class="post-tail">2012-02-15 12:30</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
         </div>
     </div>
 
- 
+ <style>
+        /* 基础贴吧样式模拟 */
 
-    <div class="l-post" data-page="2">
+        /* 弹出用户信息框样式 */
+        .user-card {
+            display: none; /* 默认隐藏 */
+            position: absolute;
+            left: 110px;
+            top: 20px;
+            width: 280px;
+            background: #fff;
+            border: 1px solid #d1d1d1;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            padding: 15px;
+            text-align: left;
+            font-size: 13px;
+            color: #333;
+        }
+        .user-card::before { /* 小三角箭头 */
+            content: "";
+            position: absolute;
+            left: -10px; top: 20px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #fff;
+        }
+        .card-header { border-bottom: 1px solid #f2f2f2; padding-bottom: 10px; margin-bottom: 10px; }
+        .card-info span { margin-right: 15px; color: #666; }
+        .fav-bars { margin-top: 10px; }
+        .fav-bars a { color: #2d64b3; text-decoration: none; margin-right: 8px; }
+        .fav-bars a:hover { text-decoration: underline; }
+        
+        .post-tail { color: #999; font-size: 12px; margin-right: 10px; }
+    </style>
+
+   <div class="l-post" data-page="2">
         <div class="d-author">
-            <div class="d-avatar" style="border-top: 2px solid #ffc0cb;"><div class="d-avatar-box" style="background:#fff0f5;"></div></div>
-            <a href="#" class="user-name">Quokka</a><div class="user-level">LV5 萌新</div>
+            <div class="d-avatar" id="avatarBtn" ">
+                <div class="d-avatar-box" style="background:#fff0f5;">
+                    <img src="avatar1.jpg" alt="头像" style="width: 100%; height: 100%; display: block; object-fit: cover;">
+                </div>
+                
+                <div class="user-card" id="userCard">
+                    <div class="card-header">
+                        <strong>百度账号：Quokka</strong>
+                    </div>
+                    <div class="card-info">
+                        <p>等级：<span>LV5 萌新</span></p>
+                        <p>性别：<span>女</span></p>
+                        <p>地区：<span>临渊 - 青州</span></p>
+                    </div>
+                    <div class="fav-bars">
+                        <p style="color:#999; margin-bottom:5px;">常逛的贴吧：</p>
+                        <a href="#">小兔gaara吧</a>
+                         <a href="#">红豆爱阿翁吧</a>
+                           <a href="#">白羊座吧</a>
+              <a href="tieba.html" target="_blank" style="font-weight:bold;">青州实验初级中学吧</a>
+                       
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="user-name">Quokka</a>
+            <div class="user-level">LV5 萌新</div>
         </div>
+
         <div class="d-post-content">
             <span class="louzhu-icon">楼主</span>
-                               <div style="text-align: center; padding: 20px 0;">
-
-    
-    <img src="jm5.png" alt="大象" style="width: 700px; border: 8px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); margin-bottom: 25px;">
-</div>
-            <div class="post-footer"><span class="post-tail">108楼</span><span class="post-tail">2012-02-15 20:27</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
+            <div style="text-align: center; padding: 20px 0;">
+                <img src="jm5.png" alt="大象" style="width: 700px; border: 8px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); margin-bottom: 25px;">
+            </div>
+            <div class="post-footer">
+                <span class="post-tail">108楼</span>
+                <span class="post-tail">2012-02-15 20:27</span>
+                <span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span>
+            </div>
         </div>
     </div>
 
@@ -230,7 +291,7 @@
         </div>
         <div class="d-post-content">
             <div class="post-text">
-                抱图，羡慕LZ！能进乐团好厉害，你说的故事简直像几米绘本里的剧情！<br>
+                抱图，LZ说的故事简直像几米绘本里的剧情！<br>
             </div>
             <div class="post-footer"><span class="post-tail">109楼</span><span class="post-tail">2012-02-17 00:15</span><span class="post-tail" style="color:#2d64b3;cursor:pointer;">回复</span></div>
         </div>
@@ -324,6 +385,26 @@
     // 初始化显示第一页
     goToPage(1);
 </script>
+<script>
+        const avatar = document.getElementById('avatarBtn');
+        const card = document.getElementById('userCard');
 
+        // 点击头像显示/隐藏信息框
+        avatar.addEventListener('click', function(e) {
+            e.stopPropagation(); // 阻止冒泡
+            const isVisible = card.style.display === 'block';
+            card.style.display = isVisible ? 'none' : 'block';
+        });
+
+        // 点击页面其他地方关闭信息框
+        document.addEventListener('click', function() {
+            card.style.display = 'none';
+        });
+
+        // 阻止点击信息框本身时关闭
+        card.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
 </body>
 </html>

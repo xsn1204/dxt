@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>青州实验初级中学吧-百度贴吧</title>
+    <style>
+        body { background-color: #f0f2f5; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; margin: 0; padding: 0; }
+        .container { width: 1000px; margin: 0 auto; background: #fff; border-left: 1px solid #dfe4ea; border-right: 1px solid #dfe4ea; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        
+        /* 顶部导航 */
+        .top-nav { height: 40px; background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .logo-area { display: flex; align-items: center; }
+        .logo-area strong { color: #2d5da1; font-size: 24px; }
+        .search-bar { background: #2d5da1; color: white; padding: 5px 15px; border-radius: 2px; cursor: pointer; }
+
+        /* 横幅区域 - 校园风格 */
+.banner { height: 180px; background: #e3f2fd url('https://img.icons8.com/illustrations/parallax/500/school.png') no-repeat right; position: relative; border-bottom: 5px solid #2d5da1; }
+        .banner-text { 
+            position: absolute; 
+            top: 45px; 
+            left: 0; 
+            width: 100%; 
+            text-align: center; 
+            font-size: 28px; 
+            color: #1a3a63; 
+            font-weight: bold; 
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8); 
+        }
+
+        /* 贴吧信息栏 */
+        .forum-info { padding: 20px; display: flex; align-items: flex-start; border-bottom: 1px solid #eee; }
+        .forum-avatar { width: 140px; 
+            height: 140px; 
+            border: 4px solid #fff; 
+            margin-top: -60px; 
+            background: url(school1.jpg ) no-repeat center; 
+            background-size: cover; 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 36px; 
+            font-weight: bold;
+            border-radius: 0; /* 强制正方形 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10; }
+        .forum-detail { margin-left: 20px; flex: 1; }
+        .forum-title-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .forum-name { font-size: 22px; font-weight: bold; margin-right: 15px; }
+        .btn-follow { background: #2d5da1; color: white; padding: 4px 12px; border-radius: 3px; font-size: 14px; text-decoration: none; }
+        .stats { font-size: 12px; color: #999; margin-left: 10px; }
+        .slogan { font-size: 13px; color: #666; }
+
+        /* 签到区域 */
+        .sign-area { width: 150px; text-align: center; }
+        .btn-sign { background: #ff9f43; color: white; padding: 15px; border-radius: 5px; font-size: 18px; cursor: pointer; display: block; font-weight: bold; }
+        .sign-stats { font-size: 12px; color: #666; margin-top: 5px; }
+
+        /* 版块导航 */
+        .quick-links { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 15px 20px; background: #f8f9fa; border-bottom: 1px solid #eee; font-size: 13px; }
+        .link-col h4 { border-left: 3px solid #2d5da1; padding-left: 8px; margin: 0 0 10px 0; color: #333; }
+        .link-col ul { list-style: none; padding: 0; margin: 0; }
+        .link-col li { margin-bottom: 6px; color: #2d5da1; cursor: pointer; }
+
+        /* 内容主体 */
+        .main-body { display: flex; padding: 10px 20px; }
+        .post-list { flex: 1; }
+        .sidebar { width: 220px; margin-left: 20px; }
+
+        .tabs { border-bottom: 1px solid #e5e5e5; margin-bottom: 10px; padding-bottom: 5px; }
+        .tabs span { margin-right: 20px; color: #333; cursor: pointer; font-size: 14px; }
+        .tabs .active { font-weight: bold; color: #2d5da1; border-bottom: 2px solid #2d5da1; padding-bottom: 5px; }
+
+        .post-item { display: flex; padding: 12px 0; border-bottom: 1px dashed #eee; align-items: center; font-size: 14px; }
+        .reply-num { width: 50px; text-align: center; background: #f3f3f3; border-radius: 3px; margin-right: 15px; font-size: 12px; color: #666; }
+        .post-title { flex: 1; color: #2d5da1; cursor: pointer; }
+        .tag { font-size: 12px; padding: 1px 3px; border-radius: 2px; margin-right: 5px; }
+        .tag-sticky { background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; }
+        .tag-fine { background: #e6f7ff; color: #1890ff; border: 1px solid #91d5ff; }
+        .post-author { width: 100px; text-align: right; color: #999; font-size: 12px; }
+
+        /* 侧边栏卡片 */
+        .sidebar-card { border: 1px solid #eee; padding: 15px; margin-bottom: 20px; border-radius: 4px; background: #fff; }
+        .card-title { font-weight: bold; color: #2d5da1; margin-bottom: 10px; display: block; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        .info-list { font-size: 12px; line-height: 2; color: #666; }
+                  .progress-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    z-index: 9999;
+}
+    </style><div class="progress-indicator">33/39</div>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-nav">
+        <div class="logo-area">
+            <strong>Baidu</strong><span style="font-size: 24px; color: #2d5da1; margin-left:5px;">贴吧</span>
+            <input type="text" placeholder="青州实验初级中学吧" style="margin-left:20px; padding: 5px; width: 220px; border: 1px solid #ccc;">
+        </div>
+        <div class="search-bar">进入贴吧</div>
+    </div>
+
+    <div class="banner">
+        <div class="banner-text">厚德载物，博学笃行<br><span style="font-size: 16px;">—— 记我们在实中度过的青葱岁月</span></div>
+    </div>
+
+    <div class="forum-info">
+        <div class="forum-avatar"></div>
+        <div class="forum-detail">
+            <div class="forum-title-row">
+                <span class="forum-name">青州实验初级中学吧</span>
+                <a href="#" class="btn-follow">+ 关注</a>
+                <span class="stats">关注：86,432 &nbsp; 贴子：521,009</span>
+            </div>
+            <div class="slogan">实中人的精神家园。无论你已毕业多久，这里永远有你的青春印记。</div>
+        </div>
+        <div class="sign-area">
+            <span class="btn-sign">签 到</span>
+            <div class="sign-stats">今日已签 1,204 人</div>
+        </div>
+    </div>
+
+    <div class="quick-links">
+        <div class="link-col">
+            <h4>| 校园导航</h4>
+            <ul>
+                <li>· 【必看】实中新生入学手册（交通/宿舍/食堂）</li>
+                <li>· 历年中考录取分数线及重点班分布参考</li>
+                <li>· 关于校园卡充值与遗失找回的统一处理帖</li>
+            </ul>
+        </div>
+        <div class="link-col">
+            <h4>| 岁月留声</h4>
+            <ul>
+                <li>· 那些年被教导主任在后窗支配的恐惧</li>
+                <li>· 毕业照认领：看看有没有你的那一届？</li>
+                <li>· 假如重回初一，你最想对自己说的一句话</li>
+            </ul>
+        </div>
+        <div class="link-col">
+            <h4>| 互助广场</h4>
+            <ul>
+                <li>· 寻物启事：在操场南侧丢失一个黑色笔袋</li>
+                <li>· 求学长推荐：初三物理哪本辅导书最好用？</li>
+                <li>· 那个校门口的小吃摊，现在搬到哪里去了？</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-body">
+        <div class="post-list">
+            <div class="tabs">
+                <span class="active">全部内容</span>
+                <span>精华贴</span>
+                <span>图片区</span>
+                <span>校友录</span>
+            </div>
+
+            <div class="post-item">
+                <div class="reply-num">889</div>
+                <div class="post-title">
+                    <span class="tag tag-sticky">置顶</span><span class="tag tag-fine">精</span>
+                    <strong>【校友集结】实中历届毕业生报到贴，留下你的入学年份和班级！</strong>
+                </div>
+                <div class="post-author">实中校友办</div>
+            </div>
+
+
+
+            <div class="post-item">
+                <div class="reply-num">142</div>
+                <div class="post-title">
+                    【讨论】大家觉得现在食堂二楼的糖醋排骨味道变了吗？
+                </div>
+                <div class="post-author">干饭第一名</div>
+            </div>
+
+            <div class="post-item">
+                <div class="reply-num">67</div>
+                <div class="post-title">
+                    <span class="tag tag-fine">精</span>
+                    分享几张今天傍晚在教学楼顶拍的夕阳，美哭了！
+                </div>
+                <div class="post-author">爱殇</div>
+            </div>
+                        <div class="post-item">
+                <div class="reply-num">256</div>
+                <div class="post-title">
+                    <span class="tag tag-fine">精</span>
+                   还有实中人记得2012届的<strong>【邹言】</strong>吗？
+                </div>
+                <div class="post-author">记忆中的那棵槐树</div>
+            </div>
+
+            <div class="post-item">
+                <div class="reply-num">45</div>
+                <div class="post-title">
+                    【求助】下周三校运动会，有哪些比赛项目比较容易拿分？
+                </div>
+                <div class="post-author">洛雨凝</div>
+            </div>
+
+            <div class="post-item">
+                <div class="reply-num">103</div>
+                <div class="post-title">
+                    致我们终将逝去的三年：那些在走廊罚站的日子。
+                </div>
+                <div class="post-author">沧海桑田。</div>
+            </div>
+            
+            <p style="text-align:center; color:#999; font-size:12px; margin-top:20px;">—— 已显示最新动态 ——</p>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-card">
+                <span class="card-title">🏫 吧务公告</span>
+                <div class="info-list">
+                    ● 禁止发布任何形式的补习广告<br>
+                    ● 禁止言语攻击老师及在校同学<br>
+                    ● 欢迎分享校园正能量故事
+                </div>
+            </div>
+       
+            <div class="sidebar-card">
+                <span class="card-title">🏆 荣誉榜</span>
+                <div class="info-list">
+                    ● 2025年全市田径运动会第一<br>
+                    ● 获“全省文明校园”称号<br>
+                    ● 模拟联合国社团省赛夺魁
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
