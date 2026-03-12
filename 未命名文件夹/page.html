@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 WEDDING EVENT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syne:wght@800&family=JetBrains+Mono:wght@400&display=swap');
+
+        :root {
+            --cream-bg: #F9F7F2;
+            --mac-border: rgba(0, 0, 0, 0.08);
+            --accent-red: #E63946;
+             --soft-red: rgba(230, 57, 70, 0.08); /* 背景囍字颜色 */
+        }
+
+        body {
+            background-color: #E8E4DB;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 3:4 Poster Canvas */
+        .poster-canvas {
+            width: 450px;
+            height: 600px;
+            background-color: var(--cream-bg);
+            background-image: 
+                radial-gradient(#D1CDC4 0.5px, transparent 0.5px);
+            background-size: 15px 15px; /* Subtle grid background */
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            border: 8px solid #fff;
+        }
+
+        /* Super Bold Title */
+        .main-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 48px;
+            line-height: 0.9;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            margin-top: 40px;
+            z-index: 10;
+        }
+
+        .main-title span {
+            color: var(--accent-red);
+            display: block;
+            font-size: 56px;
+        }
+
+        /* macOS Glass Window */
+        .mac-window {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--mac-border);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: 0px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .title-bar {
+            height: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            border-bottom: 0.5px solid var(--mac-border);
+        }
+
+        .dot-group { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; }
+        .dot-red { background: #FF5F56; }
+
+        /* Terminal Style Text */
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Floating Tags */
+        .tag {
+            position: absolute;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .tag-red { background: var(--accent-red); color: #fff; transform: rotate(-8deg); top: 50px; right: 20px; }
+        .tag-outline { border: 1px solid #1a1a1a; color: #1a1a1a; bottom: 150px; left: 30px; transform: rotate(5deg); }
+
+        /* Dock Minimalist */
+        .dock {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .dock-item { width: 30px; height: 30px; border-radius: 8px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+
+        .scanline {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.02) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+          .bg-xi {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 200px;
+            color: var(--soft-red);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+   <div class="bg-xi">囍</div>
+    <div class="poster-canvas">
+        <div class="scanline"></div>
+
+        <div class="flex justify-between items-center text-[10px] font-bold tracking-widest opacity-40 mb-2">
+            <div>FILE_SYSTEM: /404GAME/番外</div>
+            <div>STATUS: UNLOCKING...</div>
+        </div>
+
+        <div class="tag tag-red">网页解谜游戏</div>
+ 
+
+        <div class="main-title">
+            404 婚礼<br>
+            <span>来信事件</span>
+        </div>
+
+        <div class="mac-window">
+            <div class="title-bar">
+                <div class="dot-group">
+                    <div class="dot dot-red"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="flex-1 text-center text-[9px] font-bold opacity-30">terminal — invitation.exe</div>
+            </div>
+            <div class="p-5 code-font">
+                   <p class="text-red-500 font-bold">> 正在确认来宾名单...</p>
+                <p>> 访客确认: <span class="text-black underline underline-offset-4">您已被选中参与</span></p>
+                <div class="my-3 py-2 border-y border-dashed border-gray-300">
+                    <p class="text-[13px] text-black font-bold tracking-tight uppercase">日期: 2026.03.XX / 11:38</p>
+                    <p class="text-[10px]">地点: 青州国际大酒店</p>
+                </div>
+   
+            </div>
+        </div>
+
+        <div class="mt-auto pb-16">
+            <div class="flex justify-between items-end border-t border-black/10 pt-4">
+                <div class="text-[10px] leading-tight">
+                    <p class="font-bold mb-1">在系统重启之前，</p>
+                    <p>解开关于“永恒”的最后一道谜题。</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-[18px] font-bold text-red-500">囍</div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="dock">
+            <div class="dock-item">🔔</div>
+            <div class="dock-item" style="background: #1a1a1a; color: white;">404</div>
+            <div class="dock-item">❤</div>
+            <div class="dock-item">🔍</div>
+        </div>
+    </div>
+
+</body>
+</html>

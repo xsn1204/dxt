@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 WEDDING EVENT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 引入具有郑重感的宋体 (Noto Serif SC) 和 衬线体 (Playfair Display) */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500&display=swap');
+
+        :root {
+            --cream-bg: #F7F4EF; 
+            --mac-border: rgba(0, 0, 0, 0.08);
+            --formal-red: #A32D2D; 
+            --bg-xi-color: rgba(163, 45, 45, 0.05); 
+        }
+
+        body {
+            background-color: #DEDAD3;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 3:4 画布 */
+        .poster-canvas {
+            width: 450px;
+            height: 600px;
+            background-color: var(--cream-bg);
+            background-image: radial-gradient(#CBC7BD 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+            box-shadow: 0 60px 120px -20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* 重点：增加顶部 padding 迫使内容下移 */
+            padding: 80px 40px 40px 40px; 
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* 背景大囍字：位置同步下移或保持中心以营造错位感 */
+        .bg-xi {
+            position: absolute;
+            top: 55%; /* 下移 */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 900;
+            font-size: 400px;
+            color: var(--bg-xi-color);
+            z-index: 1;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .main-title {
+            margin-bottom: 25px;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 900;
+            color: #1a1a1a;
+            z-index: 10;
+            position: relative;
+            letter-spacing: 0.05em;
+        }
+
+        .title-top {
+            font-size: 56px;
+            line-height: 1.1;
+            display: block;
+        }
+
+        .title-bottom {
+            font-size: 75px;
+            line-height: 1;
+            color: var(--formal-red);
+            display: block;
+            position: relative;
+            left: -4px;
+        }
+
+        .mac-window {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid var(--mac-border);
+            border-radius: 12px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.03);
+            margin-top: 10px; /* 紧贴标题 */
+            position: relative;
+            z-index: 5;
+        }
+
+        .title-bar {
+            height: 30px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            border-bottom: 0.5px solid var(--mac-border);
+        }
+
+        .dot-group { display: flex; gap: 6px; }
+        .dot { width: 9px; height: 9px; border-radius: 50%; background: #ccc; }
+        .dot-red { background: #E26A6A; }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #444;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+        }
+
+        .tag-red { 
+            background: var(--formal-red); 
+            color: #fff; 
+            padding: 2px 10px;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: absolute;
+            top: 66px; /* 同步下移 */
+            right: 40px;
+            z-index: 20;
+        }
+
+        .footer-line {
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding-top: 20px;
+            margin-top: auto; /* 推到底部 */
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-canvas">
+        <div class="bg-xi">囍</div>
+
+    <div class="flex justify-between items-center text-[9px] font-bold tracking-[0.2em] opacity-30 mb-12 -mt-10 relative z-10">
+    <div>FILE_SYSTEM /404GAME/番外</div>
+    <div>STATUS: UNLOCKING...</div>
+</div>
+
+        <div class="tag-red">网页解谜游戏</div>
+
+        <div class="main-title">
+            <span class="title-top">404 婚礼</span>
+            <span class="title-bottom">来信事件</span>
+        </div>
+
+        <div class="mac-window">
+            <div class="title-bar">
+                <div class="dot-group">
+                    <div class="dot dot-red"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="flex-1 text-center text-[8px] font-bold opacity-20 tracking-widest">INVITATION_PROTOCOL.SH</div>
+            </div>
+            <div class="p-6 code-font">
+                <p class="text-[#A32D2D] font-bold">> 正在确认来宾名单...</p>
+                <p>> 访客确认: <span class="text-black underline underline-offset-4">您已被选中参与🔔</span></p>
+                
+                <div class="mt-4 pt-3 border-t border-solid border-black/5">
+                    <p class="text-[13px] text-black font-bold">时间：2026.03.XX / 11:38</p>
+                    <p class="text-[11px] opacity-60">地点：青州国际大酒店</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-line relative z-10">
+            <div class="flex justify-between items-end">
+                <div class="text-[10px] leading-relaxed text-gray-400 font-serif italic">
+                    <p class="text-black font-bold not-italic mb-1">在系统重启之前，</p>
+                    <p>解开关于「永恒」的最后一道谜题。</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-[24px] font-black text-[#A32D2D] opacity-80" style="font-family: 'Noto Serif SC';">囍</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
