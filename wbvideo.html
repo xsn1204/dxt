@@ -172,6 +172,14 @@
         .recommend-item .name { font-weight: bold; flex: 1; }
         .follow-btn { color: #f42424; border: 1px solid #f42424; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
+/* 初始禁用状态的样式 */
+.actions-locked {
+    pointer-events: none; /* 禁止点击事件 */
+    opacity: 0.5;         /* 变灰显示 */
+    filter: grayscale(1); /* 灰度化 */
+    cursor: not-allowed;
+}
+
                             .progress-indicator {
     position: fixed;
     top: 20px;
@@ -305,7 +313,7 @@ audio::-webkit-media-controls-play-button {
                 </div>
 
 
-<div class="wb-actions">
+<div class="wb-actions actions-locked" id="actionButtons">
     <div class="action-item" onclick="handleAction('repost')">
         <span>🔁</span> 转发
     </div>
@@ -352,7 +360,7 @@ audio::-webkit-media-controls-play-button {
             document.getElementById('verifyOverlay').style.display = 'flex';
             document.getElementById('ansInput').focus();
         }
-        function checkAns() {
+       function checkAns() {
     const val = document.getElementById('ansInput').value.trim();
     if (val === '金叶子') {
         const videoZone = document.getElementById('videoZone');
@@ -360,17 +368,19 @@ audio::-webkit-media-controls-play-button {
         document.getElementById('unlockedContent').style.display = 'block';
         videoZone.classList.add('unlocked');
 
-        // --- 新增代码：验证通过后自动播放音乐 ---
+        // --- 新增：解锁底部交互按钮 ---
+        const actionButtons = document.getElementById('actionButtons');
+        actionButtons.classList.remove('actions-locked');
+        // --------------------------
+
         const audio = document.getElementById('bgMusic');
         audio.play().catch(error => {
             console.log("浏览器拦截了自动播放，需用户手动点击播放。");
         });
-        // ------------------------------------
         
     } else {
         document.getElementById('error-msg').style.display = 'block';
     }
-    
 }
 // 弹窗处理逻辑
 function handleAction(type) {
