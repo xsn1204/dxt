@@ -302,11 +302,17 @@
         const a3 = document.getElementById('ans3').value.trim().toLowerCase();
         const a4 = document.getElementById('ans4').value.trim().toLowerCase();
 
-        if (a1 === 'character' && a2 === 'famous' && a3 === 'more' && a4 === 'rules') {
-            window.open('transfer.html', '_blank');
-        } else {
-            document.getElementById('msg').innerText = "Incorrect. Please check the clues above.";
-        }
+// 将输入值统一转为小写后再进行比较
+if (
+    a1.toLowerCase() === 'character' && 
+    a2.toLowerCase() === 'famous' && 
+    a3.toLowerCase() === 'more' && 
+    a4.toLowerCase() === 'rules'
+) {
+    window.open('transfer.html', '_blank');
+} else {
+    document.getElementById('msg').innerText = "Incorrect. Please check the clues above.";
+}
     }
 </script>
 
